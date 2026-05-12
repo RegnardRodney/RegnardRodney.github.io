@@ -3,237 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Régnard Rodney — Field Ops Master Architect</title>
+    <title>Régnard Rodney | SME Incident Commander</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black:#080806; --off:#0f0f0c; --white:#f2ede4; --gold:#c8a84b; 
-            --gold2:#a07830; --green:#27ae60; --muted:#706a5e; --border:rgba(200,168,75,.18);
-            --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif; --serif:'Fraunces',serif;
+            --black:#050505; --off:#0a0a0a; --white:#f2ede4; --gold:#c8a84b; 
+            --gold-low:rgba(200,168,75,0.1); --green:#2ecc71; --red:#e74c3c;
+            --border:rgba(200,168,75,0.2); --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif;
         }
 
-        body { background: var(--black); color: var(--white); font-family: var(--serif); margin: 0; overflow-x: hidden; cursor: none; }
+        body { background: var(--black); color: var(--white); font-family: var(--mono); margin: 0; overflow-x: hidden; cursor: none; }
         
-        /* 3D OFFICE BACKGROUND SIMULATION */
-        #office-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; perspective: 1200px; background: #050505; overflow: hidden; }
-        .office-floor { position: absolute; bottom: 0; width: 200%; height: 100%; background: linear-gradient(0deg, rgba(200,168,75,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,168,75,0.05) 1px, transparent 1px); background-size: 100px 100px; transform: rotateX(70deg) translateY(-50%); transform-origin: bottom; left: -50%; opacity: 0.3; }
-        .office-desk { position: absolute; width: 120px; height: 80px; background: rgba(200,168,75,0.03); border: 1px solid var(--border); transition: 0.5s; }
+        /* NOC FLOOR */
+        #noc-floor { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; perspective: 1200px; background: #000; overflow: hidden; }
+        .grid { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background-image: linear-gradient(var(--gold-low) 1px, transparent 1px), linear-gradient(90deg, var(--gold-low) 1px, transparent 1px); background-size: 80px 80px; transform: rotateX(65deg); opacity: 0.2; }
 
         /* HUD & NAVIGATION */
-        nav { position: fixed; top: 0; width: 100%; z-index: 200; display: flex; justify-content: space-between; padding: 1.5rem 3.5rem; background: rgba(8,8,6,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(15px); box-sizing: border-box; }
-        .nav-logo { font-family: var(--mono); color: var(--gold); text-decoration: none; letter-spacing: 2px; font-weight: bold; }
-        .nav-status { font-family: var(--mono); font-size: 0.65rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
-        .sdot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--gold); backdrop-filter: blur(10px); box-sizing: border-box; }
+        .nav-logo { font-size: 1.1rem; font-weight: bold; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
+        .btn-hire { background: var(--gold); color: #000; padding: 0.6rem 1.4rem; text-decoration: none; font-weight: bold; font-size: 0.7rem; border-radius: 2px; }
 
-        /* HERO - THE MISSION BRIEF */
-        #hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 0 3.5rem; position: relative; z-index: 5; }
-        .h-headline { font-family: var(--display); font-size: clamp(4rem, 12vw, 15rem); line-height: 0.85; margin: 0; text-shadow: 0 10px 50px rgba(0,0,0,0.9); }
-        .h-sub { font-family: var(--mono); color: var(--gold); margin-top: 1rem; letter-spacing: 4px; font-size: 0.8rem; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
+        /* THE SME AVATAR */
+        #sme-agent { position: absolute; width: 24px; height: 24px; background: var(--gold); border-radius: 4px; z-index: 10; box-shadow: 0 0 25px var(--gold); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); border: 2px solid #000; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #000; font-weight: bold; }
 
-        /* OSI LAYER WALKTHROUGH */
-        .osi-container { padding: 5rem 3.5rem; position: relative; z-index: 5; }
-        .osi-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; }
-        .osi-layers { display: flex; flex-direction: column-reverse; gap: 8px; }
-        .layer-box { padding: 1.5rem; border: 1px solid var(--border); background: rgba(15,15,12,0.8); cursor: pointer; transition: 0.3s; position: relative; }
-        .layer-box:hover, .layer-box.active { border-color: var(--gold); background: rgba(200,168,75,0.08); transform: translateX(10px); }
-        .layer-num { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); margin-bottom: 5px; }
-        .layer-name { font-family: var(--display); font-size: 1.5rem; color: var(--white); }
+        /* STATIONS */
+        .station { position: absolute; border: 1px solid var(--border); padding: 8px; font-size: 0.55rem; color: var(--muted); text-transform: uppercase; background: rgba(0,0,0,0.6); }
+        #st-mdf { top: 15%; left: 10%; }
+        #st-noc { top: 40%; right: 15%; }
+        #st-retail { bottom: 25%; left: 45%; }
 
-        /* THE ACTION TERMINAL */
-        .terminal-wrap { border: 1px solid var(--gold); background: rgba(6,6,4,0.98); height: 550px; display: flex; flex-direction: column; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-        .tbar { display: flex; align-items: center; gap: 8px; padding: 0.8rem 1.2rem; border-bottom: 1px solid rgba(200,168,75,0.2); }
-        .tdot { width: 10px; height: 10px; border-radius: 50%; }
-        .tbody { padding: 1.5rem; font-family: var(--mono); font-size: 0.85rem; color: #a0f0a0; overflow-y: auto; flex-grow: 1; line-height: 1.6; }
-        .t-recruiter { color: #fcd34d; border-top: 1px dashed rgba(200,168,75,0.4); margin-top: 1.5rem; padding-top: 1rem; font-weight: bold; }
-        .t-cmd { color: var(--gold); }
-        .t-err { color: #f87171; }
-
-        /* EXPERIENCE & FOOTER */
-        .footer { padding: 5rem 3.5rem; border-top: 1px solid var(--border); position: relative; z-index: 5; background: var(--black); }
-        .ft-scramble { font-family: var(--display); font-size: 4rem; color: var(--white); margin-bottom: 1rem; }
+        /* LAYOUT PANELS */
+        .panel { position: relative; z-index: 100; padding: 6rem 2.5rem; max-width: 1300px; margin: 0 auto; }
+        .hero-title { font-family: var(--display); font-size: clamp(4rem, 12vw, 10rem); line-height: 0.8; margin: 0; color: var(--white); }
         
-        #cur { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+        /* TRIAGE SYSTEM */
+        .triage-wrap { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; margin-top: 3rem; }
+        .layer-selector { display: flex; flex-direction: column; gap: 10px; }
+        .layer-btn { padding: 1.2rem; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--muted); cursor: pointer; text-align: left; font-family: var(--mono); font-size: 0.75rem; transition: 0.3s; }
+        .layer-btn:hover, .layer-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-low); transform: translateX(10px); }
 
-        @media(max-width: 900px) {
-            nav, #hero, .osi-container { padding: 1.5rem; }
-            .osi-grid { grid-template-columns: 1fr; }
-        }
+        /* THE SIMULATOR HUD */
+        .terminal { background: #000; border: 1px solid var(--gold); height: 580px; display: flex; flex-direction: column; position: relative; }
+        .t-header { background: var(--gold-low); padding: 0.6rem 1.2rem; font-size: 0.65rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; color: var(--gold); }
+        .t-body { padding: 1.5rem; font-size: 0.85rem; color: var(--green); overflow-y: auto; flex-grow: 1; line-height: 1.6; }
+        .t-tool { color: #f1c40f; font-weight: bold; margin: 10px 0; display: block; border-left: 2px solid #f1c40f; padding-left: 10px; }
+        .t-log { color: #5dade2; font-style: italic; display: block; margin-top: 10px; font-size: 0.75rem; }
+
+        /* TECH VAULT */
+        .vault { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 5rem; }
+        .v-card { border: 1px solid var(--border); padding: 2rem; transition: 0.3s; background: rgba(10,10,10,0.8); }
+        .v-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .v-card h4 { font-family: var(--display); font-size: 1.8rem; color: var(--gold); margin: 0 0 10px 0; }
+
+        #cur { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%,-50%); }
+        
+        @media (max-width: 900px) { .triage-wrap { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div id="office-bg"><div class="office-floor"></div></div>
+
+    <div id="noc-floor"><div class="grid"></div></div>
     <div id="cur"></div>
+    <div id="sme-agent">SME</div>
 
     <nav>
-        <a href="#" class="nav-logo">R.RODNEY // FIELD_OPS</a>
-        <div class="nav-status" id="status-hud"><div class="sdot"></div> SYSTEM_ONLINE</div>
+        <a href="#" class="nav-logo">R.RODNEY // INCIDENT_COMMANDER</a>
+        <div style="display:flex; gap:20px; align-items:center;">
+            <a href="https://linkedin.com/in/regnardrodney" target="_blank" style="color:var(--muted); font-size:0.6rem; text-decoration:none;">LINKEDIN</a>
+            <a href="mailto:regnardrodney@gmail.com" class="btn-hire">HIRE_SME</a>
+        </div>
     </nav>
 
-    <section id="hero">
-        <h1 class="h-headline">A DAY IN THE LIFE.<br>FIELD OPERATIONS.</h1>
-        <div class="h-sub">SME // INFRASTRUCTURE & AGENTIC ORCHESTRATION</div>
-    </section>
+    <div class="panel">
+        <header>
+            <span style="color:var(--gold); font-size:0.75rem; letter-spacing:5px;">[ON-SITE TRIAGE SIMULATION]</span>
+            <h1 class="hero-title">OPERATIONAL<br>VISIBILITY.</h1>
+            <p style="color:var(--muted); max-width:650px; font-size:1rem; margin-top:1.5rem; line-height:1.7;">
+                Architecting 99.9% uptime for 11,000+ endpoints. From physical fiber termination to agentic AI automation. Accelerated MSITM Candidate at WGU.
+            </p>
+        </header>
 
-    <section class="osi-container">
-        <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2.5rem;">// INITIATE DESKSIDE WALKTHROUGH: LAYER_BY_LAYER</div>
-        <div class="osi-grid">
-            <div class="osi-layers">
-                <div class="layer-box" onclick="runTriage(1)">
-                    <div class="layer-num">LAYER 01</div>
-                    <div class="layer-name">PHYSICAL</div>
+        <section id="simulator" style="margin-top: 5rem;">
+            <div class="station" id="st-mdf">SERVER_ROOM_MDF</div>
+            <div class="station" id="st-retail">RETAIL_POS_HUB</div>
+            <div class="station" id="st-noc">NOC_STATION_ALPHA</div>
+
+            <div class="triage-wrap">
+                <div class="layer-selector">
+                    <button class="layer-btn active" onclick="simulate(1, 'st-mdf')">01. PHYSICAL (Fiber/Cable)</button>
+                    <button class="layer-btn" onclick="simulate(2, 'st-noc')">02. DATA LINK (MAC/Switch)</button>
+                    <button class="layer-btn" onclick="simulate(3, 'st-mdf')">03. NETWORK (BGP/OSPF)</button>
+                    <button class="layer-btn" onclick="simulate(4, 'st-noc')">04. TRANSPORT (SQL/TCP)</button>
+                    <button class="layer-btn" onclick="simulate(7, 'st-retail')">07. APPLICATION (POS/AI)</button>
                 </div>
-                <div class="layer-box" onclick="runTriage(2)">
-                    <div class="layer-num">LAYER 02</div>
-                    <div class="layer-name">DATA LINK</div>
-                </div>
-                <div class="layer-box" onclick="runTriage(3)">
-                    <div class="layer-num">LAYER 03</div>
-                    <div class="layer-name">NETWORK</div>
-                </div>
-                <div class="layer-box" onclick="runTriage(4)">
-                    <div class="layer-num">LAYER 04</div>
-                    <div class="layer-name">TRANSPORT</div>
-                </div>
-                <div class="layer-box" onclick="runTriage(7)">
-                    <div class="layer-num">LAYER 07</div>
-                    <div class="layer-name">APPLICATION</div>
+                <div class="terminal">
+                    <div class="t-header">
+                        <span>LIVE_DIAGNOSTIC_OS.sh</span>
+                        <span id="sys-status" style="color:var(--green);">[SYSTEM_IDLE]</span>
+                    </div>
+                    <div class="t-body" id="termBody">
+                        > FIELD_OPERATOR: Select a mission critical layer to begin the deskside simulation...
+                    </div>
                 </div>
             </div>
-            <div class="terminal-wrap">
-                <div class="tbar">
-                    <div class="tdot" style="background:#ff5f57"></div>
-                    <div class="tdot" style="background:#febc2e"></div>
-                    <div class="tdot" style="background:#28c840"></div>
-                    <span id="term-title" style="margin-left:auto; font-family:var(--mono); color:var(--gold); font-size:0.65rem;">~/tablet/ops_guide.sh</span>
-                </div>
-                <div class="tbody" id="termBody">> SELECT A LAYER TO COMMENCE TRIAGE SIMULATION...</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="footer">
-        <div class="ft-scramble">THE RECORD</div>
-        <p style="font-family: var(--mono); color: var(--muted); line-height: 2;">
-            [EDUCATION]: WGU // ACCELERATED BSIT-TO-MSITM // 2022-2027<br>
-            [EXPERIENCE]: OUTLIER AI (TRAINER) // ASURION // ROBERT HALF<br>
-            [CERTIFIED]: CompTIA Network+ // Security+ // Google IT Support<br>
-            [LOCATION]: WILMINGTON, DE // (470) 483-5144 // regnardrodney@gmail.com
-        </p>
-    </section>
+        <section id="tech-vault">
+            <h2 style="font-family:var(--display); font-size:3.5rem; margin-top:6rem;">The Command Stack</h2>
+            <div class="vault">
+                <div class="v-card"><h4>INFRASTRUCTURE</h4><p style="color:var(--muted); font-size:0.75rem;">Cisco/Meraki, SD-WAN Failover, BGP, OSPF, VMware Workspace ONE, Zero-Touch MDM Enrollment.</p></div>
+                <div class="v-card"><h4>DATA & CLOUD</h4><p style="color:var(--muted); font-size:0.75rem;">SQL Server Management Studio (SSMS), Azure Entra ID, Docker Containerization, Python Scripting.</p></div>
+                <div class="v-card"><h4>DIAGNOSTICS</h4><p style="color:var(--muted); font-size:0.75rem;">Wireshark Packet Analysis, Fluke Fiber OneShot (OTDR), VFL Laser Testers, Putty/Terminal.</p></div>
+                <div class="v-card"><h4>AGENTIC AI</h4><p style="color:var(--muted); font-size:0.75rem;">Certified Prompt Architecture (Delaware AI Commission), LLM Training (Outlier), Autonomous SOP Bots.</p></div>
+            </div>
+        </section>
+
+        <footer style="margin-top:8rem; text-align:center; border-top:1px solid var(--border); padding-top:4rem;">
+            <p style="font-family:var(--display); font-size:5rem; margin:0; color:var(--white);">2022 — 2027</p>
+            <p style="color:var(--gold); font-size:0.8rem; letter-spacing:5px;">WGU MSITM ACCELERATED PATH</p>
+            <p style="color:var(--muted); font-size:0.75rem; margin-top:2rem;">WILMINGTON, DE // +1 (470) 483-5144 // regnardrodney@gmail.com</p>
+        </footer>
+    </div>
 
     <script>
-        /* CREATE AGENTIC DESKS IN THE BACKGROUND */
-        const bg = document.getElementById('office-bg');
-        for(let i=0; i<8; i++) {
-            let desk = document.createElement('div');
-            desk.className = 'office-desk';
-            desk.style.left = (Math.random() * 80 + 10) + '%';
-            desk.style.top = (Math.random() * 80 + 10) + '%';
-            bg.appendChild(desk);
+        /* AGENT MOVEMENT ENGINE */
+        const agent = document.getElementById('sme-agent');
+        function moveAgent(stationId) {
+            const station = document.getElementById(stationId);
+            const rect = station.getBoundingClientRect();
+            agent.style.left = (rect.left + 15) + 'px';
+            agent.style.top = (rect.top - 20) + 'px';
         }
+        moveAgent('st-noc');
 
-        /* AGENTIC MOVEMENT SIMULATION */
-        function moveAgent() {
-            const desks = document.querySelectorAll('.office-desk');
-            const randomDesk = desks[Math.floor(Math.random() * desks.length)];
-            const hud = document.getElementById('status-hud');
-            
-            desks.forEach(d => d.style.borderColor = 'var(--border)');
-            randomDesk.style.borderColor = 'var(--gold)';
-            randomDesk.style.background = 'rgba(200,168,75,0.1)';
-            
-            const tasks = ["AUDITING RACK 2...", "CHECKING VLAN TRUNKS...", "REBOOTING POS_04...", "VERIFYING IPSEC TUNNEL...", "INGESTING SOP..."];
-            hud.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${tasks[Math.floor(Math.random()*tasks.length)]}`;
-            
-            setTimeout(() => {
-                randomDesk.style.background = 'rgba(200,168,75,0.03)';
-                hud.innerHTML = `<div class="sdot"></div> SYSTEM_ONLINE`;
-            }, 4000);
-        }
-        setInterval(moveAgent, 10000);
-
-        /* TRIAGE ENGINE */
-        const scenarios = {
+        /* TRIAGE SIMULATION DATA */
+        const Missions = {
             1: {
-                title: "L1: PHYSICAL TRIAGE",
-                lines: [
-                    "Symptom: Register 04 heart-beat lost.",
-                    "Action: Moving deskside to MDF closet.",
-                    "<span class='t-cmd'>Check: Cat6 seating & UPS power rails.</span>",
-                    "Status: Found unseated patch cable on Port 22.",
-                    "<span class='t-ok'>Fix: Re-seated cable. Link light restored.</span>"
-                ],
-                qa: "Recruiter: 'Régnard, want to discuss how I manage hardware lifecycle at Lowe's or Bargain Hunt?'"
+                loc: 'st-mdf',
+                steps: [
+                    "Symptom: Core Fiber Uplink reports high attenuation.",
+                    "<span class='t-tool'>EQUIP: Fluke Fiber OneShot Pro + VFL Laser</span>",
+                    "A+ Method: Performing physical inspection of LC-to-LC patch cable...",
+                    "Action: VFL shows light leakage at connector. OTDR confirms micro-bend at 1.2m.",
+                    "Fix: Cleaned connectors with Isopropyl 99% and replaced patch lead.",
+                    "<span class='t-log'>ITIL Log: Physical Incident L1-0982 Resolved. Change Log Updated.</span>"
+                ]
             },
             2: {
-                title: "L2: DATA LINK HARDENING",
-                lines: [
-                    "Symptom: Traffic broadcast storm detected.",
-                    "<span class='t-cmd'>Check: Spanning Tree Protocol (STP) status.</span>",
-                    "Log: Found loop on unmanaged switch in Breakroom.",
-                    "Action: Shutting down Port 12 on Core Switch.",
-                    "<span class='t-ok'>Result: L2 convergence complete. Storm mitigated.</span>"
-                ],
-                qa: "Recruiter: 'Need someone who can troubleshoot complex L2 loops and VLAN segmentation?'"
+                loc: 'st-noc',
+                steps: [
+                    "Symptom: Broadcast storm detected on VLAN 20.",
+                    "<span class='t-tool'>EQUIP: Wireshark Packet Sniffer + Cisco CLI</span>",
+                    "Method: Capturing pcap on mirror port 22... analyzing ARP requests.",
+                    "Action: Identified looped unmanaged switch at Station Delta.",
+                    "Fix: Shutting down port 22 via Cisco Terminal. Spanning-Tree Convergence: Complete.",
+                    "<span class='t-log'>ITIL Log: Layer 2 Loop Mitigated. Ticket INC-442 closed.</span>"
+                ]
             },
             3: {
-                title: "L3: NETWORK ROUTING",
-                lines: [
-                    "Symptom: Store #402 VPN Tunnel Down.",
-                    "<span class='t-cmd'>CMD: show ip ospf neighbor</span>",
-                    "<span class='t-err'>Error: Adjacency lost via Primary Fiber.</span>",
-                    "Action: Forcing failover to 5G Cellular Backup.",
-                    "<span class='t-ok'>Result: SD-WAN routing restored via Meraki cloud.</span>"
-                ],
-                qa: "Recruiter: 'Shall we discuss my experience deploying Meraki SD-WAN to 400+ locations?'"
+                loc: 'st-mdf',
+                steps: [
+                    "Symptom: Store #402 VPN tunnel drop during peak sales.",
+                    "<span class='t-tool'>EQUIP: Putty SSH + Meraki Dashboard</span>",
+                    "Method: show ip ospf neighbor -> Adjacency: LOST.",
+                    "Action: Identifying Primary ISP timeout. BGP recalculation triggered.",
+                    "Fix: Forced failover to 5G LTE backup. Traffic rerouted in 2.1s.",
+                    "<span class='t-log'>ITIL Log: SD-WAN Failover Successful. ISP Ticket Opened.</span>"
+                ]
             },
             4: {
-                title: "L4: TRANSPORT OPTIMIZATION",
-                lines: [
-                    "Symptom: SQL Sync timing out during end-of-day.",
-                    "<span class='t-cmd'>Test: telnet 10.0.0.50 1433</span>",
-                    "Status: Connection refused (TCP Handshake failed).",
-                    "Action: Modifying Firewall ACL to allow port 1433.",
-                    "<span class='t-ok'>Result: SQL sync active. Port 1433 handshake verified.</span>"
-                ],
-                qa: "Recruiter: 'Want to talk about how I balance security ACLs with operational uptime?'"
+                loc: 'st-noc',
+                steps: [
+                    "Symptom: End-of-day SQL sync reports 'Connection Refused'.",
+                    "<span class='t-tool'>EQUIP: SQL Server Profiler + Telnet (Port 1433)</span>",
+                    "Method: Test-NetConnection 10.0.0.50 -Port 1433 -> [FAIL].",
+                    "Action: Auditing Windows Firewall and Azure NSG rules.",
+                    "Fix: Port 1433 ACL updated for secure warehouse IP range.",
+                    "<span class='t-log'>ITIL Log: Database Transport Restored. Sync Status: GREEN.</span>"
+                ]
             },
             7: {
-                title: "L7: APPLICATION / AI ORCHESTRATION",
-                lines: [
-                    "Symptom: Legacy SOPs are unstructured and causing FCR delays.",
-                    "Action: Ingesting verbal SME recordings into Outlier pipeline.",
-                    "<span class='t-cmd'>Prompt: Context + Persona (ITIL Specialist) + Constraints.</span>",
-                    "Result: AI-generated SOP deployed to team via Google Vids.",
-                    "<span class='t-ok'>Success: Triage time reduced to 0.84s. 22 hrs saved.</span>"
-                ],
-                qa: "Recruiter: 'Ready to see how I apply Delaware AI Commission prompt logic to your business?'"
+                loc: 'st-retail',
+                steps: [
+                    "Symptom: POS register unresponsive after firmware update.",
+                    "<span class='t-tool'>EQUIP: Workspace ONE MDM Console + Python Shell</span>",
+                    "Method: Querying device posture status via REST API...",
+                    "Action: Rolling back corrupted app payload via zero-touch profile.",
+                    "Fix: Service pos_ui.exe restarted remotely. Checkout line moving.",
+                    "<span class='t-log'>ITIL Log: Application Layer restored. Retail uptime verified.</span>"
+                ]
             }
         };
 
-        function runTriage(layer) {
+        function simulate(layer, stationId) {
+            moveAgent(stationId);
             const body = document.getElementById('termBody');
-            const title = document.getElementById('term-title');
-            const data = scenarios[layer];
+            const status = document.getElementById('sys-status');
+            const mission = Missions[layer];
             
-            document.querySelectorAll('.layer-box').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
             
-            title.innerText = `~/tablet/${data.title.toLowerCase().replace(/ /g, '_')}.sh`;
+            status.innerText = "[DIAGNOSING]";
+            status.style.color = "var(--gold)";
             body.innerHTML = "";
-            
-            data.lines.forEach((line, i) => {
+
+            mission.steps.forEach((step, i) => {
                 setTimeout(() => {
-                    body.innerHTML += `<div>> ${line}</div>`;
+                    body.innerHTML += `<div>> ${step}</div>`;
                     body.scrollTop = body.scrollHeight;
-                }, i * 600);
+                }, i * 700);
             });
 
             setTimeout(() => {
-                body.innerHTML += `<div class="t-recruiter">${data.qa}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, (data.lines.length + 1) * 600);
+                status.innerText = "[RESOLVED]";
+                status.style.color = "var(--green)";
+            }, (mission.steps.length + 1) * 700);
         }
 
         /* CUSTOM CURSOR */
