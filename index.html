@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Régnard Rodney — Field Ops Architect</title>
+    <title>Régnard Rodney — Field Ops Master Architect</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,179 +14,234 @@
         }
 
         body { background: var(--black); color: var(--white); font-family: var(--serif); margin: 0; overflow-x: hidden; cursor: none; }
-        #network-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.15; }
-
-        /* HUD ELEMENTS */
-        #cur { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
-        nav { position: fixed; top: 0; width: 100%; z-index: 200; display: flex; justify-content: space-between; padding: 1.5rem 3.5rem; background: rgba(8,8,6,.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); box-sizing: border-box; }
-        .nav-status { font-family: var(--mono); font-size: 0.65rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
-        .sdot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
-
-        /* 3D CORRIDOR HERO */
-        .viewport { height: 300vh; position: relative; }
-        .corridor-wrap { height: 100vh; position: sticky; top: 0; perspective: 1000px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .corridor { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
-        .wall { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, rgba(200,168,75,0.05) 1px, transparent 1px); background-size: 50px 100%; }
-        .wall-left { transform: rotateY(90deg) translateZ(-500px); left: -50%; }
-        .wall-right { transform: rotateY(-90deg) translateZ(-500px); right: -50%; }
         
-        .hero-content { position: absolute; text-align: center; z-index: 5; }
-        .h-headline { font-family: var(--display); font-size: clamp(4rem, 15vw, 15rem); line-height: 0.85; margin: 0; }
-        .h-sub { font-family: var(--mono); color: var(--gold); margin-top: 1rem; letter-spacing: 4px; font-size: 0.8rem; }
+        /* 3D OFFICE BACKGROUND SIMULATION */
+        #office-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; perspective: 1200px; background: #050505; overflow: hidden; }
+        .office-floor { position: absolute; bottom: 0; width: 200%; height: 100%; background: linear-gradient(0deg, rgba(200,168,75,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(200,168,75,0.05) 1px, transparent 1px); background-size: 100px 100px; transform: rotateX(70deg) translateY(-50%); transform-origin: bottom; left: -50%; opacity: 0.3; }
+        .office-desk { position: absolute; width: 120px; height: 80px; background: rgba(200,168,75,0.03); border: 1px solid var(--border); transition: 0.5s; }
 
-        /* CHAT RECONSTRUCTION */
-        .chat-section { padding: 10rem 3.5rem; position: relative; z-index: 5; }
-        .chat-container { max-width: 600px; margin: 0 auto; transform: rotateX(10deg) rotateY(-10deg); }
-        .chat-bubble { background: rgba(200,168,75,0.05); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 4px; opacity: 0; transform: translateY(30px); }
-        .chat-bubble.user { border-left: 3px solid var(--gold); }
-        .chat-bubble.me { border-right: 3px solid var(--green); text-align: right; margin-left: 20%; }
+        /* HUD & NAVIGATION */
+        nav { position: fixed; top: 0; width: 100%; z-index: 200; display: flex; justify-content: space-between; padding: 1.5rem 3.5rem; background: rgba(8,8,6,.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(15px); box-sizing: border-box; }
+        .nav-logo { font-family: var(--mono); color: var(--gold); text-decoration: none; letter-spacing: 2px; font-weight: bold; }
+        .nav-status { font-family: var(--mono); font-size: 0.65rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
+        .sdot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
 
-        /* SANDBOX TERMINAL */
-        .sandbox { padding: 5rem 3.5rem; display: grid; grid-template-columns: 300px 1fr; gap: 2rem; position: relative; z-index: 5; }
-        .agent-btn { background: transparent; border: 1px solid var(--border); color: var(--white); font-family: var(--mono); padding: 1.5rem; text-align: left; margin-bottom: 1rem; cursor: pointer; width: 100%; transition: 0.3s; }
-        .agent-btn:hover { background: rgba(200,168,75,0.1); border-color: var(--gold); }
-        .twrap { background: #060604; border: 1px solid var(--gold); height: 450px; display: flex; flex-direction: column; }
-        .tbody { padding: 1.5rem; font-family: var(--mono); font-size: 0.8rem; color: #a0f0a0; overflow-y: auto; flex-grow: 1; }
+        /* HERO - THE MISSION BRIEF */
+        #hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 0 3.5rem; position: relative; z-index: 5; }
+        .h-headline { font-family: var(--display); font-size: clamp(4rem, 12vw, 15rem); line-height: 0.85; margin: 0; text-shadow: 0 10px 50px rgba(0,0,0,0.9); }
+        .h-sub { font-family: var(--mono); color: var(--gold); margin-top: 1rem; letter-spacing: 4px; font-size: 0.8rem; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
-        /* FOOTER / THE RECORD */
-        .record { padding: 5rem 3.5rem; border-top: 1px solid var(--border); }
-        .scramble-text { font-family: var(--display); font-size: 4rem; color: var(--white); margin-bottom: 2rem; }
+        /* OSI LAYER WALKTHROUGH */
+        .osi-container { padding: 5rem 3.5rem; position: relative; z-index: 5; }
+        .osi-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; }
+        .osi-layers { display: flex; flex-direction: column-reverse; gap: 8px; }
+        .layer-box { padding: 1.5rem; border: 1px solid var(--border); background: rgba(15,15,12,0.8); cursor: pointer; transition: 0.3s; position: relative; }
+        .layer-box:hover, .layer-box.active { border-color: var(--gold); background: rgba(200,168,75,0.08); transform: translateX(10px); }
+        .layer-num { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); margin-bottom: 5px; }
+        .layer-name { font-family: var(--display); font-size: 1.5rem; color: var(--white); }
+
+        /* THE ACTION TERMINAL */
+        .terminal-wrap { border: 1px solid var(--gold); background: rgba(6,6,4,0.98); height: 550px; display: flex; flex-direction: column; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .tbar { display: flex; align-items: center; gap: 8px; padding: 0.8rem 1.2rem; border-bottom: 1px solid rgba(200,168,75,0.2); }
+        .tdot { width: 10px; height: 10px; border-radius: 50%; }
+        .tbody { padding: 1.5rem; font-family: var(--mono); font-size: 0.85rem; color: #a0f0a0; overflow-y: auto; flex-grow: 1; line-height: 1.6; }
+        .t-recruiter { color: #fcd34d; border-top: 1px dashed rgba(200,168,75,0.4); margin-top: 1.5rem; padding-top: 1rem; font-weight: bold; }
+        .t-cmd { color: var(--gold); }
+        .t-err { color: #f87171; }
+
+        /* EXPERIENCE & FOOTER */
+        .footer { padding: 5rem 3.5rem; border-top: 1px solid var(--border); position: relative; z-index: 5; background: var(--black); }
+        .ft-scramble { font-family: var(--display); font-size: 4rem; color: var(--white); margin-bottom: 1rem; }
+        
+        #cur { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
 
         @media(max-width: 900px) {
-            nav, .chat-section, .sandbox { padding: 1.5rem; }
-            .sandbox { grid-template-columns: 1fr; }
-            .chat-bubble.me { margin-left: 5%; }
+            nav, #hero, .osi-container { padding: 1.5rem; }
+            .osi-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <canvas id="network-canvas"></canvas>
+    <div id="office-bg"><div class="office-floor"></div></div>
     <div id="cur"></div>
 
     <nav>
-        <a href="#" class="nav-logo">R.RODNEY // ARCHITECT</a>
-        <div class="nav-status" id="status-bar"><div class="sdot"></div> SYSTEM_ONLINE</div>
+        <a href="#" class="nav-logo">R.RODNEY // FIELD_OPS</a>
+        <div class="nav-status" id="status-hud"><div class="sdot"></div> SYSTEM_ONLINE</div>
     </nav>
 
-    <div class="viewport">
-        <div class="corridor-wrap">
-            <div class="wall wall-left"></div>
-            <div class="wall wall-right"></div>
-            <div class="hero-content">
-                <h1 class="h-headline">FIELD<br>OPERATIONS.</h1>
-                <div class="h-sub">SME // INFRASTRUCTURE & AI ORCHESTRATION</div>
+    <section id="hero">
+        <h1 class="h-headline">A DAY IN THE LIFE.<br>FIELD OPERATIONS.</h1>
+        <div class="h-sub">SME // INFRASTRUCTURE & AGENTIC ORCHESTRATION</div>
+    </section>
+
+    <section class="osi-container">
+        <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2.5rem;">// INITIATE DESKSIDE WALKTHROUGH: LAYER_BY_LAYER</div>
+        <div class="osi-grid">
+            <div class="osi-layers">
+                <div class="layer-box" onclick="runTriage(1)">
+                    <div class="layer-num">LAYER 01</div>
+                    <div class="layer-name">PHYSICAL</div>
+                </div>
+                <div class="layer-box" onclick="runTriage(2)">
+                    <div class="layer-num">LAYER 02</div>
+                    <div class="layer-name">DATA LINK</div>
+                </div>
+                <div class="layer-box" onclick="runTriage(3)">
+                    <div class="layer-num">LAYER 03</div>
+                    <div class="layer-name">NETWORK</div>
+                </div>
+                <div class="layer-box" onclick="runTriage(4)">
+                    <div class="layer-num">LAYER 04</div>
+                    <div class="layer-name">TRANSPORT</div>
+                </div>
+                <div class="layer-box" onclick="runTriage(7)">
+                    <div class="layer-num">LAYER 07</div>
+                    <div class="layer-name">APPLICATION</div>
+                </div>
+            </div>
+            <div class="terminal-wrap">
+                <div class="tbar">
+                    <div class="tdot" style="background:#ff5f57"></div>
+                    <div class="tdot" style="background:#febc2e"></div>
+                    <div class="tdot" style="background:#28c840"></div>
+                    <span id="term-title" style="margin-left:auto; font-family:var(--mono); color:var(--gold); font-size:0.65rem;">~/tablet/ops_guide.sh</span>
+                </div>
+                <div class="tbody" id="termBody">> SELECT A LAYER TO COMMENCE TRIAGE SIMULATION...</div>
             </div>
         </div>
-    </div>
-
-    <section class="chat-section">
-        <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2rem;">// STATION 01: CHAT_RECONSTRUCTION</div>
-        <div class="chat-container">
-            <div class="chat-bubble user">"The front register is completely frozen and the line is out the door. We can't process anything!"</div>
-            <div class="chat-bubble me">"I understand. Following A+ methodology, checking physical link first. Is the green light blinking on the switch?"</div>
-            <div class="chat-bubble user">"Yes, but the screen won't budge."</div>
-            <div class="chat-bubble me">"Isolating Layer 7. Querying SQL cache to protect data. Restarting POS_UI service now..."</div>
-            <div class="chat-bubble me">"Register online. 99% SLA maintained."</div>
-        </div>
     </section>
 
-    <section class="sandbox">
-        <div>
-            <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2rem;">// STATION 02: OP_SANDBOX</div>
-            <button class="agent-btn" onclick="runLog('pos')">01. POS Application Fix</button>
-            <button class="agent-btn" onclick="runLog('ccna')">02. CCNA Routing</button>
-            <button class="agent-btn" onclick="runLog('mdm')">03. MDM Compliance</button>
-            <button class="agent-btn" onclick="runLog('security')">04. Security Hardening</button>
-            <button class="agent-btn" onclick="runLog('ai')">05. AI Workflow Eng</button>
-        </div>
-        <div class="twrap">
-            <div class="tbody" id="termBody">> SELECT AN OPERATION...</div>
-        </div>
-    </section>
-
-    <section class="record">
-        <div class="scramble-text" id="record-title">THE RECORD</div>
-        <p style="font-family: var(--mono); color: var(--muted); max-width: 600px;">
-            [EDUCATION]: WGU // BSIT-TO-MSITM // 2022-2027<br>
-            [EXPERIENCE]: OUTLIER AI // ASURION // ROBERT HALF<br>
-            [SME]: WILMINGTON, DE // (470) 483-5144
+    <section class="footer">
+        <div class="ft-scramble">THE RECORD</div>
+        <p style="font-family: var(--mono); color: var(--muted); line-height: 2;">
+            [EDUCATION]: WGU // ACCELERATED BSIT-TO-MSITM // 2022-2027<br>
+            [EXPERIENCE]: OUTLIER AI (TRAINER) // ASURION // ROBERT HALF<br>
+            [CERTIFIED]: CompTIA Network+ // Security+ // Google IT Support<br>
+            [LOCATION]: WILMINGTON, DE // (470) 483-5144 // regnardrodney@gmail.com
         </p>
     </section>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+        /* CREATE AGENTIC DESKS IN THE BACKGROUND */
+        const bg = document.getElementById('office-bg');
+        for(let i=0; i<8; i++) {
+            let desk = document.createElement('div');
+            desk.className = 'office-desk';
+            desk.style.left = (Math.random() * 80 + 10) + '%';
+            desk.style.top = (Math.random() * 80 + 10) + '%';
+            bg.appendChild(desk);
+        }
 
-        /* 3D CORRIDOR ANIMATION */
-        gsap.to(".corridor-wrap", {
-            scrollTrigger: {
-                trigger: ".viewport",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1
+        /* AGENTIC MOVEMENT SIMULATION */
+        function moveAgent() {
+            const desks = document.querySelectorAll('.office-desk');
+            const randomDesk = desks[Math.floor(Math.random() * desks.length)];
+            const hud = document.getElementById('status-hud');
+            
+            desks.forEach(d => d.style.borderColor = 'var(--border)');
+            randomDesk.style.borderColor = 'var(--gold)';
+            randomDesk.style.background = 'rgba(200,168,75,0.1)';
+            
+            const tasks = ["AUDITING RACK 2...", "CHECKING VLAN TRUNKS...", "REBOOTING POS_04...", "VERIFYING IPSEC TUNNEL...", "INGESTING SOP..."];
+            hud.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${tasks[Math.floor(Math.random()*tasks.length)]}`;
+            
+            setTimeout(() => {
+                randomDesk.style.background = 'rgba(200,168,75,0.03)';
+                hud.innerHTML = `<div class="sdot"></div> SYSTEM_ONLINE`;
+            }, 4000);
+        }
+        setInterval(moveAgent, 10000);
+
+        /* TRIAGE ENGINE */
+        const scenarios = {
+            1: {
+                title: "L1: PHYSICAL TRIAGE",
+                lines: [
+                    "Symptom: Register 04 heart-beat lost.",
+                    "Action: Moving deskside to MDF closet.",
+                    "<span class='t-cmd'>Check: Cat6 seating & UPS power rails.</span>",
+                    "Status: Found unseated patch cable on Port 22.",
+                    "<span class='t-ok'>Fix: Re-seated cable. Link light restored.</span>"
+                ],
+                qa: "Recruiter: 'Régnard, want to discuss how I manage hardware lifecycle at Lowe's or Bargain Hunt?'"
             },
-            scale: 2,
-            opacity: 0
-        });
-
-        /* CHAT APPEARANCE */
-        gsap.utils.toArray(".chat-bubble").forEach((bubble, i) => {
-            gsap.to(bubble, {
-                scrollTrigger: {
-                    trigger: bubble,
-                    start: "top 80%",
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                delay: i * 0.2
-            });
-        });
-
-        /* GHOST LOG STATUS BAR */
-        const actions = ["TRACING CAT6 DROP...", "AUDITING RACK 4...", "PATCHING 11K ENDPOINTS...", "RECALCULATING BGP...", "SOP GENERATION..."];
-        setInterval(() => {
-            const bar = document.getElementById('status-bar');
-            bar.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${actions[Math.floor(Math.random()*actions.length)]}`;
-            setTimeout(() => { bar.innerHTML = `<div class="sdot"></div> SYSTEM_ONLINE`; }, 3000);
-        }, 10000);
-
-        /* PLAYBOOKS */
-        const logs = {
-          pos: ["SSH -> Register_04", "L7: POS_UI unresponsive", "Action: SQL Cache Clear", "Result: System Online"],
-          ccna: ["SSH -> Core_Router", "OSPF Neighbor: Down", "Action: Reset Gi0/1", "Result: Path Restored"],
-          mdm: ["API -> WorkspaceONE", "Audit: 43 non-compliant", "Action: Push OTA Patch", "Result: 100% Fleet Compliance"],
-          security: ["Audit -> EntraID Logs", "Threat: Impossible Travel", "Action: Revoke Tokens", "Result: Account Secured"],
-          ai: ["Ingest -> Audio_SME.wav", "Prompt: Context+Constraints", "Action: Generate ITIL SOP", "Result: 22h Human-Hours Saved"]
+            2: {
+                title: "L2: DATA LINK HARDENING",
+                lines: [
+                    "Symptom: Traffic broadcast storm detected.",
+                    "<span class='t-cmd'>Check: Spanning Tree Protocol (STP) status.</span>",
+                    "Log: Found loop on unmanaged switch in Breakroom.",
+                    "Action: Shutting down Port 12 on Core Switch.",
+                    "<span class='t-ok'>Result: L2 convergence complete. Storm mitigated.</span>"
+                ],
+                qa: "Recruiter: 'Need someone who can troubleshoot complex L2 loops and VLAN segmentation?'"
+            },
+            3: {
+                title: "L3: NETWORK ROUTING",
+                lines: [
+                    "Symptom: Store #402 VPN Tunnel Down.",
+                    "<span class='t-cmd'>CMD: show ip ospf neighbor</span>",
+                    "<span class='t-err'>Error: Adjacency lost via Primary Fiber.</span>",
+                    "Action: Forcing failover to 5G Cellular Backup.",
+                    "<span class='t-ok'>Result: SD-WAN routing restored via Meraki cloud.</span>"
+                ],
+                qa: "Recruiter: 'Shall we discuss my experience deploying Meraki SD-WAN to 400+ locations?'"
+            },
+            4: {
+                title: "L4: TRANSPORT OPTIMIZATION",
+                lines: [
+                    "Symptom: SQL Sync timing out during end-of-day.",
+                    "<span class='t-cmd'>Test: telnet 10.0.0.50 1433</span>",
+                    "Status: Connection refused (TCP Handshake failed).",
+                    "Action: Modifying Firewall ACL to allow port 1433.",
+                    "<span class='t-ok'>Result: SQL sync active. Port 1433 handshake verified.</span>"
+                ],
+                qa: "Recruiter: 'Want to talk about how I balance security ACLs with operational uptime?'"
+            },
+            7: {
+                title: "L7: APPLICATION / AI ORCHESTRATION",
+                lines: [
+                    "Symptom: Legacy SOPs are unstructured and causing FCR delays.",
+                    "Action: Ingesting verbal SME recordings into Outlier pipeline.",
+                    "<span class='t-cmd'>Prompt: Context + Persona (ITIL Specialist) + Constraints.</span>",
+                    "Result: AI-generated SOP deployed to team via Google Vids.",
+                    "<span class='t-ok'>Success: Triage time reduced to 0.84s. 22 hrs saved.</span>"
+                ],
+                qa: "Recruiter: 'Ready to see how I apply Delaware AI Commission prompt logic to your business?'"
+            }
         };
 
-        function runLog(type) {
+        function runTriage(layer) {
             const body = document.getElementById('termBody');
+            const title = document.getElementById('term-title');
+            const data = scenarios[layer];
+            
+            document.querySelectorAll('.layer-box').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            title.innerText = `~/tablet/${data.title.toLowerCase().replace(/ /g, '_')}.sh`;
             body.innerHTML = "";
-            logs[type].forEach((line, i) => {
-                setTimeout(() => { body.innerHTML += `<div>> ${line}</div>`; }, i * 500);
+            
+            data.lines.forEach((line, i) => {
+                setTimeout(() => {
+                    body.innerHTML += `<div>> ${line}</div>`;
+                    body.scrollTop = body.scrollHeight;
+                }, i * 600);
             });
+
+            setTimeout(() => {
+                body.innerHTML += `<div class="t-recruiter">${data.qa}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, (data.lines.length + 1) * 600);
         }
 
-        /* CURSOR */
+        /* CUSTOM CURSOR */
         const cur = document.getElementById('cur');
-        document.addEventListener('mousemove', e => { 
-            gsap.to(cur, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        document.addEventListener('mousemove', e => {
+            cur.style.left = e.clientX + 'px';
+            cur.style.top = e.clientY + 'px';
         });
-
-        /* NETWORK CANVAS */
-        const canvas = document.getElementById('network-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        class P { constructor() { this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.v={x:(Math.random()-0.5)*0.3,y:(Math.random()-0.5)*0.3}; }
-          draw() { ctx.beginPath(); ctx.arc(this.x,this.y,1,0,Math.PI*2); ctx.fillStyle="#c8a84b"; ctx.fill(); this.x+=this.v.x; this.y+=this.v.y;
-            if(this.x<0||this.x>canvas.width)this.v.x*=-1; if(this.y<0||this.y>canvas.height)this.v.y*=-1;
-          }
-        }
-        for(let i=0;i<60;i++) particles.push(new P());
-        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>p.draw()); requestAnimationFrame(anim); }
-        anim();
     </script>
 </body>
 </html>
