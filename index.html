@@ -3,231 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Régnard Rodney | SME Incident Commander</title>
+    <title>Régnard Rodney | Incident Commander & SME</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black:#050505; --off:#0a0a0a; --white:#f2ede4; --gold:#c8a84b; 
-            --gold-low:rgba(200,168,75,0.1); --green:#2ecc71; --red:#e74c3c;
-            --border:rgba(200,168,75,0.2); --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif;
+            --black:#050505; --white:#f2ede4; --gold:#c8a84b; 
+            --green:#2ecc71; --red:#e74c3c; --border:rgba(200,168,75,0.2);
+            --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif;
         }
 
         body { background: var(--black); color: var(--white); font-family: var(--mono); margin: 0; overflow-x: hidden; cursor: none; }
         
-        /* NOC FLOOR */
-        #noc-floor { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; perspective: 1200px; background: #000; overflow: hidden; }
-        .grid { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background-image: linear-gradient(var(--gold-low) 1px, transparent 1px), linear-gradient(90deg, var(--gold-low) 1px, transparent 1px); background-size: 80px 80px; transform: rotateX(65deg); opacity: 0.2; }
+        /* DYNAMIC ENVIRONMENT ENGINE */
+        #env-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0;
+            background-color: var(--black);
+            background-size: cover; background-position: center;
+            transition: background 1.5s ease-in-out, filter 1s;
+            filter: brightness(30%) grayscale(50%);
+        }
 
-        /* HUD & NAVIGATION */
-        nav { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--gold); backdrop-filter: blur(10px); box-sizing: border-box; }
-        .nav-logo { font-size: 1.1rem; font-weight: bold; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
-        .btn-hire { background: var(--gold); color: #000; padding: 0.6rem 1.4rem; text-decoration: none; font-weight: bold; font-size: 0.7rem; border-radius: 2px; }
+        /* HUD ELEMENTS */
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; padding: 1.5rem 3rem; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--gold); backdrop-filter: blur(10px); box-sizing: border-box; }
+        .nav-logo { font-family: var(--display); font-size: 1.5rem; color: var(--gold); text-decoration: none; letter-spacing: 2px; }
+        .btn-hire { background: var(--gold); color: #000; padding: 0.7rem 1.5rem; text-decoration: none; font-weight: bold; font-size: 0.8rem; box-shadow: 0 0 20px rgba(200,168,75,0.4); }
 
-        /* THE SME AVATAR */
-        #sme-agent { position: absolute; width: 24px; height: 24px; background: var(--gold); border-radius: 4px; z-index: 10; box-shadow: 0 0 25px var(--gold); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); border: 2px solid #000; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #000; font-weight: bold; }
-
-        /* STATIONS */
-        .station { position: absolute; border: 1px solid var(--border); padding: 8px; font-size: 0.55rem; color: var(--muted); text-transform: uppercase; background: rgba(0,0,0,0.6); }
-        #st-mdf { top: 15%; left: 10%; }
-        #st-noc { top: 40%; right: 15%; }
-        #st-retail { bottom: 25%; left: 45%; }
-
-        /* LAYOUT PANELS */
-        .panel { position: relative; z-index: 100; padding: 6rem 2.5rem; max-width: 1300px; margin: 0 auto; }
-        .hero-title { font-family: var(--display); font-size: clamp(4rem, 12vw, 10rem); line-height: 0.8; margin: 0; color: var(--white); }
+        /* CONTENT PANELS */
+        .panel { position: relative; z-index: 100; padding: 8rem 3rem; max-width: 1400px; margin: 0 auto; }
+        .glass-card { background: rgba(10,10,10,0.8); border: 1px solid var(--border); padding: 2.5rem; backdrop-filter: blur(20px); margin-bottom: 3rem; }
         
-        /* TRIAGE SYSTEM */
-        .triage-wrap { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; margin-top: 3rem; }
-        .layer-selector { display: flex; flex-direction: column; gap: 10px; }
-        .layer-btn { padding: 1.2rem; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--muted); cursor: pointer; text-align: left; font-family: var(--mono); font-size: 0.75rem; transition: 0.3s; }
-        .layer-btn:hover, .layer-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-low); transform: translateX(10px); }
+        /* TRIAGE GRID */
+        .triage-grid { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; }
+        .layer-btn { padding: 1.2rem; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: #888; cursor: pointer; text-align: left; font-family: var(--mono); font-size: 0.8rem; transition: 0.3s; }
+        .layer-btn:hover, .layer-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.1); transform: translateX(10px); }
 
-        /* THE SIMULATOR HUD */
-        .terminal { background: #000; border: 1px solid var(--gold); height: 580px; display: flex; flex-direction: column; position: relative; }
-        .t-header { background: var(--gold-low); padding: 0.6rem 1.2rem; font-size: 0.65rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; color: var(--gold); }
-        .t-body { padding: 1.5rem; font-size: 0.85rem; color: var(--green); overflow-y: auto; flex-grow: 1; line-height: 1.6; }
-        .t-tool { color: #f1c40f; font-weight: bold; margin: 10px 0; display: block; border-left: 2px solid #f1c40f; padding-left: 10px; }
-        .t-log { color: #5dade2; font-style: italic; display: block; margin-top: 10px; font-size: 0.75rem; }
+        /* TERMINAL */
+        .terminal { background: #000; border: 1px solid var(--gold); height: 600px; display: flex; flex-direction: column; box-shadow: 0 0 50px rgba(0,0,0,1); }
+        .t-header { background: rgba(200,168,75,0.1); padding: 0.8rem 1.5rem; font-size: 0.7rem; border-bottom: 1px solid var(--border); color: var(--gold); display: flex; justify-content: space-between; }
+        .t-body { padding: 1.5rem; font-size: 0.85rem; color: var(--green); overflow-y: auto; flex-grow: 1; line-height: 1.7; }
+        
+        .t-ticket { color: #f1c40f; font-weight: bold; }
+        .t-tool { color: #3498db; border-left: 3px solid #3498db; padding-left: 15px; margin: 15px 0; display: block; }
+        .t-itil { color: #9b59b6; font-weight: bold; border-top: 1px dashed #9b59b6; margin-top: 15px; padding-top: 15px; display: block; }
 
-        /* TECH VAULT */
-        .vault { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 5rem; }
-        .v-card { border: 1px solid var(--border); padding: 2rem; transition: 0.3s; background: rgba(10,10,10,0.8); }
-        .v-card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .v-card h4 { font-family: var(--display); font-size: 1.8rem; color: var(--gold); margin: 0 0 10px 0; }
+        /* THE RECORD (RESUME) */
+        .record-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+        .record-item { border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 2rem; }
+        .job-title { color: var(--gold); font-family: var(--display); font-size: 1.8rem; margin: 0; }
+        .job-meta { font-size: 0.7rem; color: #888; margin-bottom: 10px; text-transform: uppercase; }
+
+        /* TECH HUD */
+        .tech-tag { display: inline-block; padding: 4px 10px; background: rgba(200,168,75,0.1); border: 1px solid var(--border); font-size: 0.65rem; color: var(--gold); margin: 3px; }
 
         #cur { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%,-50%); }
-        
-        @media (max-width: 900px) { .triage-wrap { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <div id="noc-floor"><div class="grid"></div></div>
+    <div id="env-bg"></div>
     <div id="cur"></div>
-    <div id="sme-agent">SME</div>
 
     <nav>
-        <a href="#" class="nav-logo">R.RODNEY // INCIDENT_COMMANDER</a>
-        <div style="display:flex; gap:20px; align-items:center;">
-            <a href="https://linkedin.com/in/regnardrodney" target="_blank" style="color:var(--muted); font-size:0.6rem; text-decoration:none;">LINKEDIN</a>
-            <a href="mailto:regnardrodney@gmail.com" class="btn-hire">HIRE_SME</a>
+        <a href="#" class="nav-logo">R.RODNEY // FIELD_OPERATIONS</a>
+        <div style="display: flex; gap: 2rem; align-items: center;">
+            <a href="https://linkedin.com/in/regnardrodney" target="_blank" style="color:#888; text-decoration:none; font-size:0.7rem;">LINKEDIN</a>
+            <a href="mailto:regnardrodney@gmail.com" class="btn-hire">HIRE COMMANDER</a>
         </div>
     </nav>
 
     <div class="panel">
-        <header>
-            <span style="color:var(--gold); font-size:0.75rem; letter-spacing:5px;">[ON-SITE TRIAGE SIMULATION]</span>
-            <h1 class="hero-title">OPERATIONAL<br>VISIBILITY.</h1>
-            <p style="color:var(--muted); max-width:650px; font-size:1rem; margin-top:1.5rem; line-height:1.7;">
-                Architecting 99.9% uptime for 11,000+ endpoints. From physical fiber termination to agentic AI automation. Accelerated MSITM Candidate at WGU.
+        <header style="margin-bottom: 5rem;">
+            <h1 style="font-family:var(--display); font-size: clamp(4rem, 10vw, 10rem); line-height:0.85; margin:0;">INCIDENT<br>COMMANDER.</h1>
+            <p style="color:#aaa; max-width:700px; font-size:1.1rem; margin-top:2rem; line-height:1.8;">
+                Architecting 99.9% uptime for 11,000+ endpoints. From physical fiber termination to agentic AI automation. Accelerated MSITM Candidate at Western Governors University.
             </p>
         </header>
 
-        <section id="simulator" style="margin-top: 5rem;">
-            <div class="station" id="st-mdf">SERVER_ROOM_MDF</div>
-            <div class="station" id="st-retail">RETAIL_POS_HUB</div>
-            <div class="station" id="st-noc">NOC_STATION_ALPHA</div>
-
-            <div class="triage-wrap">
+        <section id="triage-sandbox" class="glass-card">
+            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[01 — TRIAGE SIMULATION]</span>
+            <div class="triage-grid" style="margin-top: 2rem;">
                 <div class="layer-selector">
-                    <button class="layer-btn active" onclick="simulate(1, 'st-mdf')">01. PHYSICAL (Fiber/Cable)</button>
-                    <button class="layer-btn" onclick="simulate(2, 'st-noc')">02. DATA LINK (MAC/Switch)</button>
-                    <button class="layer-btn" onclick="simulate(3, 'st-mdf')">03. NETWORK (BGP/OSPF)</button>
-                    <button class="layer-btn" onclick="simulate(4, 'st-noc')">04. TRANSPORT (SQL/TCP)</button>
-                    <button class="layer-btn" onclick="simulate(7, 'st-retail')">07. APPLICATION (POS/AI)</button>
+                    <button class="layer-btn active" onclick="runTriage(1)">L1. PHYSICAL (Fiber / OTDR)</button>
+                    <button class="layer-btn" onclick="runTriage(2)">L2. DATA LINK (VLAN / MAC)</button>
+                    <button class="layer-btn" onclick="runTriage(3)">L3. NETWORK (Routing / BGP)</button>
+                    <button class="layer-btn" onclick="runTriage(4)">L4. TRANSPORT (TCP / SQL)</button>
+                    <button class="layer-btn" onclick="runTriage(7)">L7. APPLICATION (POS / AI)</button>
                 </div>
                 <div class="terminal">
-                    <div class="t-header">
-                        <span>LIVE_DIAGNOSTIC_OS.sh</span>
-                        <span id="sys-status" style="color:var(--green);">[SYSTEM_IDLE]</span>
-                    </div>
-                    <div class="t-body" id="termBody">
-                        > FIELD_OPERATOR: Select a mission critical layer to begin the deskside simulation...
-                    </div>
+                    <div class="t-header"><span>FIELD_OPS_OS_v5.0</span><span id="sys-status">[AWAITING_INPUT]</span></div>
+                    <div class="t-body" id="termBody">> SELECT AN OSI LAYER TO INITIATE GRANULAR TROUBLESHOOTING...</div>
                 </div>
             </div>
         </section>
 
-        <section id="tech-vault">
-            <h2 style="font-family:var(--display); font-size:3.5rem; margin-top:6rem;">The Command Stack</h2>
-            <div class="vault">
-                <div class="v-card"><h4>INFRASTRUCTURE</h4><p style="color:var(--muted); font-size:0.75rem;">Cisco/Meraki, SD-WAN Failover, BGP, OSPF, VMware Workspace ONE, Zero-Touch MDM Enrollment.</p></div>
-                <div class="v-card"><h4>DATA & CLOUD</h4><p style="color:var(--muted); font-size:0.75rem;">SQL Server Management Studio (SSMS), Azure Entra ID, Docker Containerization, Python Scripting.</p></div>
-                <div class="v-card"><h4>DIAGNOSTICS</h4><p style="color:var(--muted); font-size:0.75rem;">Wireshark Packet Analysis, Fluke Fiber OneShot (OTDR), VFL Laser Testers, Putty/Terminal.</p></div>
-                <div class="v-card"><h4>AGENTIC AI</h4><p style="color:var(--muted); font-size:0.75rem;">Certified Prompt Architecture (Delaware AI Commission), LLM Training (Outlier), Autonomous SOP Bots.</p></div>
+        <section id="the-record" class="glass-card">
+            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[02 — THE PROFESSIONAL RECORD]</span>
+            <div class="record-grid" style="margin-top: 2rem;">
+                <div class="record-item">
+                    <h3 class="job-title">OUTLIER AI</h3>
+                    <div class="job-meta">AI Trainer & Logic Validator // 2022 — PRESENT</div>
+                    <p style="font-size:0.85rem; color:#aaa;">Refining LLM logic, validating Python/SQL outputs, and architecting prompt structures for enterprise automation.</p>
+                </div>
+                <div class="record-item">
+                    <h3 class="job-title">ASURION</h3>
+                    <div class="job-meta">Premier Solution Support // 2020 — 2025</div>
+                    <p style="font-size:0.85rem; color:#aaa;">Managed 11,000+ endpoint fleet. Tier 2 helpdesk leader for enterprise-level retail and mobile client base.</p>
+                </div>
+                <div class="record-item">
+                    <h3 class="job-title">WGU</h3>
+                    <div class="job-meta">MS Information Technology Management // 2027</div>
+                    <p style="font-size:0.85rem; color:#aaa;">Accelerated Master's path focused on Enterprise Leadership, Data-Driven Decision Making, and Network Security.</p>
+                </div>
             </div>
         </section>
 
-        <footer style="margin-top:8rem; text-align:center; border-top:1px solid var(--border); padding-top:4rem;">
-            <p style="font-family:var(--display); font-size:5rem; margin:0; color:var(--white);">2022 — 2027</p>
-            <p style="color:var(--gold); font-size:0.8rem; letter-spacing:5px;">WGU MSITM ACCELERATED PATH</p>
-            <p style="color:var(--muted); font-size:0.75rem; margin-top:2rem;">WILMINGTON, DE // +1 (470) 483-5144 // regnardrodney@gmail.com</p>
-        </footer>
+        <section id="tech-vault" class="glass-card">
+            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[03 — THE COMMAND STACK]</span>
+            <div style="margin-top: 2rem;">
+                <div class="tech-tag">TCP/IP</div><div class="tech-tag">PORT 1433 (SQL)</div><div class="tech-tag">PORT 443 (HTTPS)</div><div class="tech-tag">PORT 22 (SSH)</div>
+                <div class="tech-tag">BGP</div><div class="tech-tag">OSPF</div><div class="tech-tag">STP</div><div class="tech-tag">VLANS (802.1Q)</div>
+                <div class="tech-tag">DOCKER</div><div class="tech-tag">AZURE ENTRA ID</div><div class="tech-tag">WIRESHARK</div><div class="tech-tag">FLUKE OTDR</div>
+                <div class="tech-tag">PYTHON</div><div class="tech-tag">SQL SERVER</div><div class="tech-tag">SERVICE-NOW</div>
+            </div>
+        </section>
     </div>
 
     <script>
-        /* AGENT MOVEMENT ENGINE */
-        const agent = document.getElementById('sme-agent');
-        function moveAgent(stationId) {
-            const station = document.getElementById(stationId);
-            const rect = station.getBoundingClientRect();
-            agent.style.left = (rect.left + 15) + 'px';
-            agent.style.top = (rect.top - 20) + 'px';
-        }
-        moveAgent('st-noc');
+        const bg = document.getElementById('env-bg');
+        const term = document.getElementById('termBody');
+        const status = document.getElementById('sys-status');
 
-        /* TRIAGE SIMULATION DATA */
-        const Missions = {
+        /* ENVIRONMENT ENGINE - Update backgrounds based on topic */
+        const EnvPhotos = {
+            1: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000', // Server/Fiber
+            2: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2000', // Dashboard/Network
+            3: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2000', // Router/Cables
+            4: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=2000', // Code/SQL
+            7: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=2000'  // Retail/POS
+        };
+
+        const Scenarios = {
             1: {
-                loc: 'st-mdf',
                 steps: [
-                    "Symptom: Core Fiber Uplink reports high attenuation.",
-                    "<span class='t-tool'>EQUIP: Fluke Fiber OneShot Pro + VFL Laser</span>",
-                    "A+ Method: Performing physical inspection of LC-to-LC patch cable...",
-                    "Action: VFL shows light leakage at connector. OTDR confirms micro-bend at 1.2m.",
-                    "Fix: Cleaned connectors with Isopropyl 99% and replaced patch lead.",
-                    "<span class='t-log'>ITIL Log: Physical Incident L1-0982 Resolved. Change Log Updated.</span>"
+                    {type:'ticket', msg:"[INCIDENT] Primary Fiber Link - High Attenuation detected."},
+                    {type:'tool', msg:"EQUIP: Fluke Fiber OneShot OTDR + 99% IPA Cleaning Kit."},
+                    {type:'step', msg:"Action: Running OTDR trace... Found micro-bend at 14.2m."},
+                    {type:'step', msg:"Remediation: Reseating LC-to-LC patch. Cleaning bulkhead connectors."},
+                    {type:'itil', msg:"ITIL LOG: Verified connectivity. 0.02dB loss. Change log updated. RESOLVED."}
                 ]
             },
             2: {
-                loc: 'st-noc',
                 steps: [
-                    "Symptom: Broadcast storm detected on VLAN 20.",
-                    "<span class='t-tool'>EQUIP: Wireshark Packet Sniffer + Cisco CLI</span>",
-                    "Method: Capturing pcap on mirror port 22... analyzing ARP requests.",
-                    "Action: Identified looped unmanaged switch at Station Delta.",
-                    "Fix: Shutting down port 22 via Cisco Terminal. Spanning-Tree Convergence: Complete.",
-                    "<span class='t-log'>ITIL Log: Layer 2 Loop Mitigated. Ticket INC-442 closed.</span>"
-                ]
-            },
-            3: {
-                loc: 'st-mdf',
-                steps: [
-                    "Symptom: Store #402 VPN tunnel drop during peak sales.",
-                    "<span class='t-tool'>EQUIP: Putty SSH + Meraki Dashboard</span>",
-                    "Method: show ip ospf neighbor -> Adjacency: LOST.",
-                    "Action: Identifying Primary ISP timeout. BGP recalculation triggered.",
-                    "Fix: Forced failover to 5G LTE backup. Traffic rerouted in 2.1s.",
-                    "<span class='t-log'>ITIL Log: SD-WAN Failover Successful. ISP Ticket Opened.</span>"
+                    {type:'ticket', msg:"[INCIDENT] Broadcast Storm detected on VLAN 20."},
+                    {type:'tool', msg:"EQUIP: Wireshark + Cisco CLI (spanning-tree)."},
+                    {type:'step', msg:"Action: Identifying MAC-flapping on Port Gi0/24."},
+                    {type:'step', msg:"Remediation: Enabling BPDU Guard. Shutting down rogue unmanaged switch port."},
+                    {type:'itil', msg:"ITIL LOG: STP converged. Network stable. Root cause: Unauthorized hardware."}
                 ]
             },
             4: {
-                loc: 'st-noc',
                 steps: [
-                    "Symptom: End-of-day SQL sync reports 'Connection Refused'.",
-                    "<span class='t-tool'>EQUIP: SQL Server Profiler + Telnet (Port 1433)</span>",
-                    "Method: Test-NetConnection 10.0.0.50 -Port 1433 -> [FAIL].",
-                    "Action: Auditing Windows Firewall and Azure NSG rules.",
-                    "Fix: Port 1433 ACL updated for secure warehouse IP range.",
-                    "<span class='t-log'>ITIL Log: Database Transport Restored. Sync Status: GREEN.</span>"
+                    {type:'ticket', msg:"[INCIDENT] SQL End-of-Day Sync - Port 1433 Connection Refused."},
+                    {type:'tool', msg:"EQUIP: SSMS + Telnet + Azure NSG Console."},
+                    {type:'step', msg:"Action: Auditing Azure NSG rules... Found Port 1433 ACL blockage."},
+                    {type:'step', msg:"Remediation: Updated Firewall rule to permit Secure Warehouse IP range."},
+                    {type:'itil', msg:"ITIL LOG: SQL Transport verified. Sync status: GREEN. CLOSED."}
                 ]
             },
             7: {
-                loc: 'st-retail',
                 steps: [
-                    "Symptom: POS register unresponsive after firmware update.",
-                    "<span class='t-tool'>EQUIP: Workspace ONE MDM Console + Python Shell</span>",
-                    "Method: Querying device posture status via REST API...",
-                    "Action: Rolling back corrupted app payload via zero-touch profile.",
-                    "Fix: Service pos_ui.exe restarted remotely. Checkout line moving.",
-                    "<span class='t-log'>ITIL Log: Application Layer restored. Retail uptime verified.</span>"
+                    {type:'ticket', msg:"[INCIDENT] POS Register 04 - Application Freeze."},
+                    {type:'tool', msg:"EQUIP: Workspace ONE Console + Python Remote Shell."},
+                    {type:'step', msg:"Action: Querying hung process 'pos_ui.exe' via REST API."},
+                    {type:'step', msg:"Remediation: Forced remote service restart. AI-generated SOP fix applied."},
+                    {type:'itil', msg:"ITIL LOG: FCR achieved. Retail uptime 100%. Ticket: CLOSED."}
                 ]
             }
         };
 
-        function simulate(layer, stationId) {
-            moveAgent(stationId);
-            const body = document.getElementById('termBody');
-            const status = document.getElementById('sys-status');
-            const mission = Missions[layer];
+        function runTriage(layer) {
+            // Update Background
+            bg.style.backgroundImage = `url('${EnvPhotos[layer]}')`;
             
-            document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            status.innerText = "[DIAGNOSING]";
-            status.style.color = "var(--gold)";
-            body.innerHTML = "";
+            status.innerText = "[PROCESSING]";
+            term.innerHTML = "";
+            const mission = Scenarios[layer] || {steps: [{type:'step', msg: "Loading Layer " + layer + " Diagnostic..."}]};
 
-            mission.steps.forEach((step, i) => {
+            mission.steps.forEach((s, i) => {
                 setTimeout(() => {
-                    body.innerHTML += `<div>> ${step}</div>`;
-                    body.scrollTop = body.scrollHeight;
+                    let line = "";
+                    if(s.type === 'ticket') line = `<span class="t-ticket">${s.msg}</span><br>`;
+                    else if(s.type === 'tool') line = `<span class="t-tool">${s.msg}</span><br>`;
+                    else if(s.type === 'itil') line = `<span class="t-itil">${s.msg}</span><br>`;
+                    else line = `> ${s.msg}<br>`;
+
+                    term.innerHTML += line;
+                    term.scrollTop = term.scrollHeight;
                 }, i * 700);
             });
 
-            setTimeout(() => {
-                status.innerText = "[RESOLVED]";
-                status.style.color = "var(--green)";
-            }, (mission.steps.length + 1) * 700);
+            setTimeout(() => { status.innerText = "[RESOLVED]"; }, mission.steps.length * 700);
         }
 
-        /* CUSTOM CURSOR */
         const cur = document.getElementById('cur');
         document.addEventListener('mousemove', e => {
             cur.style.left = e.clientX + 'px';
             cur.style.top = e.clientY + 'px';
         });
+        
+        // Initial Background
+        bg.style.backgroundImage = `url('${EnvPhotos[1]}')`;
     </script>
 </body>
 </html>
