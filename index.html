@@ -250,6 +250,32 @@ function runPlaybook(type) {
     setTimeout(next, 200 + Math.random() * 100);
   } next();
 }
+/* LIVE FIELD LOG SIMULATOR */
+const fieldActions = [
+  "Tracing Cat6 drop in MDF Room B...",
+  "Auditing Rack 4 power redundancy...",
+  "Deploying security patch to 11,000 endpoints...",
+  "Verifying BGP adjacency on Core_Router_01...",
+  "Resetting hung UI thread on Register 04...",
+  "Provisioning Zero-Trust token for new hire...",
+  "Ingesting verbal SOP into AI Workflow pipeline...",
+  "Optimizing 5G failover latency for Store 402..."
+];
+
+function startGhostLog() {
+  const navStatus = document.querySelector('.nav-status');
+  setInterval(() => {
+    const action = fieldActions[Math.floor(Math.random() * fieldActions.length)];
+    navStatus.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${action}`;
+    
+    // Reset back to "System Online" after 4 seconds
+    setTimeout(() => {
+      navStatus.innerHTML = `<div class="sdot"></div> SYSTEM ONLINE // OPEN TO OPPORTUNITIES`;
+    }, 4000);
+  }, 12000); // Cycles every 12 seconds
+}
+
+startGhostLog();
 </script>
 </body>
 </html>
