@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Régnard Rodney — IT Leader & AI Automation Specialist</title>
-<meta name="description" content="Senior IT Professional | AI Automation Specialist | Bilingual EN/FR/ES | Wilmington, DE">
+<title>Régnard Rodney — Live Field Operations Walkthrough</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
 <style>
@@ -18,540 +17,238 @@
 html{scroll-behavior:smooth;}
 body{background:var(--black);color:var(--white);font-family:var(--serif);overflow-x:hidden;cursor:none;}
 
+/* CANVAS BACKGROUND */
+#network-canvas {position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:0.25;}
+
 /* CURSOR */
 #cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference;}
 #curl{position:fixed;width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45;transition:width .25s,height .25s;}
 
-/* PRELOADER */
-#preloader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;}
-.pre-name{font-family:var(--display);font-size:clamp(3rem,10vw,8rem);letter-spacing:.08em;color:var(--white);display:flex;}
-.pre-name span{display:inline-block;animation:slideUp .6s cubic-bezier(.76,0,.24,1) forwards;opacity:0;}
-.pre-bar{width:180px;height:1px;background:rgba(200,168,75,.2);overflow:hidden;}
-.pre-fill{height:100%;background:var(--gold);width:0;animation:loadBar 1.8s ease forwards .4s;}
-@keyframes slideUp{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}
-@keyframes loadBar{to{width:100%}}
-
-/* GRAIN */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:500;opacity:.03;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
-
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3.5rem;transition:background .4s,border-color .4s;border-bottom:1px solid transparent;}
-nav.stuck{background:rgba(8,8,6,.96);border-color:var(--border);backdrop-filter:blur(14px);}
-.nav-logo{font-family:var(--display);font-size:1.4rem;letter-spacing:.1em;color:var(--gold);text-decoration:none;}
-.nav-status{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3.5rem;background:rgba(8,8,6,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);}
+.nav-logo{font-family:var(--mono);font-size:1rem;letter-spacing:.2em;color:var(--gold);text-decoration:none;}
+.nav-status{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--green);}
 .sdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(39,174,96,.5)}50%{box-shadow:0 0 0 5px rgba(39,174,96,0)}}
-.nav-links{display:flex;gap:2.5rem;list-style:none;}
-.nav-links a{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
-.nav-links a:hover{color:var(--gold);}
 
 /* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3.5rem 4.5rem;position:relative;overflow:hidden;}
-.h-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,.03) 1px,transparent 1px);background-size:80px 80px;}
-.h-glow{position:absolute;top:0;right:0;width:55vw;height:100vh;background:radial-gradient(ellipse at top right,rgba(200,168,75,.08) 0%,transparent 65%);pointer-events:none;}
-.hero-top{position:absolute;top:7rem;left:3.5rem;right:3.5rem;display:flex;justify-content:space-between;align-items:flex-start;z-index:2;}
-.h-avail{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green);border:1px solid rgba(39,174,96,.3);padding:.4rem 1rem;display:flex;align-items:center;gap:.5rem;}
-.h-loc{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
-.h-headline{position:relative;z-index:2;font-family:var(--display);font-size:clamp(5rem,13vw,14rem);line-height:.88;letter-spacing:.03em;color:var(--white);opacity:0;animation:fadeUp .9s .2s forwards;}
-.h-headline .stroke{-webkit-text-stroke:1.5px var(--gold);color:transparent;}
-.h-subrow{display:flex;align-items:flex-end;justify-content:space-between;margin-top:2.5rem;position:relative;z-index:2;opacity:0;animation:fadeUp .9s .5s forwards;}
-.h-desc{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--muted);max-width:400px;line-height:1.65;}
-.h-stats{display:flex;gap:3rem;}
-.h-stat .num{font-family:var(--display);font-size:3.5rem;color:var(--gold);line-height:1;}
-.h-stat .lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
-.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeIn 1s 1.6s forwards;}
-.s-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sArrow 1.6s ease infinite;}
-@keyframes sArrow{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 3.5rem;position:relative;z-index:2;}
+.h-hud{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--muted);margin-bottom:2rem;display:flex;gap:2rem;}
+.h-hud span{border:1px solid var(--border);padding:.4rem 1rem;background:rgba(200,168,75,.05);}
+.h-headline{font-family:var(--display);font-size:clamp(4rem,10vw,12rem);line-height:.88;letter-spacing:.03em;color:var(--white);text-shadow:0 10px 30px rgba(0,0,0,0.8);}
+.h-desc{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--muted);max-width:600px;line-height:1.65;margin-top:2rem;}
 
-/* MARQUEE */
-.mqwrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.85rem 0;background:var(--off);}
-.mqtrack{display:flex;gap:3rem;width:max-content;animation:mq 30s linear infinite;}
-.mqwrap:hover .mqtrack{animation-play-state:paused;}
-.mqi{font-family:var(--display);font-size:1.1rem;letter-spacing:.12em;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:1.5rem;}
-.sep{color:var(--gold);font-size:.7rem;}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* WALKTHROUGH SECTIONS */
+section{padding:7rem 3.5rem;position:relative;z-index:2;}
+.scene-header{margin-bottom:4rem;}
+.s-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;display:inline-block;border-bottom:1px solid var(--gold);padding-bottom:.3rem;}
+.s-title{font-family:var(--display);font-size:clamp(3rem,6vw,6rem);line-height:.9;color:var(--white);}
 
-/* SECTIONS */
-.s-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
-.s-title{font-family:var(--display);font-size:clamp(2.8rem,6vw,6rem);line-height:.92;letter-spacing:.04em;color:var(--white);margin-bottom:3rem;}
-section{padding:7rem 3.5rem;}
+/* SCENE CARDS */
+.walkthrough-grid{display:grid;grid-template-columns:1fr;gap:4rem;max-width:1100px;}
+.scene-card{background:rgba(15,15,12,.85);border:1px solid var(--border);padding:3rem;position:relative;backdrop-filter:blur(10px);}
+.scene-card::before{content:'';position:absolute;left:-1px;top:-1px;width:3px;height:100%;background:var(--gold);}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1.5rem;}
+.sc-layer{font-family:var(--display);font-size:2rem;color:var(--white);}
+.sc-status{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.3rem .8rem;background:rgba(200,168,75,.1);color:var(--gold);}
+.sc-body{font-family:var(--serif);font-size:1.05rem;color:#8a8880;line-height:1.7;}
 
-/* SKILLS */
-#skills{background:var(--off);}
-.skgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
-.sk{background:var(--off);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background .3s; display:flex; flex-direction:column;}
-.sk::before{content:'';position:absolute;left:0;top:0;width:0;height:3px;background:var(--gold);transition:width .4s;}
-.sk:hover{background:rgba(200,168,75,.05);}
-.sk:hover::before{width:100%;}
-.sk-n{font-family:var(--display);font-size:3rem;color:rgba(200,168,75,.1);line-height:1;margin-bottom:.4rem;}
-.sk-name{font-family:var(--display);font-size:1.4rem;letter-spacing:.06em;color:var(--white);margin-bottom:.7rem;}
-.sk-desc{font-family:var(--serif);font-style:italic;font-size:.83rem;color:var(--muted);line-height:1.5;margin-bottom:1rem;flex-grow:1;}
-.tags{display:flex;flex-wrap:wrap;gap:.3rem; margin-bottom: 1.5rem;}
-.tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;padding:.2rem .55rem;background:rgba(200,168,75,.08);color:var(--gold2);border:1px solid rgba(200,168,75,.14);}
-.rbtn-small{font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:.5rem 1rem;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:none;transition:all .2s; width: 100%; margin-top:auto;}
-.rbtn-small:hover{background:var(--gold);color:var(--black);}
+/* TABLET / TERMINAL */
+.tablet-grid{display:grid;grid-template-columns:300px 1fr;gap:2rem;margin-top:3rem;}
+.agent-list{display:flex;flex-direction:column;gap:1rem;}
+.agent-btn{background:rgba(200,168,75,.05);border:1px solid var(--border);padding:1.2rem;text-align:left;cursor:none;transition:all .3s;}
+.agent-btn:hover{background:rgba(200,168,75,.15);border-color:var(--gold);}
+.ab-title{font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;color:var(--white);margin-bottom:.3rem;}
+.ab-desc{font-family:var(--serif);font-size:.75rem;color:var(--muted);}
 
-/* AI SECTION */
-#ai{background:var(--black);position:relative;overflow:hidden;}
-#ai::before{content:'AI';position:absolute;right:-2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-family:var(--display);font-size:20rem;color:rgba(200,168,75,.025);pointer-events:none;white-space:nowrap;}
-.aigrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
-.ai-left{position:sticky;top:8rem;}
-.ai-intro{font-family:var(--serif);font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:2.5rem;max-width:430px;}
-.ai-cards{display:flex;flex-direction:column;gap:1.5rem;}
-.ai-card{border:1px solid var(--border);padding:2rem;transition:border-color .3s,transform .3s;}
-.ai-card:hover{border-color:var(--gold);transform:translateX(8px);}
-.ac-icon{font-size:1.4rem;margin-bottom:.7rem;}
-.ac-name{font-family:var(--display);font-size:1.3rem;letter-spacing:.06em;color:var(--white);margin-bottom:.5rem;}
-.ac-desc{font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:.8rem;}
-
-/* TERMINAL */
-.twrap{border:1px solid var(--gold);background:#060604;}
+.twrap{border:1px solid var(--gold);background:rgba(6,6,4,.95);backdrop-filter:blur(10px);box-shadow:0 20px 40px rgba(0,0,0,.5);height:100%;display:flex;flex-direction:column;min-height: 400px;}
 .tbar{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-bottom:1px solid rgba(200,168,75,.2);}
 .tdot{width:10px;height:10px;border-radius:50%;}
-.tpath{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--gold);margin-left:auto;}
-.tbody{padding:1.5rem;font-family:var(--mono);font-size:.76rem;line-height:1.75;min-height:300px;color:#a0f0a0;overflow-y:auto;max-height:340px;}
+.tbody{padding:1.5rem;font-family:var(--mono);font-size:.76rem;line-height:1.75;color:#a0f0a0;flex-grow:1;overflow-y:auto;}
 .tc{display:inline-block;width:8px;height:1em;background:var(--gold);vertical-align:text-bottom;animation:blink .8s step-end infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.rbtn{margin:1rem 1.2rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:.7rem 1.6rem;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:none;transition:all .2s;}
-.rbtn:hover{background:var(--gold);color:var(--black);}
 .t-prompt{color:var(--gold);}
 .t-dim{color:var(--muted);}
 .t-hi{color:#7dd3fc;}
 .t-err{color:#f87171;}
 .t-ok{color:#86efac;}
+.t-recruiter{color:#fcd34d; font-weight:bold; margin-top:1rem; display:block; border-top:1px dashed rgba(200,168,75,.3); padding-top:1rem;}
 
-/* EXPERIENCE */
-#experience{background:var(--off);}
-.explist{display:flex;flex-direction:column;}
-.exprow{display:grid;grid-template-columns:140px 1fr auto;gap:2rem;padding:2.5rem 0;border-bottom:1px solid var(--border);align-items:start;transition:background .2s;}
-.exprow:first-child{border-top:1px solid var(--border);}
-.exprow:hover{background:rgba(200,168,75,.03);}
-.exp-date{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:.3rem;}
-.exp-co{font-family:var(--display);font-size:2.2rem;letter-spacing:.06em;color:var(--white);line-height:1;margin-bottom:.3rem;}
-.exp-role{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.88rem;margin-bottom:1rem;}
-.exp-blist{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
-.exp-blist li{font-family:var(--serif);font-size:.86rem;color:#8a8880;line-height:1.55;padding-left:1rem;position:relative;}
-.exp-blist li::before{content:'—';position:absolute;left:0;color:var(--gold2);font-family:var(--mono);}
-.exp-badge{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid var(--border);color:var(--muted);white-space:nowrap;height:fit-content;}
+/* EXPERIENCE & EDUCATION */
+#cred-section{background:rgba(8,8,6,.95);border-top:1px solid var(--border);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+.exp-item{margin-bottom:3rem;}
+.exp-date{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem;}
+.exp-co{font-family:var(--display);font-size:2rem;color:var(--white);line-height:1;}
+.exp-role{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.9rem;margin-bottom:1rem;}
+.exp-list{list-style:none;}
+.exp-list li{font-family:var(--serif);font-size:.85rem;color:#8a8880;line-height:1.6;margin-bottom:.5rem;padding-left:1.2rem;position:relative;}
+.exp-list li::before{content:'\2022';position:absolute;left:0;color:var(--gold2);}
 
-/* CREDS */
-#creds{background:var(--black);}
-.credgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
-.cred{background:var(--black);padding:2rem 1.5rem;transition:background .3s;}
-.cred:hover{background:rgba(200,168,75,.06);}
-.cred-iss{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:.5rem;}
-.cred-name{font-family:var(--serif);font-size:.9rem;color:var(--white);line-height:1.35;margin-bottom:.9rem;}
-.pill{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .55rem;display:inline-block;}
-.pg{background:rgba(39,174,96,.15);color:#6fcf97;}
-.py{background:rgba(200,168,75,.12);color:var(--gold);}
-
-/* LANG */
-#lang{background:var(--off);}
-.langrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);max-width:700px;border:1px solid var(--border);}
-.lc{background:var(--off);padding:2.5rem 2rem;text-align:center;transition:background .3s;}
-.lc:hover{background:rgba(200,168,75,.05);}
-.lf{font-size:2.2rem;margin-bottom:.7rem;}
-.ln{font-family:var(--display);font-size:1.7rem;letter-spacing:.1em;color:var(--white);margin-bottom:.2rem;}
-.ll{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
-
-/* CONTACT */
-#contact{background:var(--black);text-align:center;padding:9rem 3.5rem;position:relative;overflow:hidden;}
-#contact::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(200,168,75,.07) 0%,transparent 70%);pointer-events:none;}
-.ct-ey{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
-.ct-big{font-family:var(--display);font-size:clamp(3.5rem,9vw,9rem);line-height:.9;letter-spacing:.05em;color:var(--white);margin-bottom:3rem;position:relative;z-index:2;}
-.ct-big a{color:inherit;text-decoration:none;transition:color .2s;}
-.ct-big a:hover{color:var(--gold);}
-.ct-links{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;position:relative;z-index:2;}
-.cl{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:all .2s;}
-.cl:hover{color:var(--gold);border-color:var(--gold);}
-
-footer{padding:1.8rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--black);}
-footer span{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--muted);}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
-.reveal.in{opacity:1;transform:translateY(0);}
-
-::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-track{background:var(--black);}
-::-webkit-scrollbar-thumb{background:var(--gold2);}
-
-@media(max-width:900px){
-  nav{padding:1rem 1.5rem;}
-  .nav-links{display:none;}
-  #hero{padding:0 1.5rem 3rem;}
-  .hero-top{left:1.5rem;right:1.5rem;top:5.5rem;}
-  section{padding:5rem 1.5rem;}
-  .skgrid,.aigrid,.credgrid,.langrow{grid-template-columns:1fr;}
-  .exprow{grid-template-columns:1fr;gap:.5rem;}
-  footer{flex-direction:column;gap:.5rem;text-align:center;}
-}
+footer{padding:4rem 3.5rem;text-align:center;border-top:1px solid var(--border);background:var(--black);position:relative;z-index:2;}
+.ft-link{font-family:var(--display);font-size:4rem;color:var(--white);text-decoration:none;display:block;margin-bottom:2rem;transition:color .3s;}
+.ft-link:hover{color:var(--gold);}
 </style>
 </head>
 <body>
 
-<div id="preloader">
-  <div class="pre-name">
-    <span style="animation-delay:.05s">R</span><span style="animation-delay:.1s">É</span><span style="animation-delay:.15s">G</span><span style="animation-delay:.2s">N</span><span style="animation-delay:.25s">A</span><span style="animation-delay:.3s">R</span><span style="animation-delay:.35s">D</span>
-  </div>
-  <div class="pre-bar"><div class="pre-fill"></div></div>
-</div>
-
+<canvas id="network-canvas"></canvas>
 <div id="cur"></div>
 <div id="curl"></div>
 
 <nav id="nav">
-  <a href="#hero" class="nav-logo">RR®</a>
-  <div class="nav-status"><div class="sdot"></div>Currently Open to Opportunities</div>
-  <ul class="nav-links">
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#ai">AI Lab</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#creds">Credentials</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <a href="#hero" class="nav-logo">R.RODNEY // FIELD_OPS</a>
+  <div class="nav-status"><div class="sdot"></div>ON_SITE // WILMINGTON, DE</div>
 </nav>
 
 <section id="hero">
-  <div class="h-grid"></div>
-  <div class="h-glow"></div>
-  <div class="hero-top">
-    <div class="h-avail"><div class="sdot"></div>Available Immediately · Any Schedule</div>
-    <div class="h-loc">Wilmington, DE · Remote Ready</div>
+  <div class="h-hud">
+    <span>[STATUS: DEPLOYED]</span>
+    <span>[OBJECTIVE: ROOT CAUSE ISOLATION]</span>
   </div>
-  <div class="h-headline">RÉGNARD<br><span class="stroke">RODNEY</span></div>
-  <div class="h-subrow">
-    <p class="h-desc">Senior IT Specialist &amp; AI Automation Engineer.<br><em>10+ years making infrastructure bulletproof<br>and machines work smarter.</em></p>
-    <div class="h-stats">
-      <div class="h-stat"><div class="num">11K</div><div class="lbl">Devices<br>Managed</div></div>
-      <div class="h-stat"><div class="num">400+</div><div class="lbl">Locations<br>SD-WAN</div></div>
-      <div class="h-stat"><div class="num">99%</div><div class="lbl">SLA<br>Compliance</div></div>
-    </div>
-  </div>
-  <div class="scroll-cue"><span>Scroll</span><div class="s-arrow"></div></div>
+  <div class="h-headline">LIVE<br>INFRASTRUCTURE<br>WALKTHROUGH.</div>
+  <p class="h-desc">This is exactly how I work in the field. Watch me diagnose POS freezes, harden networks, and train AI models to move from symptom to resolution.</p>
 </section>
 
-<div class="mqwrap" aria-hidden="true">
-  <div class="mqtrack">
-    <div class="mqi">MDM ENGINEERING <span class="sep">✦</span></div>
-    <div class="mqi">CISCO MERAKI SD-WAN <span class="sep">✦</span></div>
-    <div class="mqi">AI AUTOMATION <span class="sep">✦</span></div>
-    <div class="mqi">POS SYSTEMS <span class="sep">✦</span></div>
-    <div class="mqi">SERVICENOW <span class="sep">✦</span></div>
-    <div class="mqi">BILINGUAL FR/EN <span class="sep">✦</span></div>
-    <div class="mqi">VMWARE WORKSPACE ONE <span class="sep">✦</span></div>
-    <div class="mqi">LAYER 2/3 DIAGNOSTICS <span class="sep">✦</span></div>
-    <div class="mqi">AGENTIC WORKFLOWS <span class="sep">✦</span></div>
-    <div class="mqi">ENDPOINT SECURITY <span class="sep">✦</span></div>
-    <div class="mqi">MDM ENGINEERING <span class="sep">✦</span></div>
-    <div class="mqi">CISCO MERAKI SD-WAN <span class="sep">✦</span></div>
-    <div class="mqi">AI AUTOMATION <span class="sep">✦</span></div>
-    <div class="mqi">POS SYSTEMS <span class="sep">✦</span></div>
-    <div class="mqi">SERVICENOW <span class="sep">✦</span></div>
-    <div class="mqi">BILINGUAL FR/EN <span class="sep">✦</span></div>
-    <div class="mqi">VMWARE WORKSPACE ONE <span class="sep">✦</span></div>
-    <div class="mqi">LAYER 2/3 DIAGNOSTICS <span class="sep">✦</span></div>
-    <div class="mqi">AGENTIC WORKFLOWS <span class="sep">✦</span></div>
-    <div class="mqi">ENDPOINT SECURITY <span class="sep">✦</span></div>
+<section id="scene-walkthrough">
+  <div class="scene-header">
+    <span class="s-num">SCENE 01 // THE APPROACH</span>
+    <h2 class="s-title">Layer-by-Layer<br>Diagnosis.</h2>
   </div>
-</div>
-
-<section id="skills">
-  <p class="s-label reveal">// 02 — Technical Stack</p>
-  <h2 class="s-title reveal">What I<br>Engineer</h2>
-  <div class="skgrid">
-    <div class="sk reveal">
-      <div class="sk-n">01</div><div class="sk-name">NETWORK & MDM</div>
-      <p class="sk-desc">From 11,000-device first-responder deployments to 400-location SD-WAN rollouts — infrastructure that doesn't break.</p>
-      <div class="tags"><span class="tag">Cisco/Meraki</span><span class="tag">Workspace ONE</span><span class="tag">Intune</span><span class="tag">AirWatch</span><span class="tag">5G/WiFi</span></div>
-    </div>
-    
-    <div class="sk reveal">
-      <div class="sk-n">02</div><div class="sk-name">HELPDESK & ITSM</div>
-      <p class="sk-desc">99% SLA. Tier 1/2 resolution. ServiceNow and Zendesk workflows built for speed — not tickets sitting in queues.</p>
-      <div class="tags"><span class="tag">ServiceNow</span><span class="tag">Zendesk</span><span class="tag">ITIL</span><span class="tag">Root Cause Analysis</span></div>
-    </div>
-
-    <div class="sk reveal">
-      <div class="sk-n">03</div><div class="sk-name">POS & RETAIL TECH</div>
-      <p class="sk-desc">Field tech at Lowe's and Bargain Hunt. POS deployment, break/fix, UPS repair, zero-downtime cabling.</p>
-      <div class="tags"><span class="tag">POS Deployment</span><span class="tag">Break/Fix</span><span class="tag">UPS Repair</span><span class="tag">Fiber/Cat5/6</span></div>
-      <button class="rbtn-small" onclick="runPlaybook('pos')">👁️ View POS Triage Protocol</button>
-    </div>
-
-    <div class="sk reveal">
-      <div class="sk-n">04</div><div class="sk-name">ENDPOINT & SECURITY</div>
-      <p class="sk-desc">Full device lifecycle from provisioning to secure retirement. Architecture built on Zero Trust principles.</p>
-      <div class="tags"><span class="tag">Active Directory (Hybrid/Azure)</span><span class="tag">IAM Governance</span><span class="tag">Zero-Trust Architecture</span><span class="tag">O365 Global Admin</span></div>
-    </div>
-
-    <div class="sk reveal">
-      <div class="sk-n">05</div><div class="sk-name">VIRTUALIZATION</div>
-      <p class="sk-desc">Enterprise VDI on Citrix and VMware. Remote workstation management at scale.</p>
-      <div class="tags"><span class="tag">Citrix</span><span class="tag">VMware VDI</span><span class="tag">Docker</span><span class="tag">Office 365</span></div>
-    </div>
-
-    <div class="sk reveal">
-      <div class="sk-n">06</div><div class="sk-name">AUTOMATION & DEV</div>
-      <p class="sk-desc">Python scripting, PowerShell automation, API orchestration. Tools that eliminate repetitive work entirely.</p>
-      <div class="tags"><span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">API Integration</span><span class="tag">SQL</span><span class="tag">Git</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="ai">
-  <p class="s-label reveal">// 03 — Applied Intelligence</p>
-  <h2 class="s-title reveal">Applied AI &<br>Agentic<br>Orchestration</h2>
-  <div class="aigrid">
-    <div class="ai-left">
-      <p class="ai-intro reveal">I don't just use AI tools — I architect prompt structures and deploy autonomous agents to eliminate operational bottlenecks and orchestrate complex data workflows without human intervention.</p>
-      <div class="ai-cards">
-        <div class="ai-card reveal">
-          <div class="ac-icon">🧠</div>
-          <div class="ac-name">PROMPT ARCHITECTURE</div>
-          <p class="ac-desc">Designing deterministic LLM outputs using System Instructions, Persona Framing, and Strict Constraints. Expert in Zero-Shot and Multi-Turn logic models.</p>
-          <div class="tags"><span class="tag">Gemini 2.5</span><span class="tag">Claude 3.5</span><span class="tag">Persona Framing</span></div>
-        </div>
-        <div class="ai-card reveal">
-          <div class="ac-icon">⚙️</div>
-          <div class="ac-name">AUTONOMOUS WORKFLOWS</div>
-          <p class="ac-desc">Building closed-loop Python pipelines that ingest unstructured data, evaluate parameters against scoring algorithms, and execute autonomous API actions.</p>
-          <div class="tags"><span class="tag">Python Orchestration</span><span class="tag">API Integration</span><span class="tag">Heuristic Logic</span></div>
-        </div>
-        <div class="ai-card reveal">
-          <div class="ac-icon">📊</div>
-          <div class="ac-name">SENTIMENT & TRIAGE</div>
-          <p class="ac-desc">Leveraging LLMs to parse inbound ITSM tickets, analyze sentiment, and return valid JSON for automated routing—accelerating First Call Resolution (FCR).</p>
-          <div class="tags"><span class="tag">JSON Constraints</span><span class="tag">Sentiment Analysis</span><span class="tag">FCR Optimization</span></div>
-        </div>
+  <div class="walkthrough-grid">
+    <div class="scene-card">
+      <div class="sc-top">
+        <div class="sc-layer">OSI Layer 1: Physical Check</div>
+        <div class="sc-status">SYMPTOM: "Register Offline"</div>
       </div>
-    </div>
-
-    <div class="reveal" style="position:sticky;top:8rem;">
-      <div class="twrap">
-        <div class="tbar">
-          <div class="tdot" style="background:#ff5f57"></div>
-          <div class="tdot" style="background:#febc2e"></div>
-          <div class="tdot" style="background:#28c840"></div>
-          <span class="tpath" id="tpathTitle">~/agentic_triage.py</span>
-        </div>
-        <div class="tbody" id="termBody"><span class="t-dim"># Click RUN to watch the AI triage a live P1 ticket</span><br><span class="tc"></span></div>
-        <button class="rbtn" id="runBtn" onclick="runDemo()">&#9654; Run AI Triage Demo</button>
-      </div>
-      <p style="font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;color:var(--muted);margin-top:.7rem;text-align:right;">Interactive Agentic & Troubleshooting Sandbox</p>
+      <p class="sc-body">I always start outside-in. I walk to the MDF room, verify the Cat6 seating, and check for PoE link lights on the Meraki switch. 40% of critical outages are resolved here before touching a keyboard.</p>
     </div>
   </div>
 </section>
 
-<section id="experience">
-  <p class="s-label reveal">// 04 — Career</p>
-  <h2 class="s-title reveal">10 Years,<br>Zero Shortcuts</h2>
-  <div class="explist">
-    <div class="exprow reveal">
-      <div class="exp-date">2020 – 2025</div>
-      <div>
+<section id="scene-2">
+  <div class="scene-header">
+    <span class="s-num">SCENE 02 // THE FIELD TABLET</span>
+    <h2 class="s-title">Interactive<br>Operations Sandbox.</h2>
+  </div>
+  
+  <div class="tablet-grid">
+    <div class="agent-list">
+      <button class="agent-btn" onclick="runPlaybook('pos')">
+        <div class="ab-title">01. POS APPLICATION FIX</div>
+        <div class="ab-desc">Clear SQL cache & restart service</div>
+      </button>
+      <button class="agent-btn" onclick="runPlaybook('ccna')">
+        <div class="ab-title">02. CCNA ROUTING</div>
+        <div class="ab-desc">OSPF adjacency & routing diagnostic</div>
+      </button>
+      <button class="agent-btn" onclick="runPlaybook('mdm')">
+        <div class="ab-title">03. MDM COMPLIANCE</div>
+        <div class="ab-desc">Zero-touch OTA payload push</div>
+      </button>
+      <button class="agent-btn" onclick="runPlaybook('security')">
+        <div class="ab-title">04. SECURITY HARDENING</div>
+        <div class="ab-desc">User education & ACL deployment</div>
+      </button>
+      <button class="agent-btn" onclick="runPlaybook('ai')">
+        <div class="ab-title" style="color: #7dd3fc;">05. AI WORKFLOW ENGINEER</div>
+        <div class="ab-desc">Prompt engineering & SOP automation</div>
+      </button>
+    </div>
+
+    <div class="twrap">
+      <div class="tbar"><div class="tdot" style="background:#ff5f57"></div><div class="tdot" style="background:#febc2e"></div><div class="tdot" style="background:#28c840"></div></div>
+      <div class="tbody" id="termBody"><span class="t-dim"># Awaiting scenario selection...</span><br><span class="tc"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cred-section">
+  <div class="grid-2">
+    <div>
+      <div class="exp-item">
+        <div class="exp-date">2022 — PRESENT</div>
+        <div class="exp-co">OUTLIER AI</div>
+        <div class="exp-role">AI Trainer & Logic Validator</div>
+        <ul class="exp-list">
+          <li>Train and evaluate advanced LLM outputs focusing on logical reasoning.</li>
+          <li>Refine model responses through real-world task evaluation and prompt-quality review.</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">2020 — 2025</div>
         <div class="exp-co">ASURION</div>
-        <div class="exp-role">Premier Solution Support Specialist — Remote, Wilmington DE</div>
-        <ul class="exp-blist">
-          <li>Maintained 99% SLA compliance resolving high-volume tickets via ServiceNow & Zendesk</li>
-          <li>Executed full device lifecycle & endpoint security for Windows, macOS, iOS, Android</li>
-          <li>Administered IAM provisioning through Active Directory & Entra ID with a focus on FCR</li>
-          <li>Delegated backup to site leadership; documented SOPs & cross-trained peers</li>
+        <div class="exp-role">Premier Solution Support Specialist</div>
+        <ul class="exp-list">
+          <li>Maintained 99.9% SLA on 11,000+ endpoint fleet via ServiceNow & Active Directory.</li>
         </ul>
       </div>
-      <div class="exp-badge">Remote</div>
     </div>
-    <div class="exprow reveal">
-      <div class="exp-date">2018 – 2020</div>
-      <div>
-        <div class="exp-co">ROBERT HALF</div>
-        <div class="exp-role">IT Contractor — Multi-Client Infrastructure &amp; Field Support · Atlanta, GA</div>
-        <ul class="exp-blist">
-          <li><strong style="color:var(--white)">Prologic ITS:</strong> MDM for 11,000+ first responders via VMware Workspace ONE &amp; AT&amp;T</li>
-          <li><strong style="color:var(--white)">Honey Baked Ham:</strong> Meraki SD-WAN &amp; WAP deployment across 400+ retail locations</li>
-          <li><strong style="color:var(--white)">Lowe's &amp; Bargain Hunt:</strong> POS break/fix, UPS repair, Fiber/Cat5/6 — zero downtime</li>
-          <li><strong style="color:var(--white)">Hemmersbach/OneBeacon:</strong> High-tier deskside &amp; Citrix Hypervisor support</li>
+
+    <div>
+      <div class="exp-item">
+        <div class="exp-date">2022 — 2027 (EXPECTED)</div>
+        <div class="exp-co">WESTERN GOVERNORS UNIV.</div>
+        <div class="exp-role">Accelerated BSIT to MSITM</div>
+        <ul class="exp-list">
+          <li>Combined Bachelor's and Master's track in IT Management.</li>
+          <li>Focused on SQL, Python, Network+, and Enterprise Leadership.</li>
         </ul>
       </div>
-      <div class="exp-badge">Contract</div>
-    </div>
-    <div class="exprow reveal">
-      <div class="exp-date">2017 – 2018</div>
-      <div>
-        <div class="exp-co">CGS</div>
-        <div class="exp-role">Bilingual Lenovo Technical Support IV — Greater Atlanta Area</div>
-        <ul class="exp-blist">
-          <li>Bilingual French/English remote support for field technicians on enterprise hardware</li>
-          <li>Layer 2/3 diagnostics, firmware &amp; BIOS updates on enterprise Lenovo systems</li>
+      <div class="exp-item">
+        <div class="exp-date">CREDENTIALS</div>
+        <div class="exp-co">CERTIFICATIONS</div>
+        <ul class="exp-list">
+          <li>CompTIA Network+, Security+, A+</li>
+          <li>Google IT Support Professional</li>
+          <li>Google Data Analytics Professional</li>
         </ul>
       </div>
-      <div class="exp-badge">On-Site</div>
     </div>
-  </div>
-</section>
-
-<section id="creds">
-  <p class="s-label reveal">// 05 — Credentials</p>
-  <h2 class="s-title reveal">Education &<br>Certifications</h2>
-  <div class="credgrid">
-    <div class="cred reveal"><div class="cred-iss">Western Governors University</div><div class="cred-name">MS Information Technology Management</div><span class="pill py">Expected Nov 2026</span></div>
-    <div class="cred reveal"><div class="cred-iss">Western Governors University</div><div class="cred-name">BS Information Technology</div><span class="pill pg">Completed</span></div>
-    <div class="cred reveal"><div class="cred-iss">CompTIA</div><div class="cred-name">A+ Certification</div><span class="pill pg">Active</span></div>
-    <div class="cred reveal"><div class="cred-iss">Google</div><div class="cred-name">IT Support Professional</div><span class="pill pg">Active</span></div>
-    <div class="cred reveal"><div class="cred-iss">Google</div><div class="cred-name">Data Analytics Professional</div><span class="pill pg">Active</span></div>
-    <div class="cred reveal"><div class="cred-iss">Delaware Dept. of Labor</div><div class="cred-name">AI Strategy Facilitation</div><span class="pill pg">Completed</span></div>
-    <div class="cred reveal"><div class="cred-iss">AXELOS</div><div class="cred-name">ITIL Foundation</div><span class="pill py">2026 Candidate</span></div>
-    <div class="cred reveal"><div class="cred-iss">Cisco</div><div class="cred-name">CCIE Security</div><span class="pill py">Targeting 2027</span></div>
-  </div>
-</section>
-
-<section id="lang">
-  <p class="s-label reveal">// 06 — Languages</p>
-  <h2 class="s-title reveal">Trilingual<br>Professional</h2>
-  <div class="langrow reveal">
-    <div class="lc"><div class="lf">🇺🇸</div><div class="ln">ENGLISH</div><div class="ll">Native / Professional</div></div>
-    <div class="lc"><div class="lf">🇫🇷</div><div class="ln">FRENCH</div><div class="ll">Bilingual / Fluent</div></div>
-    <div class="lc"><div class="lf">🇪🇸</div><div class="ln">SPANISH</div><div class="ll">Conversational</div></div>
-  </div>
-</section>
-
-<section id="contact">
-  <p class="ct-ey reveal">// 07 — Let's Work Together</p>
-  <div class="ct-big reveal"><a href="mailto:regnardrodney@gmail.com">GET IN<br>TOUCH</a></div>
-  <div class="ct-links reveal">
-    <a href="mailto:regnardrodney@gmail.com" class="cl">regnardrodney@gmail.com</a>
-    <a href="tel:+14704835144" class="cl">(470) 483-5144</a>
-    <a href="https://www.linkedin.com/in/regnardrodney/" target="_blank" class="cl">LinkedIn</a>
-    <a href="https://regnardrodney.github.io" target="_blank" class="cl">Portfolio</a>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Régnard Rodney</span>
-  <span>IT Leader · AI Automation · Trilingual</span>
-  <span>Wilmington, DE</span>
+  <a href="mailto:regnardrodney@gmail.com" class="ft-link">INITIATE_CONTACT</a>
 </footer>
 
 <script>
-/* PRELOADER */
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    const p=document.getElementById('preloader');
-    p.style.transition='opacity .6s';p.style.opacity='0';
-    setTimeout(()=>p.style.display='none',600);
-  },2100);
-});
+/* BACKGROUND ANIMATION */
+const canvas = document.getElementById('network-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+class P { constructor() { this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.vx=(Math.random()-0.5)*0.5; this.vy=(Math.random()-0.5)*0.5; } update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; } draw() { ctx.beginPath(); ctx.arc(this.x,this.y,1,0,Math.PI*2); ctx.fillStyle='#c8a84b'; ctx.fill(); } }
+for(let i=0;i<60;i++) particles.push(new P());
+function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(anim); } anim();
 
 /* CURSOR */
 const cur=document.getElementById('cur'),curl=document.getElementById('curl');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curl.style.left=rx+'px';curl.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curl.style.width='54px';curl.style.height='54px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curl.style.width='38px';curl.style.height='38px';});
-});
+let mx=0,my=0; document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';curl.style.left=mx+'px';curl.style.top=my+'px';});
 
-/* NAV */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60));
-
-/* SCROLL REVEAL */
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-/* TERMINAL SCRIPTS & PLAYBOOKS */
+/* PLAYBOOKS */
 let running = false;
-
-const DEMO_LINES = [
-  {c:'prompt',t:'> python3 agentic_triage.py'},
-  {c:'dim',   t:'  Connecting to ServiceNow REST API...'},
-  {c:'ok',    t:'  \u2713 Authenticated. Session active.'},
-  {c:'dim',   t:'  Polling ticket queue...'},
-  {c:'',      t:''},
-  {c:'hi',    t:'  \u2550\u2550 TICKET #4492 RECEIVED \u2550\u2550'},
-  {c:'',      t:'  From:    store_mgr_de_19801@corp.internal'},
-  {c:'',      t:'  Subject: URGENT \u2014 Register frozen'},
-  {c:'err',   t:'  Body:    "MY POS REGISTER HAS BEEN FROZEN FOR AN HOUR.'},
-  {c:'err',   t:'            I HAVE A LINE OUT THE DOOR. UNACCEPTABLE!!"'},
-  {c:'',      t:''},
-  {c:'dim',   t:'  \u25ba Routing to LLM sentiment engine...'},
-  {c:'dim',   t:'  Model:     gemini-2.5-flash'},
-  {c:'dim',   t:'  Constraint: Return strictly valid JSON only'},
-  {c:'',      t:''},
-  {c:'ok',    t:'  [ANALYSIS COMPLETE] \u2014 0.84s'},
-  {c:'hi',    t:'  {'},
-  {c:'hi',    t:'    "sentiment":     "SEVERE_FRUSTRATION",'},
-  {c:'hi',    t:'    "hardware_flag": "POS_REGISTER_CRASH",'},
-  {c:'hi',    t:'    "priority":      "P1_CRITICAL",'},
-  {c:'hi',    t:'    "confidence":    0.97,'},
-  {c:'hi',    t:'    "suggested_sop": "pos_reboot_v3.md"'},
-  {c:'hi',    t:'  }'},
-  {c:'',      t:''},
-  {c:'dim',   t:'  Executing routing protocol...'},
-  {c:'ok',    t:'  \u2713 On-call POS technician paged (SMS + Slack)'},
-  {c:'ok',    t:'  \u2713 SOP reboot sequence pushed to store manager'},
-  {c:'ok',    t:'  \u2713 Ticket escalated \u2192 P1 queue'},
-  {c:'ok',    t:'  \u2713 Audit record written to ITSM log'},
-  {c:'',      t:''},
-  {c:'prompt',t:'> Total triage time: 0.84s. Human hours saved: \u221e'},
-];
-
 const PLAYBOOKS = {
-  pos: [
-    {c:'prompt', t:'> Initializing POS_Troubleshoot_Protocol.sh'},
-    {c:'dim',    t:'  Symptom: Register unresponsive at checkout.'},
-    {c:'ok',     t:'  STEP 1: Physical Layer Audit. Checking UPS battery & seating of power rails.'},
-    {c:'ok',     t:'  STEP 2: Network Handshake. Verifying Cat6 patch at wall jack vs MDF port blink rate.'},
-    {c:'hi',     t:'  STEP 3: Database Verification. Running SQL query to check last sync timestamp.'},
-    {c:'ok',     t:'  STEP 4: Cold Boot. Executed sequence to clear volatile memory cache.'},
-    {c:'prompt', t:'> Result: System back online in 4.2 minutes. Zero customer data loss.'}
-  ]
+  pos: [{c:'prompt', t:'root@tablet:~$ ./diagnose_register.sh'}, {c:'dim', t:'Connecting via SSH...'}, {c:'hi', t:'[L7] POS unresponsive. Memory usage: 98%'}, {c:'ok', t:'SQL Cache clear. Safe to restart.'}, {c:'hi', t:'[SYSTEM] Service restarted. Register online.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: This reflects my process at Lowe\'s. Want to discuss high-pressure triage?'}],
+  ccna: [{c:'prompt', t:'root@tablet:~$ ssh admin@Core_Router'}, {c:'err', t:'[WARN] OSPF adjacency dropped Gi0/1.'}, {c:'hi', t:'Testing Layer 2... Link UP. Testing Layer 3...'}, {c:'ok', t:'[OK] Adjacency restored. Path optimized.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Need a deeper dive into my Cisco/Meraki experience?'}],
+  mdm: [{c:'prompt', t:'root@tablet:~$ mdm sync --fleet'}, {c:'err', t:'[ALERT] 43 devices missing security patch.'}, {c:'hi', t:'Compiling zero-touch OTA payload...'}, {c:'ok', t:'[OK] Patch deployed. Fleet compliant.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Questions about global Workspace ONE rollouts?'}],
+  security: [{c:'prompt', t:'root@tablet:~$ ./audit_access.ps1'}, {c:'err', t:'[ALERT] Suspicious login. Account secured.'}, {c:'ok', t:'[USER-ED] Enforced 2FA & passphrase training.'}, {c:'hi', t:'ACL applied: RDP blocked at firewall.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Discussing Zero-Trust hardening?'}],
+  ai: [{c:'prompt', t:'root@tablet:~$ python3 sop_agent.py'}, {c:'dim', t:'Ingesting tribal knowledge...'}, {c:'hi', t:'Applying Prompt Constraints (Context+Persona)...'}, {c:'ok', t:'[OK] SOP generated. 22 hours saved.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Curious about AI automation?'}]
 };
 
-function runTerminalLogic(lines, title, btnText) {
-  if(running) return;
-  running = true;
-  
-  const btn = document.getElementById('runBtn');
-  const pathTitle = document.getElementById('tpathTitle');
-  
-  btn.textContent = '\u23f3 Running...';
-  btn.disabled = true;
-  pathTitle.textContent = title;
-  
-  const body = document.getElementById('termBody');
-  document.getElementById('ai').scrollIntoView({behavior: 'smooth', block: 'center'});
-  body.innerHTML = '';
-  
-  let i = 0;
-  function next() {
-    if(i >= lines.length) {
-      body.innerHTML += '<span class="tc"></span>';
-      btn.textContent = btnText;
-      btn.disabled = false;
-      running = false;
-      return;
-    }
-    const line = lines[i++];
-    const div = document.createElement('div');
-    const cls = {prompt:'t-prompt',dim:'t-dim',hi:'t-hi',err:'t-err',ok:'t-ok','':''}[line.c] || '';
-    div.innerHTML = cls ? `<span class="${cls}">${line.t}</span>` : (line.t || '&nbsp;');
-    body.appendChild(div);
-    body.scrollTop = body.scrollHeight;
-    setTimeout(next, (line.c === 'dim' ? 75 : line.c === '' ? 35 : 50) + Math.random() * 25);
-  }
-  next();
-}
-
-function runDemo() {
-  runTerminalLogic(DEMO_LINES, '~/agentic_triage.py', '\u25b6 Run AI Triage Demo Again');
-}
-
 function runPlaybook(type) {
-  runTerminalLogic(PLAYBOOKS[type], `~/${type}_triage_protocol.sh`, '\u25b6 Run AI Triage Demo');
+  if(running) return; running = true;
+  const body = document.getElementById('termBody'); body.innerHTML = '';
+  let i = 0; function next() {
+    if(i >= PLAYBOOKS[type].length) { body.innerHTML += '<span class="tc"></span>'; running = false; return; }
+    const line = PLAYBOOKS[type][i++];
+    const div = document.createElement('div');
+    const cls = {prompt:'t-prompt',dim:'t-dim',hi:'t-hi',err:'t-err',ok:'t-ok','t-recruiter':'t-recruiter','':''}[line.c] || '';
+    div.innerHTML = cls ? `<span class="${cls}">${line.t}</span>` : (line.t || '&nbsp;');
+    body.appendChild(div); body.scrollTop = body.scrollHeight;
+    setTimeout(next, 200 + Math.random() * 100);
+  } next();
 }
 </script>
 </body>
