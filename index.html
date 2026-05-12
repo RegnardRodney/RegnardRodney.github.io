@@ -3,217 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Régnard Rodney | Incident Commander & SME</title>
+    <title>Régnard Rodney | Omni-Fleet SME Command</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black:#050505; --white:#f2ede4; --gold:#c8a84b; 
-            --green:#2ecc71; --red:#e74c3c; --border:rgba(200,168,75,0.2);
+            --black:#050505; --white:#f2ede4; --gold:#c8a84b; --gold-dim:rgba(200,168,75,0.15);
+            --green:#2ecc71; --blue:#3498db; --border:rgba(200,168,75,0.2);
             --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif;
         }
 
-        body { background: var(--black); color: var(--white); font-family: var(--mono); margin: 0; overflow-x: hidden; cursor: none; }
+        body { background: var(--black); color: var(--white); font-family: var(--mono); margin: 0; overflow: hidden; cursor: none; }
         
-        /* DYNAMIC ENVIRONMENT ENGINE */
-        #env-bg {
+        /* DYNAMIC SCENE ENGINE */
+        #main-viewport {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0;
-            background-color: var(--black);
             background-size: cover; background-position: center;
-            transition: background 1.5s ease-in-out, filter 1s;
-            filter: brightness(30%) grayscale(50%);
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(25%) grayscale(40%);
         }
 
-        /* HUD ELEMENTS */
-        nav { position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; padding: 1.5rem 3rem; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--gold); backdrop-filter: blur(10px); box-sizing: border-box; }
-        .nav-logo { font-family: var(--display); font-size: 1.5rem; color: var(--gold); text-decoration: none; letter-spacing: 2px; }
-        .btn-hire { background: var(--gold); color: #000; padding: 0.7rem 1.5rem; text-decoration: none; font-weight: bold; font-size: 0.8rem; box-shadow: 0 0 20px rgba(200,168,75,0.4); }
+        /* SIDEBAR NAVIGATION */
+        #sidebar {
+            position: fixed; left: 0; top: 0; height: 100vh; width: 260px;
+            background: rgba(0,0,0,0.9); border-right: 1px solid var(--border);
+            z-index: 1000; display: flex; flex-direction: column; padding: 2rem 0;
+            backdrop-filter: blur(15px);
+        }
+        .nav-item {
+            padding: 1.2rem 2rem; color: #888; cursor: pointer; transition: 0.3s;
+            font-size: 0.8rem; border-left: 3px solid transparent; text-transform: uppercase;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: var(--gold); background: var(--gold-dim); border-left-color: var(--gold);
+        }
 
-        /* CONTENT PANELS */
-        .panel { position: relative; z-index: 100; padding: 8rem 3rem; max-width: 1400px; margin: 0 auto; }
-        .glass-card { background: rgba(10,10,10,0.8); border: 1px solid var(--border); padding: 2.5rem; backdrop-filter: blur(20px); margin-bottom: 3rem; }
-        
-        /* TRIAGE GRID */
-        .triage-grid { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; }
-        .layer-btn { padding: 1.2rem; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: #888; cursor: pointer; text-align: left; font-family: var(--mono); font-size: 0.8rem; transition: 0.3s; }
-        .layer-btn:hover, .layer-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.1); transform: translateX(10px); }
+        /* HUD & CONTENT */
+        #content-area { margin-left: 260px; padding: 4rem; height: 100vh; overflow-y: auto; position: relative; z-index: 100; }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.8s ease-out; }
 
-        /* TERMINAL */
-        .terminal { background: #000; border: 1px solid var(--gold); height: 600px; display: flex; flex-direction: column; box-shadow: 0 0 50px rgba(0,0,0,1); }
-        .t-header { background: rgba(200,168,75,0.1); padding: 0.8rem 1.5rem; font-size: 0.7rem; border-bottom: 1px solid var(--border); color: var(--gold); display: flex; justify-content: space-between; }
-        .t-body { padding: 1.5rem; font-size: 0.85rem; color: var(--green); overflow-y: auto; flex-grow: 1; line-height: 1.7; }
-        
-        .t-ticket { color: #f1c40f; font-weight: bold; }
-        .t-tool { color: #3498db; border-left: 3px solid #3498db; padding-left: 15px; margin: 15px 0; display: block; }
-        .t-itil { color: #9b59b6; font-weight: bold; border-top: 1px dashed #9b59b6; margin-top: 15px; padding-top: 15px; display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* THE RECORD (RESUME) */
-        .record-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
-        .record-item { border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 2rem; }
-        .job-title { color: var(--gold); font-family: var(--display); font-size: 1.8rem; margin: 0; }
-        .job-meta { font-size: 0.7rem; color: #888; margin-bottom: 10px; text-transform: uppercase; }
+        /* THE TERMINAL HUB */
+        .terminal { background: #000; border: 1px solid var(--gold); height: 500px; display: flex; flex-direction: column; margin-top: 2rem; box-shadow: 0 0 40px rgba(0,0,0,1); }
+        .t-header { background: var(--gold-dim); padding: 0.8rem 1.5rem; font-size: 0.7rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; color: var(--gold); }
+        .t-body { padding: 1.5rem; font-size: 0.85rem; color: var(--green); overflow-y: auto; line-height: 1.7; flex-grow: 1; }
 
-        /* TECH HUD */
-        .tech-tag { display: inline-block; padding: 4px 10px; background: rgba(200,168,75,0.1); border: 1px solid var(--border); font-size: 0.65rem; color: var(--gold); margin: 3px; }
+        /* TOOL CARDS */
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .tool-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; transition: 0.3s; }
+        .tool-card:hover { border-color: var(--gold); transform: translateY(-5px); background: var(--gold-dim); }
+        .tool-card h4 { color: var(--gold); margin: 0 0 10px 0; font-size: 0.9rem; }
+        .tool-card p { font-size: 0.7rem; color: #aaa; margin: 0; }
 
+        /* AGENT AVATAR */
+        #agent {
+            position: fixed; width: 40px; height: 40px; background: var(--gold);
+            z-index: 500; border-radius: 4px; box-shadow: 0 0 30px var(--gold);
+            transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; align-items: center; justify-content: center; font-size: 10px; color: #000; font-weight: bold;
+        }
+
+        /* UTILITY */
+        .btn-hire { background: var(--gold); color: #000; padding: 0.8rem 2rem; text-decoration: none; font-weight: bold; font-size: 0.8rem; margin-top: auto; align-self: center; width: 80%; text-align: center; }
         #cur { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%,-50%); }
     </style>
 </head>
 <body>
 
-    <div id="env-bg"></div>
+    <div id="main-viewport"></div>
     <div id="cur"></div>
+    <div id="agent">SME</div>
 
-    <nav>
-        <a href="#" class="nav-logo">R.RODNEY // FIELD_OPERATIONS</a>
-        <div style="display: flex; gap: 2rem; align-items: center;">
-            <a href="https://linkedin.com/in/regnardrodney" target="_blank" style="color:#888; text-decoration:none; font-size:0.7rem;">LINKEDIN</a>
-            <a href="mailto:regnardrodney@gmail.com" class="btn-hire">HIRE COMMANDER</a>
-        </div>
-    </nav>
+    <div id="sidebar">
+        <div style="padding: 0 2rem 2rem; font-family: var(--display); font-size: 2rem; color: var(--gold);">COMMAND</div>
+        <div class="nav-item active" onclick="switchTab('dashboard', this)">01. Incident Center</div>
+        <div class="nav-item" onclick="switchTab('network', this)">02. Network Admin</div>
+        <div class="nav-item" onclick="switchTab('linux', this)">03. Linux Lab</div>
+        <div class="nav-item" onclick="switchTab('sql', this)">04. SQL Vault</div>
+        <div class="nav-item" onclick="switchTab('cloud', this)">05. Azure & Cloud</div>
+        <div class="nav-item" onclick="switchTab('resume', this)">06. The Record</div>
+        
+        <a href="mailto:regnardrodney@gmail.com" class="btn-hire">HIRE COMMANDER</a>
+        <div style="padding: 2rem; font-size: 0.6rem; color: #555;">[SLA: 99.99%] // [WGU: 2027]</div>
+    </div>
 
-    <div class="panel">
-        <header style="margin-bottom: 5rem;">
-            <h1 style="font-family:var(--display); font-size: clamp(4rem, 10vw, 10rem); line-height:0.85; margin:0;">INCIDENT<br>COMMANDER.</h1>
-            <p style="color:#aaa; max-width:700px; font-size:1.1rem; margin-top:2rem; line-height:1.8;">
-                Architecting 99.9% uptime for 11,000+ endpoints. From physical fiber termination to agentic AI automation. Accelerated MSITM Candidate at Western Governors University.
-            </p>
-        </header>
+    <div id="content-area">
+        
+        <section id="dashboard" class="view-section active">
+            <h1 style="font-family: var(--display); font-size: 6rem; margin: 0;">INCIDENT COMMAND</h1>
+            <p style="color: #888;">Select a layer to initiate a real-time agentic triage simulation.</p>
+            
+            <div style="display: flex; gap: 10px; margin-top: 2rem;">
+                <button onclick="runDiagnostic('L1')">L1. PHYSICAL</button>
+                <button onclick="runDiagnostic('L3')">L3. NETWORK</button>
+                <button onclick="runDiagnostic('L7')">L7. APPLICATION</button>
+            </div>
 
-        <section id="triage-sandbox" class="glass-card">
-            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[01 — TRIAGE SIMULATION]</span>
-            <div class="triage-grid" style="margin-top: 2rem;">
-                <div class="layer-selector">
-                    <button class="layer-btn active" onclick="runTriage(1)">L1. PHYSICAL (Fiber / OTDR)</button>
-                    <button class="layer-btn" onclick="runTriage(2)">L2. DATA LINK (VLAN / MAC)</button>
-                    <button class="layer-btn" onclick="runTriage(3)">L3. NETWORK (Routing / BGP)</button>
-                    <button class="layer-btn" onclick="runTriage(4)">L4. TRANSPORT (TCP / SQL)</button>
-                    <button class="layer-btn" onclick="runTriage(7)">L7. APPLICATION (POS / AI)</button>
-                </div>
-                <div class="terminal">
-                    <div class="t-header"><span>FIELD_OPS_OS_v5.0</span><span id="sys-status">[AWAITING_INPUT]</span></div>
-                    <div class="t-body" id="termBody">> SELECT AN OSI LAYER TO INITIATE GRANULAR TROUBLESHOOTING...</div>
-                </div>
+            <div class="terminal">
+                <div class="t-header"><span>TRIAGE_ENGINE_v6.0.sh</span><span id="sys-status">[AWAITING_INPUT]</span></div>
+                <div class="t-body" id="termBody">> COMMANDER: Select mission-critical layer...</div>
             </div>
         </section>
 
-        <section id="the-record" class="glass-card">
-            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[02 — THE PROFESSIONAL RECORD]</span>
-            <div class="record-grid" style="margin-top: 2rem;">
-                <div class="record-item">
-                    <h3 class="job-title">OUTLIER AI</h3>
-                    <div class="job-meta">AI Trainer & Logic Validator // 2022 — PRESENT</div>
-                    <p style="font-size:0.85rem; color:#aaa;">Refining LLM logic, validating Python/SQL outputs, and architecting prompt structures for enterprise automation.</p>
-                </div>
-                <div class="record-item">
-                    <h3 class="job-title">ASURION</h3>
-                    <div class="job-meta">Premier Solution Support // 2020 — 2025</div>
-                    <p style="font-size:0.85rem; color:#aaa;">Managed 11,000+ endpoint fleet. Tier 2 helpdesk leader for enterprise-level retail and mobile client base.</p>
-                </div>
-                <div class="record-item">
-                    <h3 class="job-title">WGU</h3>
-                    <div class="job-meta">MS Information Technology Management // 2027</div>
-                    <p style="font-size:0.85rem; color:#aaa;">Accelerated Master's path focused on Enterprise Leadership, Data-Driven Decision Making, and Network Security.</p>
-                </div>
+        <section id="network" class="view-section">
+            <h1 style="font-family: var(--display); font-size: 4rem;">NETWORK ADMIN TOOLKIT</h1>
+            <div class="tool-grid">
+                <div class="tool-card"><h4>Wireshark</h4><p>Protocol analyzer for packet-level packet analysis and latency isolation.</p></div>
+                <div class="tool-card"><h4>nmap</h4><p>Network discovery and security auditing for port vulnerability scanning.</p></div>
+                <div class="tool-card"><h4>Fluke OTDR</h4><p>Fiber optic fault isolation and high-precision attenuation testing.</p></div>
+                <div class="tool-card"><h4>mRemoteNG</h4><p>Multi-protocol remote connection management (SSH, RDP, VNC).</p></div>
+                <div class="tool-card"><h4>PuTTY</h4><p>Secure Shell (SSH) client for headless server management.</p></div>
+                <div class="tool-card"><h4>Clonezilla</h4><p>Mass-deployment imaging for rapid hardware lifecycle refreshes.</p></div>
             </div>
         </section>
 
-        <section id="tech-vault" class="glass-card">
-            <span style="color:var(--gold); font-size:0.7rem; letter-spacing:5px;">[03 — THE COMMAND STACK]</span>
-            <div style="margin-top: 2rem;">
-                <div class="tech-tag">TCP/IP</div><div class="tech-tag">PORT 1433 (SQL)</div><div class="tech-tag">PORT 443 (HTTPS)</div><div class="tech-tag">PORT 22 (SSH)</div>
-                <div class="tech-tag">BGP</div><div class="tech-tag">OSPF</div><div class="tech-tag">STP</div><div class="tech-tag">VLANS (802.1Q)</div>
-                <div class="tech-tag">DOCKER</div><div class="tech-tag">AZURE ENTRA ID</div><div class="tech-tag">WIRESHARK</div><div class="tech-tag">FLUKE OTDR</div>
-                <div class="tech-tag">PYTHON</div><div class="tech-tag">SQL SERVER</div><div class="tech-tag">SERVICE-NOW</div>
+        <section id="linux" class="view-section">
+            <h1 style="font-family: var(--display); font-size: 4rem;">LINUX LAB</h1>
+            <div class="tool-grid">
+                <div class="tool-card"><h4>Ansible</h4><p>YAML-based configuration management and infrastructure-as-code automation.</p></div>
+                <div class="tool-card"><h4>Docker</h4><p>Containerization for microservices and scalable dev environments.</p></div>
+                <div class="tool-card"><h4>Shell Scripting</h4><p>Python and Bash automation for repetitive cron-job tasks.</p></div>
             </div>
         </section>
+
+        <section id="resume" class="view-section">
+            <h1 style="font-family: var(--display); font-size: 4rem;">THE PROFESSIONAL RECORD</h1>
+            <div style="border-left: 2px solid var(--gold); padding-left: 2rem;">
+                <h3>OUTLIER AI // AI TRAINER</h3>
+                <p style="color: #888;">2022 — PRESENT | Refining LLM logic and validating technical code outputs.</p>
+                
+                <h3 style="margin-top: 2rem;">ASURION // PREMIER SOLUTION SUPPORT</h3>
+                <p style="color: #888;">2020 — 2025 | Managing 11,000+ endpoints and Tier 2 architecture.</p>
+
+                <h3 style="margin-top: 2rem;">WGU // ACCELERATED MSITM</h3>
+                <p style="color: #888;">Expected Graduation: 2027 | IT Leadership & Enterprise Strategy.</p>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        const bg = document.getElementById('env-bg');
+        const viewport = document.getElementById('main-viewport');
+        const agent = document.getElementById('agent');
         const term = document.getElementById('termBody');
-        const status = document.getElementById('sys-status');
 
-        /* ENVIRONMENT ENGINE - Update backgrounds based on topic */
-        const EnvPhotos = {
-            1: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000', // Server/Fiber
-            2: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2000', // Dashboard/Network
-            3: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2000', // Router/Cables
-            4: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=2000', // Code/SQL
-            7: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=2000'  // Retail/POS
+        const Scenes = {
+            dashboard: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000',
+            network: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000',
+            linux: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=2000',
+            sql: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&q=80&w=2000',
+            cloud: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000',
+            resume: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000'
         };
 
-        const Scenarios = {
-            1: {
-                steps: [
-                    {type:'ticket', msg:"[INCIDENT] Primary Fiber Link - High Attenuation detected."},
-                    {type:'tool', msg:"EQUIP: Fluke Fiber OneShot OTDR + 99% IPA Cleaning Kit."},
-                    {type:'step', msg:"Action: Running OTDR trace... Found micro-bend at 14.2m."},
-                    {type:'step', msg:"Remediation: Reseating LC-to-LC patch. Cleaning bulkhead connectors."},
-                    {type:'itil', msg:"ITIL LOG: Verified connectivity. 0.02dB loss. Change log updated. RESOLVED."}
-                ]
-            },
-            2: {
-                steps: [
-                    {type:'ticket', msg:"[INCIDENT] Broadcast Storm detected on VLAN 20."},
-                    {type:'tool', msg:"EQUIP: Wireshark + Cisco CLI (spanning-tree)."},
-                    {type:'step', msg:"Action: Identifying MAC-flapping on Port Gi0/24."},
-                    {type:'step', msg:"Remediation: Enabling BPDU Guard. Shutting down rogue unmanaged switch port."},
-                    {type:'itil', msg:"ITIL LOG: STP converged. Network stable. Root cause: Unauthorized hardware."}
-                ]
-            },
-            4: {
-                steps: [
-                    {type:'ticket', msg:"[INCIDENT] SQL End-of-Day Sync - Port 1433 Connection Refused."},
-                    {type:'tool', msg:"EQUIP: SSMS + Telnet + Azure NSG Console."},
-                    {type:'step', msg:"Action: Auditing Azure NSG rules... Found Port 1433 ACL blockage."},
-                    {type:'step', msg:"Remediation: Updated Firewall rule to permit Secure Warehouse IP range."},
-                    {type:'itil', msg:"ITIL LOG: SQL Transport verified. Sync status: GREEN. CLOSED."}
-                ]
-            },
-            7: {
-                steps: [
-                    {type:'ticket', msg:"[INCIDENT] POS Register 04 - Application Freeze."},
-                    {type:'tool', msg:"EQUIP: Workspace ONE Console + Python Remote Shell."},
-                    {type:'step', msg:"Action: Querying hung process 'pos_ui.exe' via REST API."},
-                    {type:'step', msg:"Remediation: Forced remote service restart. AI-generated SOP fix applied."},
-                    {type:'itil', msg:"ITIL LOG: FCR achieved. Retail uptime 100%. Ticket: CLOSED."}
-                ]
-            }
-        };
-
-        function runTriage(layer) {
-            // Update Background
-            bg.style.backgroundImage = `url('${EnvPhotos[layer]}')`;
+        function switchTab(tabId, el) {
+            // Background & Tab Switch
+            viewport.style.backgroundImage = `url('${Scenes[tabId]}')`;
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
             
-            status.innerText = "[PROCESSING]";
-            term.innerHTML = "";
-            const mission = Scenarios[layer] || {steps: [{type:'step', msg: "Loading Layer " + layer + " Diagnostic..."}]};
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
 
-            mission.steps.forEach((s, i) => {
-                setTimeout(() => {
-                    let line = "";
-                    if(s.type === 'ticket') line = `<span class="t-ticket">${s.msg}</span><br>`;
-                    else if(s.type === 'tool') line = `<span class="t-tool">${s.msg}</span><br>`;
-                    else if(s.type === 'itil') line = `<span class="t-itil">${s.msg}</span><br>`;
-                    else line = `> ${s.msg}<br>`;
-
-                    term.innerHTML += line;
-                    term.scrollTop = term.scrollHeight;
-                }, i * 700);
-            });
-
-            setTimeout(() => { status.innerText = "[RESOLVED]"; }, mission.steps.length * 700);
+            // Agent Movement
+            const x = Math.random() * (window.innerWidth - 300) + 300;
+            const y = Math.random() * (window.innerHeight - 100) + 50;
+            agent.style.left = x + 'px';
+            agent.style.top = y + 'px';
         }
 
-        const cur = document.getElementById('cur');
+        const diagnostics = {
+            'L1': [
+                "[TICKET: INC-001] Fiber Link Attenuation Error.",
+                "SME: Moving to Server Room... Equipping Fluke OneShot OTDR.",
+                "ACTION: Found macro-bend at 12m mark. Cleaning with Isopropyl 99%.",
+                "ITIL: Verification PASS. Change Log Updated. Incident: CLOSED.",
+                "RECRUITER: 'Ask me about my fiber maintenance experience!'"
+            ],
+            'L3': [
+                "[TICKET: INC-882] Store #402 VPN Drop.",
+                "SME: Running 'show ip ospf neighbor'. Adjacency: LOST.",
+                "ACTION: Forcing BGP failover to LTE Cellular backup path.",
+                "VERIFY: Latency < 40ms. Retail sync restored.",
+                "RECRUITER: 'Want to talk about Meraki SD-WAN at scale?'"
+            ]
+        };
+
+        function runDiagnostic(layer) {
+            term.innerHTML = "";
+            document.getElementById('sys-status').innerText = "[PROCESSING]";
+            diagnostics[layer].forEach((line, i) => {
+                setTimeout(() => {
+                    term.innerHTML += `> ${line}<br>`;
+                    term.scrollTop = term.scrollHeight;
+                }, i * 800);
+            });
+            setTimeout(() => { document.getElementById('sys-status').innerText = "[RESOLVED]"; }, diagnostics[layer].length * 800);
+        }
+
+        // Custom Cursor
         document.addEventListener('mousemove', e => {
-            cur.style.left = e.clientX + 'px';
-            cur.style.top = e.clientY + 'px';
+            document.getElementById('cur').style.left = e.clientX + 'px';
+            document.getElementById('cur').style.top = e.clientY + 'px';
         });
-        
-        // Initial Background
-        bg.style.backgroundImage = `url('${EnvPhotos[1]}')`;
+
+        // Initialize
+        switchTab('dashboard', document.querySelector('.nav-item'));
     </script>
 </body>
 </html>
