@@ -1,281 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Régnard Rodney — Live Field Operations Walkthrough</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --black:#080806; --off:#0f0f0c; --white:#f2ede4; --cream:#e8e0d0;
-  --gold:#c8a84b; --gold2:#a07830; --red:#c0392b; --green:#27ae60;
-  --muted:#706a5e; --border:rgba(200,168,75,.18);
-  --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif; --serif:'Fraunces',Georgia,serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:var(--serif);overflow-x:hidden;cursor:none;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Régnard Rodney — Field Ops Architect</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black:#080806; --off:#0f0f0c; --white:#f2ede4; --gold:#c8a84b; 
+            --gold2:#a07830; --green:#27ae60; --muted:#706a5e; --border:rgba(200,168,75,.18);
+            --mono:'DM Mono',monospace; --display:'Bebas Neue',sans-serif; --serif:'Fraunces',serif;
+        }
 
-/* CANVAS BACKGROUND */
-#network-canvas {position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:0.25;}
+        body { background: var(--black); color: var(--white); font-family: var(--serif); margin: 0; overflow-x: hidden; cursor: none; }
+        #network-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.15; }
 
-/* CURSOR */
-#cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference;}
-#curl{position:fixed;width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45;transition:width .25s,height .25s;}
+        /* HUD ELEMENTS */
+        #cur { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+        nav { position: fixed; top: 0; width: 100%; z-index: 200; display: flex; justify-content: space-between; padding: 1.5rem 3.5rem; background: rgba(8,8,6,.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); box-sizing: border-box; }
+        .nav-status { font-family: var(--mono); font-size: 0.65rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
+        .sdot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3.5rem;background:rgba(8,8,6,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);}
-.nav-logo{font-family:var(--mono);font-size:1rem;letter-spacing:.2em;color:var(--gold);text-decoration:none;}
-.nav-status{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--green);}
-.sdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(39,174,96,.5)}50%{box-shadow:0 0 0 5px rgba(39,174,96,0)}}
+        /* 3D CORRIDOR HERO */
+        .viewport { height: 300vh; position: relative; }
+        .corridor-wrap { height: 100vh; position: sticky; top: 0; perspective: 1000px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .corridor { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
+        .wall { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, rgba(200,168,75,0.05) 1px, transparent 1px); background-size: 50px 100%; }
+        .wall-left { transform: rotateY(90deg) translateZ(-500px); left: -50%; }
+        .wall-right { transform: rotateY(-90deg) translateZ(-500px); right: -50%; }
+        
+        .hero-content { position: absolute; text-align: center; z-index: 5; }
+        .h-headline { font-family: var(--display); font-size: clamp(4rem, 15vw, 15rem); line-height: 0.85; margin: 0; }
+        .h-sub { font-family: var(--mono); color: var(--gold); margin-top: 1rem; letter-spacing: 4px; font-size: 0.8rem; }
 
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 3.5rem;position:relative;z-index:2;}
-.h-hud{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--muted);margin-bottom:2rem;display:flex;gap:2rem;}
-.h-hud span{border:1px solid var(--border);padding:.4rem 1rem;background:rgba(200,168,75,.05);}
-.h-headline{font-family:var(--display);font-size:clamp(4rem,10vw,12rem);line-height:.88;letter-spacing:.03em;color:var(--white);text-shadow:0 10px 30px rgba(0,0,0,0.8);}
-.h-desc{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--muted);max-width:600px;line-height:1.65;margin-top:2rem;}
+        /* CHAT RECONSTRUCTION */
+        .chat-section { padding: 10rem 3.5rem; position: relative; z-index: 5; }
+        .chat-container { max-width: 600px; margin: 0 auto; transform: rotateX(10deg) rotateY(-10deg); }
+        .chat-bubble { background: rgba(200,168,75,0.05); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 4px; opacity: 0; transform: translateY(30px); }
+        .chat-bubble.user { border-left: 3px solid var(--gold); }
+        .chat-bubble.me { border-right: 3px solid var(--green); text-align: right; margin-left: 20%; }
 
-/* WALKTHROUGH SECTIONS */
-section{padding:7rem 3.5rem;position:relative;z-index:2;}
-.scene-header{margin-bottom:4rem;}
-.s-num{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;display:inline-block;border-bottom:1px solid var(--gold);padding-bottom:.3rem;}
-.s-title{font-family:var(--display);font-size:clamp(3rem,6vw,6rem);line-height:.9;color:var(--white);}
+        /* SANDBOX TERMINAL */
+        .sandbox { padding: 5rem 3.5rem; display: grid; grid-template-columns: 300px 1fr; gap: 2rem; position: relative; z-index: 5; }
+        .agent-btn { background: transparent; border: 1px solid var(--border); color: var(--white); font-family: var(--mono); padding: 1.5rem; text-align: left; margin-bottom: 1rem; cursor: pointer; width: 100%; transition: 0.3s; }
+        .agent-btn:hover { background: rgba(200,168,75,0.1); border-color: var(--gold); }
+        .twrap { background: #060604; border: 1px solid var(--gold); height: 450px; display: flex; flex-direction: column; }
+        .tbody { padding: 1.5rem; font-family: var(--mono); font-size: 0.8rem; color: #a0f0a0; overflow-y: auto; flex-grow: 1; }
 
-/* SCENE CARDS */
-.walkthrough-grid{display:grid;grid-template-columns:1fr;gap:4rem;max-width:1100px;}
-.scene-card{background:rgba(15,15,12,.85);border:1px solid var(--border);padding:3rem;position:relative;backdrop-filter:blur(10px);}
-.scene-card::before{content:'';position:absolute;left:-1px;top:-1px;width:3px;height:100%;background:var(--gold);}
-.sc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1.5rem;}
-.sc-layer{font-family:var(--display);font-size:2rem;color:var(--white);}
-.sc-status{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;padding:.3rem .8rem;background:rgba(200,168,75,.1);color:var(--gold);}
-.sc-body{font-family:var(--serif);font-size:1.05rem;color:#8a8880;line-height:1.7;}
+        /* FOOTER / THE RECORD */
+        .record { padding: 5rem 3.5rem; border-top: 1px solid var(--border); }
+        .scramble-text { font-family: var(--display); font-size: 4rem; color: var(--white); margin-bottom: 2rem; }
 
-/* TABLET / TERMINAL */
-.tablet-grid{display:grid;grid-template-columns:300px 1fr;gap:2rem;margin-top:3rem;}
-.agent-list{display:flex;flex-direction:column;gap:1rem;}
-.agent-btn{background:rgba(200,168,75,.05);border:1px solid var(--border);padding:1.2rem;text-align:left;cursor:none;transition:all .3s;}
-.agent-btn:hover{background:rgba(200,168,75,.15);border-color:var(--gold);}
-.ab-title{font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;color:var(--white);margin-bottom:.3rem;}
-.ab-desc{font-family:var(--serif);font-size:.75rem;color:var(--muted);}
-
-.twrap{border:1px solid var(--gold);background:rgba(6,6,4,.95);backdrop-filter:blur(10px);box-shadow:0 20px 40px rgba(0,0,0,.5);height:100%;display:flex;flex-direction:column;min-height: 400px;}
-.tbar{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-bottom:1px solid rgba(200,168,75,.2);}
-.tdot{width:10px;height:10px;border-radius:50%;}
-.tbody{padding:1.5rem;font-family:var(--mono);font-size:.76rem;line-height:1.75;color:#a0f0a0;flex-grow:1;overflow-y:auto;}
-.tc{display:inline-block;width:8px;height:1em;background:var(--gold);vertical-align:text-bottom;animation:blink .8s step-end infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.t-prompt{color:var(--gold);}
-.t-dim{color:var(--muted);}
-.t-hi{color:#7dd3fc;}
-.t-err{color:#f87171;}
-.t-ok{color:#86efac;}
-.t-recruiter{color:#fcd34d; font-weight:bold; margin-top:1rem; display:block; border-top:1px dashed rgba(200,168,75,.3); padding-top:1rem;}
-
-/* EXPERIENCE & EDUCATION */
-#cred-section{background:rgba(8,8,6,.95);border-top:1px solid var(--border);}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
-.exp-item{margin-bottom:3rem;}
-.exp-date{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem;}
-.exp-co{font-family:var(--display);font-size:2rem;color:var(--white);line-height:1;}
-.exp-role{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.9rem;margin-bottom:1rem;}
-.exp-list{list-style:none;}
-.exp-list li{font-family:var(--serif);font-size:.85rem;color:#8a8880;line-height:1.6;margin-bottom:.5rem;padding-left:1.2rem;position:relative;}
-.exp-list li::before{content:'\2022';position:absolute;left:0;color:var(--gold2);}
-
-footer{padding:4rem 3.5rem;text-align:center;border-top:1px solid var(--border);background:var(--black);position:relative;z-index:2;}
-.ft-link{font-family:var(--display);font-size:4rem;color:var(--white);text-decoration:none;display:block;margin-bottom:2rem;transition:color .3s;}
-.ft-link:hover{color:var(--gold);}
-</style>
+        @media(max-width: 900px) {
+            nav, .chat-section, .sandbox { padding: 1.5rem; }
+            .sandbox { grid-template-columns: 1fr; }
+            .chat-bubble.me { margin-left: 5%; }
+        }
+    </style>
 </head>
 <body>
+    <canvas id="network-canvas"></canvas>
+    <div id="cur"></div>
 
-<canvas id="network-canvas"></canvas>
-<div id="cur"></div>
-<div id="curl"></div>
+    <nav>
+        <a href="#" class="nav-logo">R.RODNEY // ARCHITECT</a>
+        <div class="nav-status" id="status-bar"><div class="sdot"></div> SYSTEM_ONLINE</div>
+    </nav>
 
-<nav id="nav">
-  <a href="#hero" class="nav-logo">R.RODNEY // FIELD_OPS</a>
-  <div class="nav-status"><div class="sdot"></div>ON_SITE // WILMINGTON, DE</div>
-</nav>
-
-<section id="hero">
-  <div class="h-hud">
-    <span>[STATUS: DEPLOYED]</span>
-    <span>[OBJECTIVE: ROOT CAUSE ISOLATION]</span>
-  </div>
-  <div class="h-headline">LIVE<br>INFRASTRUCTURE<br>WALKTHROUGH.</div>
-  <p class="h-desc">This is exactly how I work in the field. Watch me diagnose POS freezes, harden networks, and train AI models to move from symptom to resolution.</p>
-</section>
-
-<section id="scene-walkthrough">
-  <div class="scene-header">
-    <span class="s-num">SCENE 01 // THE APPROACH</span>
-    <h2 class="s-title">Layer-by-Layer<br>Diagnosis.</h2>
-  </div>
-  <div class="walkthrough-grid">
-    <div class="scene-card">
-      <div class="sc-top">
-        <div class="sc-layer">OSI Layer 1: Physical Check</div>
-        <div class="sc-status">SYMPTOM: "Register Offline"</div>
-      </div>
-      <p class="sc-body">I always start outside-in. I walk to the MDF room, verify the Cat6 seating, and check for PoE link lights on the Meraki switch. 40% of critical outages are resolved here before touching a keyboard.</p>
-    </div>
-  </div>
-</section>
-
-<section id="scene-2">
-  <div class="scene-header">
-    <span class="s-num">SCENE 02 // THE FIELD TABLET</span>
-    <h2 class="s-title">Interactive<br>Operations Sandbox.</h2>
-  </div>
-  
-  <div class="tablet-grid">
-    <div class="agent-list">
-      <button class="agent-btn" onclick="runPlaybook('pos')">
-        <div class="ab-title">01. POS APPLICATION FIX</div>
-        <div class="ab-desc">Clear SQL cache & restart service</div>
-      </button>
-      <button class="agent-btn" onclick="runPlaybook('ccna')">
-        <div class="ab-title">02. CCNA ROUTING</div>
-        <div class="ab-desc">OSPF adjacency & routing diagnostic</div>
-      </button>
-      <button class="agent-btn" onclick="runPlaybook('mdm')">
-        <div class="ab-title">03. MDM COMPLIANCE</div>
-        <div class="ab-desc">Zero-touch OTA payload push</div>
-      </button>
-      <button class="agent-btn" onclick="runPlaybook('security')">
-        <div class="ab-title">04. SECURITY HARDENING</div>
-        <div class="ab-desc">User education & ACL deployment</div>
-      </button>
-      <button class="agent-btn" onclick="runPlaybook('ai')">
-        <div class="ab-title" style="color: #7dd3fc;">05. AI WORKFLOW ENGINEER</div>
-        <div class="ab-desc">Prompt engineering & SOP automation</div>
-      </button>
+    <div class="viewport">
+        <div class="corridor-wrap">
+            <div class="wall wall-left"></div>
+            <div class="wall wall-right"></div>
+            <div class="hero-content">
+                <h1 class="h-headline">FIELD<br>OPERATIONS.</h1>
+                <div class="h-sub">SME // INFRASTRUCTURE & AI ORCHESTRATION</div>
+            </div>
+        </div>
     </div>
 
-    <div class="twrap">
-      <div class="tbar"><div class="tdot" style="background:#ff5f57"></div><div class="tdot" style="background:#febc2e"></div><div class="tdot" style="background:#28c840"></div></div>
-      <div class="tbody" id="termBody"><span class="t-dim"># Awaiting scenario selection...</span><br><span class="tc"></span></div>
-    </div>
-  </div>
-</section>
+    <section class="chat-section">
+        <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2rem;">// STATION 01: CHAT_RECONSTRUCTION</div>
+        <div class="chat-container">
+            <div class="chat-bubble user">"The front register is completely frozen and the line is out the door. We can't process anything!"</div>
+            <div class="chat-bubble me">"I understand. Following A+ methodology, checking physical link first. Is the green light blinking on the switch?"</div>
+            <div class="chat-bubble user">"Yes, but the screen won't budge."</div>
+            <div class="chat-bubble me">"Isolating Layer 7. Querying SQL cache to protect data. Restarting POS_UI service now..."</div>
+            <div class="chat-bubble me">"Register online. 99% SLA maintained."</div>
+        </div>
+    </section>
 
-<section id="cred-section">
-  <div class="grid-2">
-    <div>
-      <div class="exp-item">
-        <div class="exp-date">2022 — PRESENT</div>
-        <div class="exp-co">OUTLIER AI</div>
-        <div class="exp-role">AI Trainer & Logic Validator</div>
-        <ul class="exp-list">
-          <li>Train and evaluate advanced LLM outputs focusing on logical reasoning.</li>
-          <li>Refine model responses through real-world task evaluation and prompt-quality review.</li>
-        </ul>
-      </div>
-      <div class="exp-item">
-        <div class="exp-date">2020 — 2025</div>
-        <div class="exp-co">ASURION</div>
-        <div class="exp-role">Premier Solution Support Specialist</div>
-        <ul class="exp-list">
-          <li>Maintained 99.9% SLA on 11,000+ endpoint fleet via ServiceNow & Active Directory.</li>
-        </ul>
-      </div>
-    </div>
+    <section class="sandbox">
+        <div>
+            <div style="font-family: var(--mono); color: var(--gold); margin-bottom: 2rem;">// STATION 02: OP_SANDBOX</div>
+            <button class="agent-btn" onclick="runLog('pos')">01. POS Application Fix</button>
+            <button class="agent-btn" onclick="runLog('ccna')">02. CCNA Routing</button>
+            <button class="agent-btn" onclick="runLog('mdm')">03. MDM Compliance</button>
+            <button class="agent-btn" onclick="runLog('security')">04. Security Hardening</button>
+            <button class="agent-btn" onclick="runLog('ai')">05. AI Workflow Eng</button>
+        </div>
+        <div class="twrap">
+            <div class="tbody" id="termBody">> SELECT AN OPERATION...</div>
+        </div>
+    </section>
 
-    <div>
-      <div class="exp-item">
-        <div class="exp-date">2022 — 2027 (EXPECTED)</div>
-        <div class="exp-co">WESTERN GOVERNORS UNIV.</div>
-        <div class="exp-role">Accelerated BSIT to MSITM</div>
-        <ul class="exp-list">
-          <li>Combined Bachelor's and Master's track in IT Management.</li>
-          <li>Focused on SQL, Python, Network+, and Enterprise Leadership.</li>
-        </ul>
-      </div>
-      <div class="exp-item">
-        <div class="exp-date">CREDENTIALS</div>
-        <div class="exp-co">CERTIFICATIONS</div>
-        <ul class="exp-list">
-          <li>CompTIA Network+, Security+, A+</li>
-          <li>Google IT Support Professional</li>
-          <li>Google Data Analytics Professional</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+    <section class="record">
+        <div class="scramble-text" id="record-title">THE RECORD</div>
+        <p style="font-family: var(--mono); color: var(--muted); max-width: 600px;">
+            [EDUCATION]: WGU // BSIT-TO-MSITM // 2022-2027<br>
+            [EXPERIENCE]: OUTLIER AI // ASURION // ROBERT HALF<br>
+            [SME]: WILMINGTON, DE // (470) 483-5144
+        </p>
+    </section>
 
-<footer>
-  <a href="mailto:regnardrodney@gmail.com" class="ft-link">INITIATE_CONTACT</a>
-</footer>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
 
-<script>
-/* BACKGROUND ANIMATION */
-const canvas = document.getElementById('network-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.addEventListener('resize', resize); resize();
-class P { constructor() { this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.vx=(Math.random()-0.5)*0.5; this.vy=(Math.random()-0.5)*0.5; } update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; } draw() { ctx.beginPath(); ctx.arc(this.x,this.y,1,0,Math.PI*2); ctx.fillStyle='#c8a84b'; ctx.fill(); } }
-for(let i=0;i<60;i++) particles.push(new P());
-function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(anim); } anim();
+        /* 3D CORRIDOR ANIMATION */
+        gsap.to(".corridor-wrap", {
+            scrollTrigger: {
+                trigger: ".viewport",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            },
+            scale: 2,
+            opacity: 0
+        });
 
-/* CURSOR */
-const cur=document.getElementById('cur'),curl=document.getElementById('curl');
-let mx=0,my=0; document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';curl.style.left=mx+'px';curl.style.top=my+'px';});
+        /* CHAT APPEARANCE */
+        gsap.utils.toArray(".chat-bubble").forEach((bubble, i) => {
+            gsap.to(bubble, {
+                scrollTrigger: {
+                    trigger: bubble,
+                    start: "top 80%",
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.2
+            });
+        });
 
-/* PLAYBOOKS */
-let running = false;
-const PLAYBOOKS = {
-  pos: [{c:'prompt', t:'root@tablet:~$ ./diagnose_register.sh'}, {c:'dim', t:'Connecting via SSH...'}, {c:'hi', t:'[L7] POS unresponsive. Memory usage: 98%'}, {c:'ok', t:'SQL Cache clear. Safe to restart.'}, {c:'hi', t:'[SYSTEM] Service restarted. Register online.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: This reflects my process at Lowe\'s. Want to discuss high-pressure triage?'}],
-  ccna: [{c:'prompt', t:'root@tablet:~$ ssh admin@Core_Router'}, {c:'err', t:'[WARN] OSPF adjacency dropped Gi0/1.'}, {c:'hi', t:'Testing Layer 2... Link UP. Testing Layer 3...'}, {c:'ok', t:'[OK] Adjacency restored. Path optimized.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Need a deeper dive into my Cisco/Meraki experience?'}],
-  mdm: [{c:'prompt', t:'root@tablet:~$ mdm sync --fleet'}, {c:'err', t:'[ALERT] 43 devices missing security patch.'}, {c:'hi', t:'Compiling zero-touch OTA payload...'}, {c:'ok', t:'[OK] Patch deployed. Fleet compliant.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Questions about global Workspace ONE rollouts?'}],
-  security: [{c:'prompt', t:'root@tablet:~$ ./audit_access.ps1'}, {c:'err', t:'[ALERT] Suspicious login. Account secured.'}, {c:'ok', t:'[USER-ED] Enforced 2FA & passphrase training.'}, {c:'hi', t:'ACL applied: RDP blocked at firewall.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Discussing Zero-Trust hardening?'}],
-  ai: [{c:'prompt', t:'root@tablet:~$ python3 sop_agent.py'}, {c:'dim', t:'Ingesting tribal knowledge...'}, {c:'hi', t:'Applying Prompt Constraints (Context+Persona)...'}, {c:'ok', t:'[OK] SOP generated. 22 hours saved.'}, {c:'t-recruiter', t:'> RECRUITER Q&A: Curious about AI automation?'}]
-};
+        /* GHOST LOG STATUS BAR */
+        const actions = ["TRACING CAT6 DROP...", "AUDITING RACK 4...", "PATCHING 11K ENDPOINTS...", "RECALCULATING BGP...", "SOP GENERATION..."];
+        setInterval(() => {
+            const bar = document.getElementById('status-bar');
+            bar.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${actions[Math.floor(Math.random()*actions.length)]}`;
+            setTimeout(() => { bar.innerHTML = `<div class="sdot"></div> SYSTEM_ONLINE`; }, 3000);
+        }, 10000);
 
-function runPlaybook(type) {
-  if(running) return; running = true;
-  const body = document.getElementById('termBody'); body.innerHTML = '';
-  let i = 0; function next() {
-    if(i >= PLAYBOOKS[type].length) { body.innerHTML += '<span class="tc"></span>'; running = false; return; }
-    const line = PLAYBOOKS[type][i++];
-    const div = document.createElement('div');
-    const cls = {prompt:'t-prompt',dim:'t-dim',hi:'t-hi',err:'t-err',ok:'t-ok','t-recruiter':'t-recruiter','':''}[line.c] || '';
-    div.innerHTML = cls ? `<span class="${cls}">${line.t}</span>` : (line.t || '&nbsp;');
-    body.appendChild(div); body.scrollTop = body.scrollHeight;
-    setTimeout(next, 200 + Math.random() * 100);
-  } next();
-}
-/* LIVE FIELD LOG SIMULATOR */
-const fieldActions = [
-  "Tracing Cat6 drop in MDF Room B...",
-  "Auditing Rack 4 power redundancy...",
-  "Deploying security patch to 11,000 endpoints...",
-  "Verifying BGP adjacency on Core_Router_01...",
-  "Resetting hung UI thread on Register 04...",
-  "Provisioning Zero-Trust token for new hire...",
-  "Ingesting verbal SOP into AI Workflow pipeline...",
-  "Optimizing 5G failover latency for Store 402..."
-];
+        /* PLAYBOOKS */
+        const logs = {
+          pos: ["SSH -> Register_04", "L7: POS_UI unresponsive", "Action: SQL Cache Clear", "Result: System Online"],
+          ccna: ["SSH -> Core_Router", "OSPF Neighbor: Down", "Action: Reset Gi0/1", "Result: Path Restored"],
+          mdm: ["API -> WorkspaceONE", "Audit: 43 non-compliant", "Action: Push OTA Patch", "Result: 100% Fleet Compliance"],
+          security: ["Audit -> EntraID Logs", "Threat: Impossible Travel", "Action: Revoke Tokens", "Result: Account Secured"],
+          ai: ["Ingest -> Audio_SME.wav", "Prompt: Context+Constraints", "Action: Generate ITIL SOP", "Result: 22h Human-Hours Saved"]
+        };
 
-function startGhostLog() {
-  const navStatus = document.querySelector('.nav-status');
-  setInterval(() => {
-    const action = fieldActions[Math.floor(Math.random() * fieldActions.length)];
-    navStatus.innerHTML = `<div class="sdot"></div> FIELD_OPS: ${action}`;
-    
-    // Reset back to "System Online" after 4 seconds
-    setTimeout(() => {
-      navStatus.innerHTML = `<div class="sdot"></div> SYSTEM ONLINE // OPEN TO OPPORTUNITIES`;
-    }, 4000);
-  }, 12000); // Cycles every 12 seconds
-}
+        function runLog(type) {
+            const body = document.getElementById('termBody');
+            body.innerHTML = "";
+            logs[type].forEach((line, i) => {
+                setTimeout(() => { body.innerHTML += `<div>> ${line}</div>`; }, i * 500);
+            });
+        }
 
-startGhostLog();
-</script>
+        /* CURSOR */
+        const cur = document.getElementById('cur');
+        document.addEventListener('mousemove', e => { 
+            gsap.to(cur, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+
+        /* NETWORK CANVAS */
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        class P { constructor() { this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.v={x:(Math.random()-0.5)*0.3,y:(Math.random()-0.5)*0.3}; }
+          draw() { ctx.beginPath(); ctx.arc(this.x,this.y,1,0,Math.PI*2); ctx.fillStyle="#c8a84b"; ctx.fill(); this.x+=this.v.x; this.y+=this.v.y;
+            if(this.x<0||this.x>canvas.width)this.v.x*=-1; if(this.y<0||this.y>canvas.height)this.v.y*=-1;
+          }
+        }
+        for(let i=0;i<60;i++) particles.push(new P());
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>p.draw()); requestAnimationFrame(anim); }
+        anim();
+    </script>
 </body>
 </html>
