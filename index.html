@@ -3,323 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Régnard Rodney - Senior IT Infrastructure Specialist and Agentic AI Engineer.">
-    <title>Régnard Rodney | IT Operations & Incident Response</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Régnard Rodney | ServiceNow ITSM Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* BASE & CSS VARIABLES */
+        /* SERVICENOW WORKSPACE THEME */
         :root {
-            --bg-main: #f8f9fa;
-            --bg-card: #ffffff;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --primary: #0d6efd;
-            --primary-light: #e7f1ff;
-            --success: #198754;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --border: #dee2e6;
+            --sn-bg-dark: #1e293b;
+            --sn-bg-panel: #0f172a;
+            --sn-border: #334155;
+            --sn-text: #f8fafc;
+            --sn-muted: #94a3b8;
+            --sn-accent: #10b981; /* Emerald Green */
+            --sn-brand: #38bdf8; /* Light Blue */
+            --sn-warning: #f59e0b;
+            --sn-danger: #ef4444;
             --font-sans: 'Inter', sans-serif;
             --font-mono: 'Fira Code', monospace;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-sans); background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
+        body { font-family: var(--font-sans); background-color: var(--sn-bg-dark); color: var(--sn-text); height: 100vh; display: flex; overflow: hidden; }
 
-        /* HEADER & NAV */
-        header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 1.5rem 0; position: sticky; top: 0; z-index: 100; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 2rem; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--primary); }
+        /* SIDEBAR NAVIGATION */
+        .sidebar { width: 250px; background: var(--sn-bg-panel); border-right: 1px solid var(--sn-border); display: flex; flex-direction: column; }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid var(--sn-border); }
+        .sidebar-header h1 { font-size: 1.1rem; color: var(--sn-text); letter-spacing: 0.5px; }
+        .sidebar-header p { font-size: 0.75rem; color: var(--sn-accent); font-family: var(--font-mono); margin-top: 5px; }
+        .nav-items { padding: 1rem 0; flex-grow: 1; }
+        .nav-btn { display: block; width: 100%; text-align: left; background: none; border: none; color: var(--sn-muted); padding: 0.75rem 1.5rem; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; transition: 0.2s; font-family: var(--font-sans); font-weight: 600; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(56, 189, 248, 0.1); color: var(--sn-brand); border-left-color: var(--sn-brand); }
+        .contact-info { padding: 1.5rem; font-size: 0.75rem; color: var(--sn-muted); border-top: 1px solid var(--sn-border); }
+        .contact-info a { color: var(--sn-brand); text-decoration: none; }
 
-        /* HERO SECTION */
-        .hero { padding: 5rem 0 3rem; text-align: left; }
-        .hero h1 { font-size: 3rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 1rem; color: #000; line-height: 1.1; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin-bottom: 2rem; }
-        .badge { display: inline-block; padding: 0.35em 0.65em; font-size: 0.75em; font-weight: 700; background: var(--primary-light); color: var(--primary); border-radius: 4px; margin-right: 0.5rem; margin-bottom: 0.5rem; }
+        /* MAIN CONTENT AREA */
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .header-bar { height: 60px; border-bottom: 1px solid var(--sn-border); display: flex; align-items: center; padding: 0 2rem; background: var(--sn-bg-dark); justify-content: space-between; }
+        .workspace { flex-grow: 1; overflow-y: auto; padding: 2rem; }
 
-        /* INCIDENT DESK (THE CHAT UI) */
-        .incident-desk { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; margin-top: 2rem; }
-        .ticket-queue { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; height: fit-content; }
-        .queue-header { background: #f1f3f5; padding: 1rem; font-weight: 600; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
-        .ticket-item { padding: 1.25rem 1rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
-        .ticket-item.active { background: var(--primary-light); border-left: 4px solid var(--primary); }
-        .ticket-id { font-family: var(--font-mono); font-size: 0.75rem; color: var(--primary); font-weight: 600; }
-        .ticket-title { font-weight: 600; font-size: 0.95rem; margin: 0.25rem 0; }
+        /* VIEW: DASHBOARD (SKILLS) */
+        #view-dashboard { display: block; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .skill-card { background: var(--sn-bg-panel); border: 1px solid var(--sn-border); border-radius: 6px; padding: 1.5rem; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
+        .skill-card:hover { border-color: var(--sn-brand); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
+        .skill-card h3 { color: var(--sn-brand); margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .skill-card p { font-size: 0.85rem; color: var(--sn-muted); margin-bottom: 1rem; line-height: 1.5; }
+        .launch-btn { background: rgba(16, 185, 129, 0.1); color: var(--sn-accent); border: 1px solid var(--sn-accent); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; font-family: var(--font-sans); cursor: pointer; }
 
-        /* CHAT WINDOW */
-        .resolution-window { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; height: 600px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .res-header { padding: 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 8px 8px 0 0; }
-        .res-body { padding: 1.5rem; overflow-y: auto; flex-grow: 1; background: #f8f9fa; border-radius: 0 0 8px 8px; }
+        /* VIEW: INCIDENT WORKSPACE (SERVICENOW CLONE) */
+        #view-incident { display: none; height: 100%; display: flex; gap: 1.5rem; display: none; }
+        .ticket-details { width: 300px; background: var(--sn-bg-panel); border: 1px solid var(--sn-border); border-radius: 6px; padding: 1.5rem; flex-shrink: 0; }
+        .detail-row { margin-bottom: 1.2rem; }
+        .detail-label { font-size: 0.7rem; color: var(--sn-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+        .detail-value { font-size: 0.9rem; font-weight: 600; }
+        .priority-high { color: var(--sn-danger); background: rgba(239, 68, 68, 0.1); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
         
-        .chat-msg { margin-bottom: 1.5rem; max-width: 85%; animation: fadeIn 0.4s ease-out; }
-        .msg-user { margin-right: auto; }
-        .msg-agent { margin-left: auto; }
-        .msg-system { margin: 1rem auto; text-align: center; max-width: 100%; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); animation: fadeIn 0.4s ease-out; }
-        
-        .bubble { padding: 1rem 1.25rem; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .msg-user .bubble { background: #ffffff; border: 1px solid var(--border); border-bottom-left-radius: 0; }
-        .msg-agent .bubble { background: var(--primary); color: white; border-bottom-right-radius: 0; }
-        
-        .user-name { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-muted); }
-        .agent-name { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-muted); text-align: right; }
-        
-        .logic-comment { display: block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--success); margin-top: 0.5rem; text-align: right; }
+        /* HARDWARE/TOOL FLASHER */
+        .ci-flasher { margin-top: 2rem; padding: 1rem; border: 1px solid var(--sn-warning); background: rgba(245, 158, 11, 0.05); border-radius: 6px; }
+        .ci-flasher.active { animation: pulseWarning 1.5s infinite; }
+        @keyframes pulseWarning { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+        .ci-label { color: var(--sn-warning); font-family: var(--font-mono); font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; }
+        .ci-value { font-size: 0.9rem; font-weight: bold; }
 
-        .btn-initiate { padding: 0.6rem 1.2rem; background: var(--success); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-family: var(--font-sans); transition: 0.2s; }
-        .btn-initiate:hover { background: #148f43; }
-
-        /* SECTIONS */
-        .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 2rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+        /* ACTIVITY STREAM */
+        .activity-stream { flex-grow: 1; background: var(--sn-bg-panel); border: 1px solid var(--sn-border); border-radius: 6px; display: flex; flex-direction: column; }
+        .stream-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--sn-border); display: flex; justify-content: space-between; align-items: center; }
+        .stream-content { padding: 1.5rem; flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
         
-        /* RESUME GRID */
-        .resume-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .resume-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .resume-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
-        .company { font-size: 1.25rem; font-weight: 700; color: var(--text-main); }
-        .dates { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); }
-        .role { font-weight: 600; color: var(--primary); margin-bottom: 1rem; }
-        .resume-card ul { list-style-type: none; padding-left: 0; }
-        .resume-card ul li { margin-bottom: 0.5rem; position: relative; padding-left: 1.5rem; color: #495057; font-size: 0.95rem; }
-        .resume-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+        .chat-block { display: flex; flex-direction: column; max-width: 85%; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-meta { font-size: 0.75rem; color: var(--sn-muted); margin-bottom: 0.2rem; }
+        .chat-meta span { font-family: var(--font-mono); }
+        .bubble { padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
+        
+        .msg-caller { align-self: flex-start; }
+        .msg-caller .bubble { background: #334155; border-bottom-left-radius: 0; }
+        .msg-agent { align-self: flex-end; }
+        .msg-agent .bubble { background: var(--sn-brand); color: #000; border-bottom-right-radius: 0; font-weight: 500; }
+        
+        .msg-system { align-self: center; width: 100%; max-width: 100%; }
+        .msg-system .bubble { background: #000; border: 1px solid var(--sn-accent); color: var(--sn-accent); font-family: var(--font-mono); font-size: 0.85rem; border-radius: 4px; }
+        
+        .msg-cli { align-self: center; width: 100%; max-width: 100%; }
+        .msg-cli .bubble { background: #0f172a; border: 1px solid var(--sn-border); color: #fff; font-family: var(--font-mono); font-size: 0.85rem; border-radius: 4px; white-space: pre-wrap; border-left: 3px solid var(--sn-brand); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .logic-comment { display: block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--sn-warning); margin-top: 0.5rem; text-align: right; font-style: italic; }
 
-        @media (max-width: 900px) {
-            .incident-desk { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
+        /* INCOMING CALL ANIMATION */
+        .incoming-call { background: var(--sn-danger); color: white; padding: 1rem; border-radius: 6px; text-align: center; font-weight: bold; animation: ringing 0.5s infinite alternate; cursor: pointer; }
+        @keyframes ringing { from { transform: scale(1); } to { transform: scale(1.02); background: #b91c1c; } }
+
+        /* VIEW: RESUME */
+        #view-resume { display: none; background: var(--sn-bg-panel); border: 1px solid var(--sn-border); border-radius: 6px; padding: 3rem; max-width: 900px; margin: 0 auto; }
+        .res-section { margin-bottom: 2.5rem; }
+        .res-section h2 { border-bottom: 1px solid var(--sn-border); padding-bottom: 0.5rem; color: var(--sn-brand); font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .res-job { margin-bottom: 2rem; }
+        .res-job-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
+        .res-job h3 { margin: 0; color: var(--sn-text); font-size: 1.2rem; }
+        .res-job .dates { font-family: var(--font-mono); color: var(--sn-muted); font-size: 0.85rem; }
+        .res-job .role { color: var(--sn-accent); font-weight: 600; margin-bottom: 0.5rem; }
+        .res-job ul { padding-left: 1.5rem; color: #cbd5e1; font-size: 0.95rem; }
+        .res-job li { margin-bottom: 0.4rem; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container nav-flex">
-            <a href="#" class="logo">R. RODNEY | IT OPERATIONS</a>
-            <div class="nav-links">
-                <a href="#incident-desk">Live Triage</a>
-                <a href="#resume">Professional Record</a>
-                <a href="#ai">AI Engineering</a>
-            </div>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>ServiceNow Workspace</h1>
+            <p>Agent: R. Rodney | Status: <span style="color:var(--sn-accent)">Online</span></p>
         </div>
-    </header>
+        <div class="nav-items">
+            <button class="nav-btn active" onclick="switchView('dashboard')">📊 Incident Dashboard</button>
+            <button class="nav-btn" onclick="switchView('resume')">📄 Candidate Resume</button>
+        </div>
+        <div class="contact-info">
+            Wilmington, DE<br>
+            (470) 483-5144<br>
+            <a href="mailto:regnardrodney@gmail.com">regnardrodney@gmail.com</a><br>
+            <a href="https://linkedin.com/in/regnardrodney" target="_blank">LinkedIn Profile</a>
+        </div>
+    </nav>
 
-    <main class="container">
-        <section class="hero">
-            <h1>Infrastructure Reliability & Incident Management</h1>
-            <p>Bridging the gap between physical infrastructure, logical troubleshooting, and Agentic AI automation. Delivering 99.9% SLAs through strict ITIL frameworks and A+ methodology.</p>
-            <div>
-                <span class="badge">ITIL v4 Framework</span>
-                <span class="badge">A+ / Network+ / Security+</span>
-                <span class="badge">ServiceNow & MDM</span>
-                <span class="badge">Agentic AI Prompting</span>
-                <span class="badge">WGU MSITM '27</span>
-            </div>
-        </section>
+    <main class="main-content">
+        <header class="header-bar">
+            <h2 id="header-title" style="font-size: 1.2rem; font-weight: 600;">Incident Dashboard</h2>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--sn-muted);" id="live-clock"></div>
+        </header>
 
-        <section id="incident-desk" style="margin-bottom: 6rem;">
-            <h2 class="section-title">End-to-End Incident Resolution</h2>
-            <p style="color: var(--text-muted);">A live demonstration of a multi-layer P1 incident, scaling from physical diagnostics to cross-team coordination and AI documentation.</p>
+        <div class="workspace">
             
-            <div class="incident-desk">
-                <div class="ticket-queue">
-                    <div class="queue-header">Open Incidents (Assigned to: R. Rodney)</div>
-                    <div class="ticket-item active">
-                        <div class="ticket-id">INC-88924 (Master Incident)</div>
-                        <div class="ticket-title">P1: Retail POS Registers Offline</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">End-to-End OSI Troubleshooting</div>
+            <div id="view-dashboard">
+                <p style="color: var(--sn-muted); font-size: 1.1rem;">Select a core competency below to launch an interactive, step-by-step incident resolution simulation.</p>
+                <div class="grid-cards">
+                    </div>
+            </div>
+
+            <div id="view-resume">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Régnard Rodney</h1>
+                    <p style="color: var(--sn-brand); font-weight: 600; font-size: 1.1rem;">Customer-First IT Support Specialist & Incident Commander</p>
+                    <p style="color: var(--sn-muted); margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Bilingual (French/English) IT professional with 10+ years experience in network troubleshooting, cybersecurity fundamentals, and full device lifecycle management across Windows, macOS, Linux, iOS, and Android ecosystems. Proven track record of leveraging Advanced Prompt Engineering and automation to accelerate ticket resolution, consistently maintaining 99% SLA compliance.</p>
+                </div>
+
+                <div class="res-section">
+                    <h2>Professional Experience</h2>
+                    
+                    <div class="res-job">
+                        <div class="res-job-header">
+                            <h3>Asurion</h3>
+                            <span class="dates">2020 – 2025</span>
+                        </div>
+                        <div class="role">Premier Solution Support Specialist</div>
+                        <ul>
+                            <li>Orchestrated full device lifecycle and endpoint security compliance for 11,000+ enterprise endpoints.</li>
+                            <li>Maintained 99% SLA compliance resolving complex Active Directory, Azure AD, and Office 365 issues via ServiceNow.</li>
+                        </ul>
+                    </div>
+
+                    <div class="res-job">
+                        <div class="res-job-header">
+                            <h3>Robert Half (Prologic ITS, Lowe's, Honey Baked Ham)</h3>
+                            <span class="dates">2018 – 2020</span>
+                        </div>
+                        <div class="role">IT Infrastructure Contractor</div>
+                        <ul>
+                            <li>Managed MDM deployments via VMware Workspace ONE and AT&T provisioning for 11,000+ first responders (Prologic).</li>
+                            <li>Executed on-site retail POS break/fix, UPS repair, and data cabling to ensure zero downtime (Lowe's & Bargain Hunt).</li>
+                            <li>Governed hardware lifecycle and network infrastructure for 400+ retail stores, deploying Cisco Meraki SD-WAN (Honey Baked Ham).</li>
+                        </ul>
+                    </div>
+
+                    <div class="res-job">
+                        <div class="res-job-header">
+                            <h3>Computer Generated Solutions (CGS)</h3>
+                            <span class="dates">2017 – 2018</span>
+                        </div>
+                        <div class="role">Bilingual Lenovo Technical Support IV</div>
+                        <ul>
+                            <li>Provided bilingual (French/English) remote assistance resolving complex hardware, server, and router anomalies.</li>
+                            <li>Executed Layer 2/Layer 3 OSI diagnostics and advanced firmware/BIOS updates on enterprise-grade Lenovo systems.</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="resolution-window">
-                    <div class="res-header">
-                        <div>
-                            <strong style="display:block;">INC-88924: Master Incident Walkthrough</strong>
-                            <span style="font-size:0.75rem; color:var(--text-muted);">Status: <span style="color:var(--primary); font-weight:bold;" id="chat-status">Ready</span></span>
-                        </div>
-                        <button class="btn-initiate" onclick="runChatSimulation()" id="btn-start">Initiate Master Incident</button>
+                <div class="res-section">
+                    <h2>Education & Certifications</h2>
+                    <ul>
+                        <li><strong>Western Governors University:</strong> Master of Science, IT Management (Expected 2026) & BS Information Technology</li>
+                        <li><strong>ITT Technical Institute:</strong> Bachelor of Science, Computer Networks Systems</li>
+                        <li><strong>Certifications:</strong> CompTIA A+, Google Data Analytics, Google IT Support Professional, ITIL Foundation (2026 Candidate)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="view-incident">
+                <div class="ticket-details">
+                    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--sn-border); padding-bottom: 0.5rem;" id="inc-number">INC0000000</h3>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Caller</div>
+                        <div class="detail-value" id="inc-caller">-</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Priority</div>
+                        <div class="detail-value priority-high" id="inc-priority">1 - Critical</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">State</div>
+                        <div class="detail-value" style="color: var(--sn-accent);" id="inc-state">In Progress</div>
                     </div>
                     
-                    <div class="res-body" id="chat-container">
-                        <div class="msg-system">Waiting for triage initiation... Click the button above to begin.</div>
+                    <div class="ci-flasher" id="ci-panel">
+                        <div class="ci-label">TARGET DEVICE / CI:</div>
+                        <div class="ci-value" id="inc-ci">Scanning...</div>
                     </div>
+                </div>
+
+                <div class="activity-stream">
+                    <div class="stream-header">
+                        <h3 style="font-size: 1.1rem;">Activity Stream</h3>
+                        <button class="launch-btn" id="next-step-btn" onclick="advanceIncident()" style="display: none;">Execute Next Step</button>
+                    </div>
+                    <div class="stream-content" id="stream-content">
+                        </div>
                 </div>
             </div>
-        </section>
 
-        <section id="resume" style="margin-bottom: 6rem;">
-            <h2 class="section-title">The Professional Record</h2>
-            <div class="resume-grid">
-                
-                <div class="resume-card">
-                    <div class="resume-header">
-                        <span class="company">Outlier AI</span>
-                        <span class="dates">2022 — Present</span>
-                    </div>
-                    <div class="role">AI Trainer & Logic Validator (Remote)</div>
-                    <ul>
-                        <li>Train and evaluate LLM outputs, applying structured rubrics to validate logical reasoning, IT troubleshooting accuracy, and Python/SQL code structure.</li>
-                        <li>Perform "Human-in-the-Loop" hallucination checks, ensuring AI-generated solutions align with safe, functional enterprise IT practices.</li>
-                        <li>Draft complex prompt architectures focusing on context, persona, and strict operational constraints to generate internal SOPs and automated ticket triage frameworks.</li>
-                    </ul>
-                </div>
-
-                <div class="resume-card">
-                    <div class="resume-header">
-                        <span class="company">Asurion</span>
-                        <span class="dates">2020 — 2025</span>
-                    </div>
-                    <div class="role">Premier Solution Support Specialist</div>
-                    <ul>
-                        <li>Maintained 99.9% SLA compliance across an 11,000+ endpoint enterprise fleet utilizing ServiceNow, Active Directory, and MDM platforms.</li>
-                        <li>Served as Tier 2 escalation point, applying A+ outside-in methodology (Hardware -> Network -> OS -> App) to resolve high-pressure retail system freezes.</li>
-                        <li>Coordinated cross-team handoffs with Network and App Dev teams, providing detailed ITIL-compliant incident logs to reduce Mean Time to Resolution (MTTR).</li>
-                    </ul>
-                </div>
-
-                <div class="resume-card">
-                    <div class="resume-header">
-                        <span class="company">Robert Half</span>
-                        <span class="dates">2018 — 2020</span>
-                    </div>
-                    <div class="role">IT Infrastructure Contractor</div>
-                    <ul>
-                        <li>Deployed to mission-critical environments to execute rapid hardware lifecycle management, network racking, and endpoint deployments.</li>
-                        <li>Conducted layer-by-layer OSI diagnostics, testing physical fiber patches, validating switch link states, and verifying endpoint connectivity.</li>
-                    </ul>
-                </div>
-
-                <div class="resume-card">
-                    <div class="resume-header">
-                        <span class="company">CGS (Computer Generated Solutions)</span>
-                        <span class="dates">2017 — 2018</span>
-                    </div>
-                    <div class="role">Bilingual Lenovo Technical Support IV</div>
-                    <ul>
-                        <li>Provided bilingual (English/French) Tier 2 and Tier 3 hardware and software support for Lenovo enterprise clients.</li>
-                        <li>Managed advanced hardware diagnostic flows, warranty dispatch protocols, and OS recovery processes.</li>
-                    </ul>
-                </div>
-
-                <div class="resume-card">
-                    <div class="resume-header">
-                        <span class="company">Western Governors University (WGU)</span>
-                        <span class="dates">2022 — Expected 2027</span>
-                    </div>
-                    <div class="role">Accelerated BSIT to MS Information Technology Management</div>
-                    <ul>
-                        <li>Dual-degree track merging technical infrastructure engineering with IT service management, governance, and business alignment.</li>
-                        <li>Certifications: CompTIA Network+, Security+, A+, Google IT Support Professional.</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="ai" style="margin-bottom: 6rem;">
-            <h2 class="section-title">AI Workflow & Prompt Engineering</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                <div class="resume-card">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Enterprise Prompt Architecture</h3>
-                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Applying structured prompt engineering to build reliable, business-safe AI assistants.</p>
-                    <ul style="padding-left: 0;">
-                        <li><strong>Context & Persona:</strong> Grounding the LLM in the specific ITIL role.</li>
-                        <li><strong>Constraint Enforcement:</strong> Preventing the model from generating speculative fixes.</li>
-                        <li><strong>Few-Shot Examples:</strong> Providing exact ticket formats for consistent output.</li>
-                    </ul>
-                </div>
-                <div class="resume-card">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Hallucination Validation</h3>
-                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Acting as the "Human-in-the-Loop" safeguard for enterprise AI deployments.</p>
-                    <ul style="padding-left: 0;">
-                        <li><strong>Claim Checking:</strong> Cross-referencing AI outputs against official network topology.</li>
-                        <li><strong>Self-UAT:</strong> Designing fallback behaviors where the AI admits knowledge gaps.</li>
-                        <li><strong>SOP Generation:</strong> Using validated LLM outputs to instantly draft KBAs.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
+        </div>
     </main>
 
-    <footer style="background: var(--bg-card); border-top: 1px solid var(--border); padding: 3rem 0; text-align: center;">
-        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Let's connect.</h2>
-        <a href="mailto:regnardrodney@gmail.com" style="display: inline-block; padding: 0.75rem 1.5rem; background: var(--primary); color: white; text-decoration: none; border-radius: 4px; font-weight: 600;">regnardrodney@gmail.com</a>
-        <p style="margin-top: 2rem; color: var(--text-muted); font-size: 0.85rem;">Wilmington, DE • LinkedIn • GitHub</p>
-    </footer>
-
     <script>
-        const chatContainer = document.getElementById('chat-container');
-        let isRunning = false;
+        // --- REAL-TIME CLOCK ---
+        setInterval(() => {
+            document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+        }, 1000);
 
-        const masterScript = [
-            { t: 'system', m: 'Ticket INC-88924 Created. Priority: P1.' },
-            { t: 'user', name: 'Sarah (Store 402 Lead)', m: 'Regnard, all front registers just dropped offline. We have a massive line, nothing is scanning!' },
-            { t: 'agent', name: 'R. Rodney (Tier 2)', m: 'I see the ticket, Sarah. I am establishing a P1 incident bridge. Are the screens completely black, or is the POS software frozen?', c: '' },
-            { t: 'user', name: 'Sarah (Store 402 Lead)', m: 'The screens are on, but the app says "No Database Connection".' },
-            { t: 'agent', name: 'R. Rodney (Tier 2)', m: 'Understood. I am verifying the physical layer and local network switch at your location first before we escalate to the database team.', c: '' },
-            { t: 'system', m: 'TOOL [Command Line]: Pinging Store 402 Default Gateway... [SUCCESS]' },
-            { t: 'system', m: 'TOOL [Wireshark]: Analyzing packet capture on VLAN 30... [NO BROADCAST STORMS]' },
-            { t: 'agent', name: 'R. Rodney (Tier 2)', m: 'Local network is stable. I am coordinating a handoff to the DBA/Security team. It appears the SQL server endpoint blocked port 1433 during last night\'s patch.', c: '' },
-            { t: 'system', m: 'SYSTEM EVENT: Azure NSG ACL reverted by DBA Team.' },
-            { t: 'agent', name: 'R. Rodney (Tier 2)', m: 'Sarah, the App team cleared the block. Please reboot Register 1 and test a transaction.' },
-            { t: 'user', name: 'Sarah (Store 402 Lead)', m: 'It\'s scanning! The database is syncing. We are back online. Thank you!' },
-            { t: 'agent', name: 'R. Rodney (Tier 2)', m: 'Excellent. I am documenting the resolution and closing the ticket. I will use our AI workflow to generate an SOP for post-patch ACL verification.', c: '' },
-            { t: 'system', m: 'Ticket INC-88924 Status Updated: RESOLVED & CLOSED.' }
+        // --- NAVIGATION ---
+        function switchView(view) {
+            document.getElementById('view-dashboard').style.display = view === 'dashboard' ? 'block' : 'none';
+            document.getElementById('view-resume').style.display = view === 'resume' ? 'block' : 'none';
+            document.getElementById('view-incident').style.display = view === 'incident' ? 'flex' : 'none';
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if(view === 'dashboard') document.querySelectorAll('.nav-btn')[0].classList.add('active');
+            if(view === 'resume') document.querySelectorAll('.nav-btn')[1].classList.add('active');
+
+            document.getElementById('header-title').innerText = view === 'dashboard' ? 'Incident Dashboard' : (view === 'resume' ? 'Candidate Profile' : 'Agent Workspace');
+        }
+
+        // --- INCIDENT DATA & LOGIC ---
+        const scenarios = [
+            {
+                id: "net-sec",
+                title: "Network & Security (Cisco Meraki)",
+                desc: "Demonstrates CCNA routing logic, SD-WAN failover, and hardware lifecycle management for 400+ stores.",
+                incNumber: "INC004092",
+                caller: "Store 42 Manager (Honey Baked Ham)",
+                ci: "Meraki MX68 Security Appliance",
+                steps: [
+                    { type: 'call', text: "📞 INCOMING CALL: Store 42 - Point of Sale Offline", actionBtn: "Answer Call" },
+                    { type: 'agent', name: "R. Rodney", text: "Thank you for calling IT Operations, this is Régnard. I understand Store 42 is completely offline and you have customers waiting. I am pulling up your network telemetry right now to get you back online.", comment: "// ITIL: Empathy & Expectation Management. Acknowledge business impact." },
+                    { type: 'system', text: "[SYS] Target CI acquired: Meraki MX68. Initiating Layer 1 & 2 OSI Diagnostics..." },
+                    { type: 'agent', name: "R. Rodney", text: "I've remoted into your MX68 dashboard. Physical ports are showing UP, and local ARP tables are clean. No broadcast storms. Moving to Layer 3 routing.", comment: "" },
+                    { type: 'cli', text: "Router# show ip ospf neighbor\n\nNeighbor ID     Pri   State           Dead Time   Address         Interface\n10.0.0.1        1     DOWN/DROPPED    00:00:00    192.168.1.1     GigabitEthernet0/1\n\nRouter# show standby brief\nInterface   Grp  Pri P State   Active          Standby         Virtual IP\nGi0/1       10   100   Init    unknown         local           192.168.1.254", comment: "// CCNA: Verifying OSPF adjacency and HSRP status. Primary ISP route has failed." },
+                    { type: 'system', text: "[SYS] EXECUTING COMMAND: Forcing Cisco Meraki SD-WAN Failover to LTE Backup Circuit..." },
+                    { type: 'caller', name: "Store 42 Manager", text: "Wait, the registers just lit back up! Cards are processing again." },
+                    { type: 'agent', name: "R. Rodney", text: "Excellent. Your primary ISP is experiencing an outage, but I have forced your store onto the cellular backup. You can continue operating normally. I am opening a carrier ticket to repair the main fiber line.", comment: "// ITIL Incident Management: Restore service via workaround ASAP, then pursue Root Cause Analysis (RCA)." },
+                    { type: 'system', text: "[SYS] ServiceNow State updated to: RESOLVED. Resolution Code: Workaround Applied." }
+                ]
+            },
+            {
+                id: "iam-azure",
+                title: "Systems & IAM (Azure Entra ID)",
+                desc: "Demonstrates Zero Trust security principles, MFA validation, and identity access management via Azure.",
+                incNumber: "INC005103",
+                caller: "VIP Executive (Asurion)",
+                ci: "Azure Entra ID / Microsoft 365",
+                steps: [
+                    { type: 'call', text: "💬 HIGH PRIORITY CHAT INITIATED: VIP Executive Locked Out", actionBtn: "Accept Chat" },
+                    { type: 'caller', name: "VIP Executive", text: "I'm travelling in Europe and O365 won't let me check email. I have a board meeting in 10 minutes!" },
+                    { type: 'agent', name: "R. Rodney", text: "I apologize for the stress this is causing right before your meeting. I am pulling your Entra ID sign-in logs immediately to see why the system is blocking you.", comment: "// ITIL: Prioritize VIP incidents while maintaining security protocols." },
+                    { type: 'system', text: "[SYS] QUERYING AZURE ENTRA ID LOGS...\nResult: Blocked by Conditional Access Policy [Zero_Trust_Geoblock]. Port 443 HTTPS blocked from unfamiliar IP." },
+                    { type: 'agent', name: "R. Rodney", text: "Our Zero Trust security policy blocked your login because you are on an unfamiliar network abroad. For your security, I am sending a secure push notification to your registered authenticator app. Please approve it.", comment: "" },
+                    { type: 'system', text: "[SYS] MFA Challenge Status: SUCCESSFUL." },
+                    { type: 'system', text: "[SYS] TOOL EXECUTED: Temporarily whitelisting IP address in Azure Conditional Access for 12 hours." },
+                    { type: 'caller', name: "VIP Executive", text: "Approved the prompt. My inbox just loaded. Thank you!" },
+                    { type: 'agent', name: "R. Rodney", text: "You're welcome. I'm documenting this exception and notifying the Security team to update your VPN travel profile. Have a great board meeting.", comment: "// ITIL: Document configuration changes. Cross-team collaboration for permanent fix." }
+                ]
+            },
+            {
+                id: "pos-data",
+                title: "ITSM, POS & Database Admin",
+                desc: "Demonstrates Retail POS break/fix, Windows OS diagnostics, and SQL port connectivity troubleshooting.",
+                incNumber: "INC006221",
+                caller: "Lowe's Front End Supervisor",
+                ci: "NCR POS Terminal / Windows 10 IoT",
+                steps: [
+                    { type: 'call', text: "🚨 ALERT: ServiceNow Auto-Ticket - Register 4 Database Timeout", actionBtn: "Investigate" },
+                    { type: 'caller', name: "Supervisor", text: "Register 4 won't close tickets. It throws a 'DB Sync Error'. Can we fix it without shutting down the lane?" },
+                    { type: 'agent', name: "R. Rodney", text: "I see the error on the monitoring dashboard. Yes, I will use RDP to remote into the register in the background so you don't have to leave the floor.", comment: "// A+ Core 2: Utilize Remote Desktop Protocol (RDP Port 3389) for non-intrusive support." },
+                    { type: 'system', text: "[SYS] RDP Session Established to Target CI: NCR-POS-04." },
+                    { type: 'cli', text: "PS C:\\> Test-NetConnection -ComputerName SQL-SERVER-01 -Port 1433\nComputerName     : SQL-SERVER-01\nRemoteAddress    : 10.50.2.10\nRemotePort       : 1433\nTcpTestSucceeded : False", comment: "" },
+                    { type: 'agent', name: "R. Rodney", text: "The local SQL Sync Agent service has crashed on the register. I am opening Services.msc to forcefully restart the daemon.", comment: "// A+ Core 2: Using OS-level administrative tools to manage services." },
+                    { type: 'system', text: "[SYS] EXECUTING: Restart-Service -Name 'SQLSyncAgent' -Force\n[SYS] Status: Running. Transaction logs uploading..." },
+                    { type: 'caller', name: "Supervisor", text: "The error cleared and the receipt just printed!" },
+                    { type: 'agent', name: "R. Rodney", text: "Perfect. All cached transactions are synced. Closing the ticket as a First Call Resolution.", comment: "// ITIL: First Call Resolution (FCR) achieved, maintaining 99% SLA." }
+                ]
+            },
+            {
+                id: "hw-lenovo",
+                title: "Hardware Lifecycle (Lenovo Enterprise)",
+                desc: "Demonstrates deep hardware troubleshooting, BIOS configuration, and OS recovery on enterprise machines.",
+                incNumber: "INC007334",
+                caller: "Field Technician (CGS)",
+                ci: "Lenovo ThinkPad T14 Gen 2",
+                steps: [
+                    { type: 'call', text: "📞 INCOMING CALL: Field Tech Escalation - Boot Failure", actionBtn: "Answer Call" },
+                    { type: 'caller', name: "Field Tech", text: "I'm on site with the client. The ThinkPad T14 gives a 'Boot Device Not Found' error. Is the SSD dead?" },
+                    { type: 'agent', name: "R. Rodney", text: "Let's not assume a dead drive just yet. I know the client needs this laptop today. Have them power it on and tap F1 repeatedly to enter the Lenovo BIOS.", comment: "" },
+                    { type: 'system', text: "[SYS] Remote Camera Share Active: Viewing Lenovo BIOS UEFI Screen." },
+                    { type: 'agent', name: "R. Rodney", text: "I can see the NVMe SSD is recognized in the BIOS under 'Storage'. The hardware is fine. The Boot Configuration Data (BCD) sector is corrupted.", comment: "" },
+                    { type: 'system', text: "[SYS] TOOL IN USE: Windows PE Bootable USB Drive." },
+                    { type: 'cli', text: "X:\\Sources> bootrec /rebuildbcd\nScanning all disks for Windows installations.\nSuccessfully scanned Windows installations.\nTotal identified Windows installations: 1\n[1] C:\\Windows\nAdd installation to boot list? Yes(Y)/No(N)/All(A): Y\nThe operation completed successfully.", comment: "// A+ Core 2: Executing advanced command-line OS recovery tools." },
+                    { type: 'caller', name: "Field Tech", text: "Rebooting now... Windows is loading! Client is thrilled, didn't lose any data." },
+                    { type: 'agent', name: "R. Rodney", text: "Great job. I will log a hardware anomaly in ServiceNow tied to this serial number for future lifecycle tracking. Have a good one.", comment: "// ITIL: Configuration Management Database (CMDB) hygiene. Track CI anomalies for lifecycle replacement." }
+                ]
+            },
+            {
+                id: "ai-auto",
+                title: "Automation & Applied AI Prompting",
+                desc: "Demonstrates advanced prompt engineering to orchestrate autonomous Tier 1 support workflows.",
+                incNumber: "INC008445",
+                caller: "ServiceNow Automation Engine",
+                ci: "LLM Orchestration API",
+                steps: [
+                    { type: 'call', text: "🚨 CRITICAL ALERT: Ticket Storm Detected. 50+ Tickets created in 3 minutes.", actionBtn: "Deploy Automation" },
+                    { type: 'system', text: "[SYS] TICKET ANALYSIS: 100% of tickets relate to 'Password Reset' following mandatory 90-day expiration policy." },
+                    { type: 'agent', name: "R. Rodney", text: "A manual response will breach our SLAs. I am deploying the Advanced Prompt Engineering script I wrote to autonomous handle this queue via API.", comment: "// ITIL Incident Management: Utilize automation to handle high-volume events and maintain 99% SLA." },
+                    { type: 'cli', text: "POST https://api.openai.com/v1/chat/completions\n{\n  \"model\": \"gpt-4\",\n  \"messages\": [\n    {\"role\": \"system\", \"content\": \"You are an enterprise IT assistant. Persona: Empathetic, precise. Constraint: Only provide the official SailPoint self-service reset link. Do not attempt manual resets.\"},\n    {\"role\": \"user\", \"content\": \"Context: Process 50 pending ServiceNow tickets matching 'password reset'.\"}\n  ]\n}", comment: "" },
+                    { type: 'system', text: "[SYS] AI WORKFLOW EXECUTING...\n[SYS] 45 Tickets categorized, tagged, and auto-responded with self-service link.\n[SYS] 5 Tickets escalated to Tier 2 (Complex Account Locks)." },
+                    { type: 'agent', name: "R. Rodney", text: "Queue is normalized. AI handled 90% of the volume flawlessly. I will manually process the remaining 5 complex lockouts.", comment: "// IT Service Strategy: Leverage AI for Tier 1 deflection, reserving human capital for complex Tier 2/3 engineering." }
+                ]
+            }
         ];
 
-        function runChatSimulation() {
-            if(isRunning) return;
-            isRunning = true;
+        // Generate Dashboard Cards
+        const grid = document.querySelector('.grid-cards');
+        scenarios.forEach(scen => {
+            const card = document.createElement('div');
+            card.className = 'skill-card';
+            card.innerHTML = `
+                <h3>${scen.title}</h3>
+                <p>${scen.desc}</p>
+                <button class="launch-btn" onclick="startIncident('${scen.id}')">Launch Simulation</button>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Current Simulation State
+        let currentScenario = null;
+        let currentStepIndex = 0;
+        let isAutoPlaying = false;
+
+        function startIncident(id) {
+            currentScenario = scenarios.find(s => s.id === id);
+            currentStepIndex = 0;
             
-            // UI Updates
-            document.getElementById('btn-start').innerText = "Simulation Running...";
-            document.getElementById('btn-start').style.background = "var(--text-muted)";
-            document.getElementById('chat-status').innerText = "In Progress";
-            document.getElementById('chat-status').style.color = "var(--warning)";
-            chatContainer.innerHTML = '';
+            // Populate Ticket Details
+            document.getElementById('inc-number').innerText = currentScenario.incNumber;
+            document.getElementById('inc-caller').innerText = currentScenario.caller;
+            document.getElementById('inc-ci').innerText = currentScenario.ci;
             
-            masterScript.forEach((step, index) => {
-                setTimeout(() => {
-                    let html = '';
-                    
-                    if (step.t === 'system') {
-                        html = `<div class="msg-system">${step.m}</div>`;
-                    } else if (step.t === 'user') {
-                        html = `
-                            <div class="chat-msg msg-user">
-                                <span class="user-name">${step.name}</span>
-                                <div class="bubble">${step.m}</div>
-                            </div>
-                        `;
-                    } else if (step.t === 'agent') {
-                        html = `
-                            <div class="chat-msg msg-agent">
-                                <span class="agent-name">${step.name}</span>
-                                <div class="bubble">${step.m}</div>
-                                ${step.c ? `<span class="logic-comment">${step.c.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>` : ''}
-                            </div>
-                        `;
-                    }
+            // Reset Stream
+            document.getElementById('stream-content').innerHTML = '';
+            document.getElementById('next-step-btn').style.display = 'block';
+            document.getElementById('ci-panel').classList.remove('active');
 
-                    chatContainer.innerHTML += html;
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                    // Reset button when done
-                    if (index === masterScript.length - 1) {
-                        isRunning = false;
-                        document.getElementById('chat-status').innerText = "Closed";
-                        document.getElementById('chat-status').style.color = "var(--success)";
-                        document.getElementById('btn-start').innerText = "Restart Incident";
-                        document.getElementById('btn-start').style.background = "var(--success)";
-                    }
-
-                }, index * 1500); // 1.5 second delay between chat bubbles
-            });
+            switchView('incident');
+            advanceIncident(); // Auto-start first step
         }
+
+        function advanceIncident() {
+            if (!currentScenario || currentStepIndex >= currentScenario.steps.length) return;
+
+            const step = currentScenario.steps[currentStepIndex];
+            const stream = document.getElementById('stream-content');
+            const btn = document.getElementById('next-step-btn');
+            const ciPanel = document.getElementById('ci-panel');
+
+            // Flash CI Panel randomly during tech steps
+            if (step.type === 'cli' || step.type === 'system') {
+                ciPanel.classList.add('active');
+            } else {
+                ciPanel.classList.remove('active');
+            }
+
+            // Simulated Timestamp (+ approx 2 mins per step to show time passing)
+            const simulatedTime = new Date(Date.now() + (currentStepIndex * 120000)).toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+
+            const block = document.createElement('div');
+            block.className = 'chat-block ' + (step.type === 'call' ? 'msg-system' : step.type === 'caller' ? 'msg-caller' : step.type === 'agent' ? 'msg-agent' : step.type === 'cli' ? 'msg-cli' : 'msg-system');
+
+            let contentHTML = '';
+
+            if (step.type === 'call') {
+                contentHTML = `<div class="incoming-call" onclick="autoPlay()">${step.text}<br><span style="font-size:0.7rem; font-weight:normal;">(Click to ${step.actionBtn} & Auto-Play)</span></div>`;
+                btn.style.display = 'none'; // Hide next button during incoming call
+            } else {
+                contentHTML = `
+                    <div class="chat-meta">${step.name ? step.name + ' • ' : ''}<span>[${simulatedTime}]</span></div>
+                    <div class="bubble">${step.text}</div>
+                    ${step.comment ? `<div class="logic-comment">${step.comment.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>` : ''}
+                `;
+                btn.style.display = 'block';
+            }
+
+            block.innerHTML = contentHTML;
+            stream.appendChild(block);
+            
+            // Auto-scroll
+            stream.scrollTo({ top: stream.scrollHeight, behavior: 'smooth' });
+
+            currentStepIndex++;
+
+            if (currentStepIndex >= currentScenario.steps.length) {
+                btn.style.display = 'none';
+                ciPanel.classList.remove('active');
+            } else if (isAutoPlaying && step.type !== 'call') {
+                btn.style.display = 'none';
+                setTimeout(advanceIncident, 3500); // 3.5 seconds per step for reading
+            }
+        }
+
+        function autoPlay() {
+            isAutoPlaying = true;
+            advanceIncident();
+        }
+
     </script>
 </body>
 </html>
