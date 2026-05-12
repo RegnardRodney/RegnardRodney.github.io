@@ -166,4 +166,393 @@ section{padding:7rem 3.5rem;}
 .cl{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:all .2s;}
 .cl:hover{color:var(--gold);border-color:var(--gold);}
 
-footer{padding:1.8rem 3.5rem;border-top:1px solid var
+footer{padding:1.8rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--black);}
+footer span{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--muted);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold2);}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  #hero{padding:0 1.5rem 3rem;}
+  .hero-top{left:1.5rem;right:1.5rem;top:5.5rem;}
+  section{padding:5rem 1.5rem;}
+  .skgrid,.aigrid,.credgrid,.langrow{grid-template-columns:1fr;}
+  .exprow{grid-template-columns:1fr;gap:.5rem;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pre-name">
+    <span style="animation-delay:.05s">R</span><span style="animation-delay:.1s">É</span><span style="animation-delay:.15s">G</span><span style="animation-delay:.2s">N</span><span style="animation-delay:.25s">A</span><span style="animation-delay:.3s">R</span><span style="animation-delay:.35s">D</span>
+  </div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+</div>
+
+<div id="cur"></div>
+<div id="curl"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nav-logo">RR®</a>
+  <div class="nav-status"><div class="sdot"></div>Currently Open to Opportunities</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#ai">AI Lab</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#creds">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="h-grid"></div>
+  <div class="h-glow"></div>
+  <div class="hero-top">
+    <div class="h-avail"><div class="sdot"></div>Available Immediately · Any Schedule</div>
+    <div class="h-loc">Wilmington, DE · Remote Ready</div>
+  </div>
+  <div class="h-headline">RÉGNARD<br><span class="stroke">RODNEY</span></div>
+  <div class="h-subrow">
+    <p class="h-desc">Senior IT Specialist &amp; AI Automation Engineer.<br><em>10+ years making infrastructure bulletproof<br>and machines work smarter.</em></p>
+    <div class="h-stats">
+      <div class="h-stat"><div class="num">11K</div><div class="lbl">Devices<br>Managed</div></div>
+      <div class="h-stat"><div class="num">400+</div><div class="lbl">Locations<br>SD-WAN</div></div>
+      <div class="h-stat"><div class="num">99%</div><div class="lbl">SLA<br>Compliance</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="s-arrow"></div></div>
+</section>
+
+<div class="mqwrap" aria-hidden="true">
+  <div class="mqtrack">
+    <div class="mqi">MDM ENGINEERING <span class="sep">✦</span></div>
+    <div class="mqi">CISCO MERAKI SD-WAN <span class="sep">✦</span></div>
+    <div class="mqi">AI AUTOMATION <span class="sep">✦</span></div>
+    <div class="mqi">POS SYSTEMS <span class="sep">✦</span></div>
+    <div class="mqi">SERVICENOW <span class="sep">✦</span></div>
+    <div class="mqi">BILINGUAL FR/EN <span class="sep">✦</span></div>
+    <div class="mqi">VMWARE WORKSPACE ONE <span class="sep">✦</span></div>
+    <div class="mqi">LAYER 2/3 DIAGNOSTICS <span class="sep">✦</span></div>
+    <div class="mqi">AGENTIC WORKFLOWS <span class="sep">✦</span></div>
+    <div class="mqi">ENDPOINT SECURITY <span class="sep">✦</span></div>
+    <div class="mqi">MDM ENGINEERING <span class="sep">✦</span></div>
+    <div class="mqi">CISCO MERAKI SD-WAN <span class="sep">✦</span></div>
+    <div class="mqi">AI AUTOMATION <span class="sep">✦</span></div>
+    <div class="mqi">POS SYSTEMS <span class="sep">✦</span></div>
+    <div class="mqi">SERVICENOW <span class="sep">✦</span></div>
+    <div class="mqi">BILINGUAL FR/EN <span class="sep">✦</span></div>
+    <div class="mqi">VMWARE WORKSPACE ONE <span class="sep">✦</span></div>
+    <div class="mqi">LAYER 2/3 DIAGNOSTICS <span class="sep">✦</span></div>
+    <div class="mqi">AGENTIC WORKFLOWS <span class="sep">✦</span></div>
+    <div class="mqi">ENDPOINT SECURITY <span class="sep">✦</span></div>
+  </div>
+</div>
+
+<section id="skills">
+  <p class="s-label reveal">// 02 — Technical Stack</p>
+  <h2 class="s-title reveal">What I<br>Engineer</h2>
+  <div class="skgrid">
+    <div class="sk reveal">
+      <div class="sk-n">01</div><div class="sk-name">NETWORK & MDM</div>
+      <p class="sk-desc">From 11,000-device first-responder deployments to 400-location SD-WAN rollouts — infrastructure that doesn't break.</p>
+      <div class="tags"><span class="tag">Cisco/Meraki</span><span class="tag">Workspace ONE</span><span class="tag">Intune</span><span class="tag">AirWatch</span><span class="tag">5G/WiFi</span></div>
+    </div>
+    
+    <div class="sk reveal">
+      <div class="sk-n">02</div><div class="sk-name">HELPDESK & ITSM</div>
+      <p class="sk-desc">99% SLA. Tier 1/2 resolution. ServiceNow and Zendesk workflows built for speed — not tickets sitting in queues.</p>
+      <div class="tags"><span class="tag">ServiceNow</span><span class="tag">Zendesk</span><span class="tag">ITIL</span><span class="tag">Root Cause Analysis</span></div>
+    </div>
+
+    <div class="sk reveal">
+      <div class="sk-n">03</div><div class="sk-name">POS & RETAIL TECH</div>
+      <p class="sk-desc">Field tech at Lowe's and Bargain Hunt. POS deployment, break/fix, UPS repair, zero-downtime cabling.</p>
+      <div class="tags"><span class="tag">POS Deployment</span><span class="tag">Break/Fix</span><span class="tag">UPS Repair</span><span class="tag">Fiber/Cat5/6</span></div>
+      <button class="rbtn-small" onclick="runPlaybook('pos')">👁️ View POS Triage Protocol</button>
+    </div>
+
+    <div class="sk reveal">
+      <div class="sk-n">04</div><div class="sk-name">ENDPOINT & SECURITY</div>
+      <p class="sk-desc">Full device lifecycle from provisioning to secure retirement. Architecture built on Zero Trust principles.</p>
+      <div class="tags"><span class="tag">Active Directory (Hybrid/Azure)</span><span class="tag">IAM Governance</span><span class="tag">Zero-Trust Architecture</span><span class="tag">O365 Global Admin</span></div>
+    </div>
+
+    <div class="sk reveal">
+      <div class="sk-n">05</div><div class="sk-name">VIRTUALIZATION</div>
+      <p class="sk-desc">Enterprise VDI on Citrix and VMware. Remote workstation management at scale.</p>
+      <div class="tags"><span class="tag">Citrix</span><span class="tag">VMware VDI</span><span class="tag">Docker</span><span class="tag">Office 365</span></div>
+    </div>
+
+    <div class="sk reveal">
+      <div class="sk-n">06</div><div class="sk-name">AUTOMATION & DEV</div>
+      <p class="sk-desc">Python scripting, PowerShell automation, API orchestration. Tools that eliminate repetitive work entirely.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">API Integration</span><span class="tag">SQL</span><span class="tag">Git</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="ai">
+  <p class="s-label reveal">// 03 — Applied Intelligence</p>
+  <h2 class="s-title reveal">Applied AI &<br>Agentic<br>Orchestration</h2>
+  <div class="aigrid">
+    <div class="ai-left">
+      <p class="ai-intro reveal">I don't just use AI tools — I architect prompt structures and deploy autonomous agents to eliminate operational bottlenecks and orchestrate complex data workflows without human intervention.</p>
+      <div class="ai-cards">
+        <div class="ai-card reveal">
+          <div class="ac-icon">🧠</div>
+          <div class="ac-name">PROMPT ARCHITECTURE</div>
+          <p class="ac-desc">Designing deterministic LLM outputs using System Instructions, Persona Framing, and Strict Constraints. Expert in Zero-Shot and Multi-Turn logic models.</p>
+          <div class="tags"><span class="tag">Gemini 2.5</span><span class="tag">Claude 3.5</span><span class="tag">Persona Framing</span></div>
+        </div>
+        <div class="ai-card reveal">
+          <div class="ac-icon">⚙️</div>
+          <div class="ac-name">AUTONOMOUS WORKFLOWS</div>
+          <p class="ac-desc">Building closed-loop Python pipelines that ingest unstructured data, evaluate parameters against scoring algorithms, and execute autonomous API actions.</p>
+          <div class="tags"><span class="tag">Python Orchestration</span><span class="tag">API Integration</span><span class="tag">Heuristic Logic</span></div>
+        </div>
+        <div class="ai-card reveal">
+          <div class="ac-icon">📊</div>
+          <div class="ac-name">SENTIMENT & TRIAGE</div>
+          <p class="ac-desc">Leveraging LLMs to parse inbound ITSM tickets, analyze sentiment, and return valid JSON for automated routing—accelerating First Call Resolution (FCR).</p>
+          <div class="tags"><span class="tag">JSON Constraints</span><span class="tag">Sentiment Analysis</span><span class="tag">FCR Optimization</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="position:sticky;top:8rem;">
+      <div class="twrap">
+        <div class="tbar">
+          <div class="tdot" style="background:#ff5f57"></div>
+          <div class="tdot" style="background:#febc2e"></div>
+          <div class="tdot" style="background:#28c840"></div>
+          <span class="tpath" id="tpathTitle">~/agentic_triage.py</span>
+        </div>
+        <div class="tbody" id="termBody"><span class="t-dim"># Click RUN to watch the AI triage a live P1 ticket</span><br><span class="tc"></span></div>
+        <button class="rbtn" id="runBtn" onclick="runDemo()">&#9654; Run AI Triage Demo</button>
+      </div>
+      <p style="font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;color:var(--muted);margin-top:.7rem;text-align:right;">Interactive Agentic & Troubleshooting Sandbox</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <p class="s-label reveal">// 04 — Career</p>
+  <h2 class="s-title reveal">10 Years,<br>Zero Shortcuts</h2>
+  <div class="explist">
+    <div class="exprow reveal">
+      <div class="exp-date">2020 – 2025</div>
+      <div>
+        <div class="exp-co">ASURION</div>
+        <div class="exp-role">Premier Solution Support Specialist — Remote, Wilmington DE</div>
+        <ul class="exp-blist">
+          <li>Maintained 99% SLA compliance resolving high-volume tickets via ServiceNow & Zendesk</li>
+          <li>Executed full device lifecycle & endpoint security for Windows, macOS, iOS, Android</li>
+          <li>Administered IAM provisioning through Active Directory & Entra ID with a focus on FCR</li>
+          <li>Delegated backup to site leadership; documented SOPs & cross-trained peers</li>
+        </ul>
+      </div>
+      <div class="exp-badge">Remote</div>
+    </div>
+    <div class="exprow reveal">
+      <div class="exp-date">2018 – 2020</div>
+      <div>
+        <div class="exp-co">ROBERT HALF</div>
+        <div class="exp-role">IT Contractor — Multi-Client Infrastructure &amp; Field Support · Atlanta, GA</div>
+        <ul class="exp-blist">
+          <li><strong style="color:var(--white)">Prologic ITS:</strong> MDM for 11,000+ first responders via VMware Workspace ONE &amp; AT&amp;T</li>
+          <li><strong style="color:var(--white)">Honey Baked Ham:</strong> Meraki SD-WAN &amp; WAP deployment across 400+ retail locations</li>
+          <li><strong style="color:var(--white)">Lowe's &amp; Bargain Hunt:</strong> POS break/fix, UPS repair, Fiber/Cat5/6 — zero downtime</li>
+          <li><strong style="color:var(--white)">Hemmersbach/OneBeacon:</strong> High-tier deskside &amp; Citrix Hypervisor support</li>
+        </ul>
+      </div>
+      <div class="exp-badge">Contract</div>
+    </div>
+    <div class="exprow reveal">
+      <div class="exp-date">2017 – 2018</div>
+      <div>
+        <div class="exp-co">CGS</div>
+        <div class="exp-role">Bilingual Lenovo Technical Support IV — Greater Atlanta Area</div>
+        <ul class="exp-blist">
+          <li>Bilingual French/English remote support for field technicians on enterprise hardware</li>
+          <li>Layer 2/3 diagnostics, firmware &amp; BIOS updates on enterprise Lenovo systems</li>
+        </ul>
+      </div>
+      <div class="exp-badge">On-Site</div>
+    </div>
+  </div>
+</section>
+
+<section id="creds">
+  <p class="s-label reveal">// 05 — Credentials</p>
+  <h2 class="s-title reveal">Education &<br>Certifications</h2>
+  <div class="credgrid">
+    <div class="cred reveal"><div class="cred-iss">Western Governors University</div><div class="cred-name">MS Information Technology Management</div><span class="pill py">Expected Nov 2026</span></div>
+    <div class="cred reveal"><div class="cred-iss">Western Governors University</div><div class="cred-name">BS Information Technology</div><span class="pill pg">Completed</span></div>
+    <div class="cred reveal"><div class="cred-iss">CompTIA</div><div class="cred-name">A+ Certification</div><span class="pill pg">Active</span></div>
+    <div class="cred reveal"><div class="cred-iss">Google</div><div class="cred-name">IT Support Professional</div><span class="pill pg">Active</span></div>
+    <div class="cred reveal"><div class="cred-iss">Google</div><div class="cred-name">Data Analytics Professional</div><span class="pill pg">Active</span></div>
+    <div class="cred reveal"><div class="cred-iss">Delaware Dept. of Labor</div><div class="cred-name">AI Strategy Facilitation</div><span class="pill pg">Completed</span></div>
+    <div class="cred reveal"><div class="cred-iss">AXELOS</div><div class="cred-name">ITIL Foundation</div><span class="pill py">2026 Candidate</span></div>
+    <div class="cred reveal"><div class="cred-iss">Cisco</div><div class="cred-name">CCIE Security</div><span class="pill py">Targeting 2027</span></div>
+  </div>
+</section>
+
+<section id="lang">
+  <p class="s-label reveal">// 06 — Languages</p>
+  <h2 class="s-title reveal">Trilingual<br>Professional</h2>
+  <div class="langrow reveal">
+    <div class="lc"><div class="lf">🇺🇸</div><div class="ln">ENGLISH</div><div class="ll">Native / Professional</div></div>
+    <div class="lc"><div class="lf">🇫🇷</div><div class="ln">FRENCH</div><div class="ll">Bilingual / Fluent</div></div>
+    <div class="lc"><div class="lf">🇪🇸</div><div class="ln">SPANISH</div><div class="ll">Conversational</div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <p class="ct-ey reveal">// 07 — Let's Work Together</p>
+  <div class="ct-big reveal"><a href="mailto:regnardrodney@gmail.com">GET IN<br>TOUCH</a></div>
+  <div class="ct-links reveal">
+    <a href="mailto:regnardrodney@gmail.com" class="cl">regnardrodney@gmail.com</a>
+    <a href="tel:+14704835144" class="cl">(470) 483-5144</a>
+    <a href="https://www.linkedin.com/in/regnardrodney/" target="_blank" class="cl">LinkedIn</a>
+    <a href="https://regnardrodney.github.io" target="_blank" class="cl">Portfolio</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Régnard Rodney</span>
+  <span>IT Leader · AI Automation · Trilingual</span>
+  <span>Wilmington, DE</span>
+</footer>
+
+<script>
+/* PRELOADER */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const p=document.getElementById('preloader');
+    p.style.transition='opacity .6s';p.style.opacity='0';
+    setTimeout(()=>p.style.display='none',600);
+  },2100);
+});
+
+/* CURSOR */
+const cur=document.getElementById('cur'),curl=document.getElementById('curl');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curl.style.left=rx+'px';curl.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curl.style.width='54px';curl.style.height='54px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';curl.style.width='38px';curl.style.height='38px';});
+});
+
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60));
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* TERMINAL SCRIPTS & PLAYBOOKS */
+let running = false;
+
+const DEMO_LINES = [
+  {c:'prompt',t:'> python3 agentic_triage.py'},
+  {c:'dim',   t:'  Connecting to ServiceNow REST API...'},
+  {c:'ok',    t:'  \u2713 Authenticated. Session active.'},
+  {c:'dim',   t:'  Polling ticket queue...'},
+  {c:'',      t:''},
+  {c:'hi',    t:'  \u2550\u2550 TICKET #4492 RECEIVED \u2550\u2550'},
+  {c:'',      t:'  From:    store_mgr_de_19801@corp.internal'},
+  {c:'',      t:'  Subject: URGENT \u2014 Register frozen'},
+  {c:'err',   t:'  Body:    "MY POS REGISTER HAS BEEN FROZEN FOR AN HOUR.'},
+  {c:'err',   t:'            I HAVE A LINE OUT THE DOOR. UNACCEPTABLE!!"'},
+  {c:'',      t:''},
+  {c:'dim',   t:'  \u25ba Routing to LLM sentiment engine...'},
+  {c:'dim',   t:'  Model:     gemini-2.5-flash'},
+  {c:'dim',   t:'  Constraint: Return strictly valid JSON only'},
+  {c:'',      t:''},
+  {c:'ok',    t:'  [ANALYSIS COMPLETE] \u2014 0.84s'},
+  {c:'hi',    t:'  {'},
+  {c:'hi',    t:'    "sentiment":     "SEVERE_FRUSTRATION",'},
+  {c:'hi',    t:'    "hardware_flag": "POS_REGISTER_CRASH",'},
+  {c:'hi',    t:'    "priority":      "P1_CRITICAL",'},
+  {c:'hi',    t:'    "confidence":    0.97,'},
+  {c:'hi',    t:'    "suggested_sop": "pos_reboot_v3.md"'},
+  {c:'hi',    t:'  }'},
+  {c:'',      t:''},
+  {c:'dim',   t:'  Executing routing protocol...'},
+  {c:'ok',    t:'  \u2713 On-call POS technician paged (SMS + Slack)'},
+  {c:'ok',    t:'  \u2713 SOP reboot sequence pushed to store manager'},
+  {c:'ok',    t:'  \u2713 Ticket escalated \u2192 P1 queue'},
+  {c:'ok',    t:'  \u2713 Audit record written to ITSM log'},
+  {c:'',      t:''},
+  {c:'prompt',t:'> Total triage time: 0.84s. Human hours saved: \u221e'},
+];
+
+const PLAYBOOKS = {
+  pos: [
+    {c:'prompt', t:'> Initializing POS_Troubleshoot_Protocol.sh'},
+    {c:'dim',    t:'  Symptom: Register unresponsive at checkout.'},
+    {c:'ok',     t:'  STEP 1: Physical Layer Audit. Checking UPS battery & seating of power rails.'},
+    {c:'ok',     t:'  STEP 2: Network Handshake. Verifying Cat6 patch at wall jack vs MDF port blink rate.'},
+    {c:'hi',     t:'  STEP 3: Database Verification. Running SQL query to check last sync timestamp.'},
+    {c:'ok',     t:'  STEP 4: Cold Boot. Executed sequence to clear volatile memory cache.'},
+    {c:'prompt', t:'> Result: System back online in 4.2 minutes. Zero customer data loss.'}
+  ]
+};
+
+function runTerminalLogic(lines, title, btnText) {
+  if(running) return;
+  running = true;
+  
+  const btn = document.getElementById('runBtn');
+  const pathTitle = document.getElementById('tpathTitle');
+  
+  btn.textContent = '\u23f3 Running...';
+  btn.disabled = true;
+  pathTitle.textContent = title;
+  
+  const body = document.getElementById('termBody');
+  document.getElementById('ai').scrollIntoView({behavior: 'smooth', block: 'center'});
+  body.innerHTML = '';
+  
+  let i = 0;
+  function next() {
+    if(i >= lines.length) {
+      body.innerHTML += '<span class="tc"></span>';
+      btn.textContent = btnText;
+      btn.disabled = false;
+      running = false;
+      return;
+    }
+    const line = lines[i++];
+    const div = document.createElement('div');
+    const cls = {prompt:'t-prompt',dim:'t-dim',hi:'t-hi',err:'t-err',ok:'t-ok','':''}[line.c] || '';
+    div.innerHTML = cls ? `<span class="${cls}">${line.t}</span>` : (line.t || '&nbsp;');
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    setTimeout(next, (line.c === 'dim' ? 75 : line.c === '' ? 35 : 50) + Math.random() * 25);
+  }
+  next();
+}
+
+function runDemo() {
+  runTerminalLogic(DEMO_LINES, '~/agentic_triage.py', '\u25b6 Run AI Triage Demo Again');
+}
+
+function runPlaybook(type) {
+  runTerminalLogic(PLAYBOOKS[type], `~/${type}_triage_protocol.sh`, '\u25b6 Run AI Triage Demo');
+}
+</script>
+</body>
+</html>
