@@ -339,8 +339,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
       </div>
 
       <div class="agent-header">
-        ...
-      <div class="agent-header">
         <div class="agent-avatar">RR</div>
         <div class="agent-info">
           <h2>Agent RR 2.0 · Infrastructure Digital Twin</h2>
@@ -544,40 +542,6 @@ function getAgentResponse(input) {
   }
 }
 
-function handleAgentChat() {
-  const inputEl = document.getElementById('agent-input');
-  const text = inputEl.value.trim();
-  if(!text) return;
-  
-  const msgContainer = document.getElementById('agent-messages');
-  
-  // Append User Message
-  const userMsg = document.createElement('div');
-  userMsg.className = 'agent-msg user';
-  userMsg.innerHTML = `<div class="agent-bubble">${text}</div>`;
-  msgContainer.appendChild(userMsg);
-  
-  inputEl.value = '';
-  msgContainer.scrollTop = msgContainer.scrollHeight;
-  
-  // Typing Indicator
-  const typingMsg = document.createElement('div');
-  typingMsg.className = 'agent-msg ai typing-temp';
-  typingMsg.innerHTML = `<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
-  msgContainer.appendChild(typingMsg);
-  msgContainer.scrollTop = msgContainer.scrollHeight;
-  
-  // Simulate Network Delay & Fetch Response
-  setTimeout(() => {
-    msgContainer.removeChild(typingMsg);
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'agent-msg ai';
-    aiMsg.innerHTML = `<div class="agent-bubble">${getAgentResponse(text)}</div>`;
-    msgContainer.appendChild(aiMsg);
-    msgContainer.scrollTop = msgContainer.scrollHeight;
-  }, 1200);
-}
-
 // ─── KNOWLEDGE BASE DATA ───
 const certData = {
   'comptia': {
@@ -646,7 +610,7 @@ const certData = {
         <div class="kb-card">
           <h4>Unit 2: System Admin Tasks</h4>
           <ul>
-            <li><strong>User Mgmt:</strong> <code>useradd</code>, <code>usermod</code>, <code>/etc/passwd</code>.</li>
+            <li><strong>User Mgmt:</strong> <code>useradd</code>, <code>usermod</code>, <code>/etc/passwd</code></li>
             <li><strong>Process Mgmt:</strong> <code>ps aux</code>, <code>top</code>, <code>kill -9</code>, and nice levels.</li>
             <li><strong>Package Mgmt:</strong> <code>yum install</code> vs <code>dnf update</code>.</li>
           </ul>
@@ -988,9 +952,9 @@ const svgs={
   meraki_mx:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="30" y="45" width="260" height="60" rx="4" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="100" y="38" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold">Cisco Meraki MX68</text><text x="100" y="48" fill="#7d8590" font-size="7" font-family="monospace">Security Appliance · SD-WAN</text><circle cx="55" cy="75" r="5" fill="#3fb950"/><text x="55" y="92" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">PWR</text><rect x="70" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="76" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN1</text><circle cx="76" cy="70" r="2" fill="#f85149"/><rect x="86" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="92" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN2</text><circle cx="92" cy="70" r="2" fill="#3fb950"/><text x="160" y="80" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">LTE FAILOVER ACTIVE</text><rect x="255" y="65" width="20" height="8" rx="1" fill="#0d1117" stroke="#3fb950" stroke-width="1"/><text x="265" y="72" fill="#3fb950" font-size="5" font-family="monospace" text-anchor="middle">4G</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Throughput: 450Mbps · VPN: 150Mbps · Up to 5 SSIDs</text></svg>`,
   cable_tester:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="20" width="110" height="100" rx="6" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="75" y="38" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Fluke Networks</text><text x="75" y="49" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">MicroScanner2</text><rect x="35" y="55" width="80" height="40" rx="2" fill="#0d1117" stroke="#484f58"/><text x="75" y="68" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">WIREMAP OK</text><text x="75" y="80" fill="#d29922" font-size="6" font-family="monospace" text-anchor="middle">PAIR 3-6: OPEN</text><text x="75" y="90" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">LENGTH: 84m</text><circle cx="45" cy="108" r="4" fill="#3fb950"/><circle cx="60" cy="108" r="4" fill="#f85149"/><circle cx="75" cy="108" r="4" fill="#3fb950"/><circle cx="90" cy="108" r="4" fill="#3fb950"/><text x="200" y="38" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Cat6A Cable</text><text x="200" y="52" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Panduit TX6A 10Gig</text><rect x="155" y="60" width="90" height="50" rx="2" fill="#0d1117" stroke="#334155"/><text x="200" y="78" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Bandwidth: 750MHz</text><text x="200" y="90" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Max Length: 100m</text><text x="200" y="102" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Standard: ANSI/TIA-568</text><text x="200" y="128" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">⚠ Replace run at panel port 14</text></svg>`,
   switch_cisco:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="40" width="290" height="70" rx="3" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="160" y="33" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">Cisco Catalyst 2960-X</text><text x="160" y="43" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">48-Port Managed Switch · PoE+</text>${Array.from({length:24},(_,i)=>{const x=25+i*11,color=i===7?'#f85149':i===8?'#d29922':'#3fb950';return `<rect x="${x}" y="52" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${56}" r="2" fill="${color}"/>`;}).join('')}${Array.from({length:24},(_,i)=>{const x=25+i*11,color='#3fb950';return `<rect x="${x}" y="72" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${76}" r="2" fill="${color}"/>`;}).join('')}<text x="90" y="102" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">↑ Gi0/8 — PORT DOWN</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Ports: 48x GbE PoE+ · 4x SFP+ · VLAN · Spanning Tree · LACP</text></svg>`,
-  wireshark:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/><rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text><text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text><rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/><text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text><text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text><text x="20" y="80" fill="#7d8590" font-size="6" font-family="monospace">1425   0.001312  192.168.1.45   10.0.0.1        TCP       [ACK] Seq=1 Ack=1</text><rect x="10" y="82" width="300" height="10" fill="rgba(248,81,73,0.1)"/><text x="20" y="90" fill="#f85149" font-size="6" font-family="monospace">1426   4.001998  192.168.1.45   10.0.0.1        TCP       [RST] — CONNECTION RESET</text><text x="20" y="102" fill="#7d8590" font-size="6" font-family="monospace">1427   4.002010  —              —               —         Retransmission timeout</text><text x="160" y="125" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">⚠ TCP RST at packet 1426 — MTU mismatch or firewall drop</text></svg>`,
+  wireshark:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/><rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text><text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text><rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/><text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text><text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text><text x="20" y="80" fill="#7d8590" font-size="6" font-family="monospace">1425   0.001312  192.168.1.45   10.0.0.1        TCP       [ACK] Seq=1 Ack=1</text><rect x="10" y="82" width="300" height="10" fill="rgba(248,81,73,0.1)"/><text x="20" y="90" fill="#f85149" font-size="6" font-family="monospace">1426   4.001998  192.168.1.45   10.0.0.1        TCP       [RST] — CONNECTION RESET</text><text x="20" y="102" fill="#7d8590" font-size="6" font-family="monospace">1427   4.002010  —              —               —         Retransmission timeout</text><text x="160" y="125" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">⚠ TCP RST at packet 1426 — MTU mismatch or firewall drop</text></svg>`,
   azure_entra:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="85" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Azure Entra ID</text><text x="85" y="44" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access</text><rect x="35" y="52" width="100" height="18" rx="2" fill="#0d1117" stroke="#f85149" stroke-width="1"/><text x="85" y="64" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">BLOCKED</text><text x="85" y="76" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Policy: Zero_Trust_Geo</text><text x="85" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">IP: 91.203.114.88</text><text x="85" y="100" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Location: Frankfurt,DE</text><rect x="35" y="108" width="100" height="12" rx="2" fill="rgba(63,185,80,0.1)" stroke="rgba(63,185,80,.3)"/><text x="85" y="117" fill="#3fb950" font-size="6" font-family="monospace" text-anchor="middle">MFA PUSH → APPROVED</text><rect x="170" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="235" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Sign-in Log</text><text x="235" y="48" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">User: vip.exec@corp.com</text><text x="235" y="62" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">App: Office 365</text><text x="235" y="76" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Client: Win11 Outlook</text><text x="235" y="90" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">Result: FAILURE</text><text x="235" y="104" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Error: 53003</text><text x="235" y="116" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access Block</text></svg>`,
-  lenovo_bios:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="10" width="290" height="120" rx="4" fill="#0d0d0d" stroke="#484f58"/><rect x="15" y="10" width="290" height="20" rx="4" fill="#0d1117" stroke="#484f58"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Lenovo ThinkPad BIOS Setup Utility v1.47</text><text x="30" y="46" fill="#3fb950" font-size="8" font-family="monospace">Main  Config  Security  Startup  Restart</text><text x="30" y="62" fill="#7d8590" font-size="7" font-family="monospace">▸ Storage Devices</text><text x="45" y="74" fill="#79c0ff" font-size="6" font-family="monospace">SK Hynix PC711 NVMe  512GB   DETECTED ✓</text><text x="45" y="84" fill="#7d8590" font-size="6" font-family="monospace">SMART Status: PASS   Temp: 31°C</text><text x="30" y="96" fill="#7d8590" font-size="7" font-family="monospace">▸ Boot Configuration</text><text x="45" y="108" fill="#f85149" font-size="6" font-family="monospace">Windows Boot Manager   ERROR: BCD corrupt</text><text x="45" y="118" fill="#484f58" font-size="6" font-family="monospace">Secure Boot: ON  · UEFI Mode: Active</text><text x="240" y="74" fill="#484f58" font-size="6" font-family="monospace">F1  Help</text><text x="240" y="84" fill="#484f58" font-size="6" font-family="monospace">F9  Default</text><text x="240" y="94" fill="#484f58" font-size="6" font-family="monospace">F10 Save/Exit</text></svg>`,
+  lenovo_bios:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="10" width="290" height="120" rx="4" fill="#0d0d0d" stroke="#484f58"/><rect x="15" y="10" width="290" height="20" rx="4" fill="#0d1117" stroke="#484f58"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Lenovo ThinkPad BIOS Setup Utility v1.47</text><text x="30" y="46" fill="#3fb950" font-size="8" font-family="monospace">Main  Config  Security  Startup  Restart</text><text x="30" y="62" fill="#7d8590" font-size="7" font-family="monospace">▸ Storage Devices</text><text x="45" y="74" fill="#79c0ff" font-size="6" font-family="monospace">SK Hynix PC711 NVMe  512GB   DETECTED ✓</text><text x="45" y="84" fill="#7d8590" font-size="6" font-family="monospace">SMART Status: PASS   Temp: 31°C</text><text x="30" y="96" fill="#7d8590" font-size="7" font-family="monospace">▸ Boot Configuration</text><text x="45" y="108" fill="#f85149" font-size="6" font-family="monospace">Windows Boot Manager   ERROR: BCD corrupt</text><text x="45" y="118" fill="#484f58" font-size="6" font-family="monospace">Secure Boot: ON  · UEFI Mode: Active</text><text x="240" y="74" fill="#484f58" font-size="6" font-family="monospace">F1  Help</text><text x="240" y="84" fill="#484f58" font-size="6" font-family="monospace">F9  Default</text><text x="240" y="94" fill="#484f58" font-size="6" font-family="monospace">F10 Save/Exit</text></svg>`,
   tls_cert:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="82" y="28" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">TLS 1.3 Handshake</text><text x="30" y="44" fill="#7d8590" font-size="6" font-family="monospace">Client → Server: ClientHello</text><text x="30" y="56" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: ServerHello</text><text x="30" y="68" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: Certificate</text><text x="30" y="80" fill="#f85149" font-size="6" font-family="monospace">❌ Verify: EXPIRED</text><text x="30" y="92" fill="#f85149" font-size="6" font-family="monospace">ERR_CERT_DATE_INVALID</text><text x="30" y="110" fill="#484f58" font-size="6" font-family="monospace">Expired: 2025-11-01</text><text x="30" y="122" fill="#484f58" font-size="6" font-family="monospace">Issuer: DigiCert CA</text><rect x="165" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="237" y="28" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">New Certificate</text><text x="178" y="44" fill="#7d8590" font-size="6" font-family="monospace">Subject: *.corp.internal</text><text x="178" y="56" fill="#7d8590" font-size="6" font-family="monospace">Valid: 2025-12-01</text><text x="178" y="68" fill="#3fb950" font-size="6" font-family="monospace">Expires: 2026-12-01</text><text x="178" y="80" fill="#7d8590" font-size="6" font-family="monospace">Alg: RSA-4096 / SHA-256</text><text x="178" y="92" fill="#7d8590" font-size="6" font-family="monospace">SAN: 12 alt names</text><text x="178" y="110" fill="#3fb950" font-size="6" font-family="monospace">✓ Issued by DigiCert</text><text x="178" y="122" fill="#3fb950" font-size="6" font-family="monospace">✓ Chain: VALID</text></svg>`,
   bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
     <rect width="320" height="140" fill="#0a0f15"/>
@@ -1475,17 +1439,64 @@ function triggerAuto(){
   autoPlay=true;
   advanceIncident();
 }
-// ... your existing handleAgentChat function ends here ...
-    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.location.hostname.includes('netlify.app')) {
-        const alertBanner = document.getElementById('env-alert');
-        if (alertBanner) {
-          alertBanner.style.display = 'none';
-        }
-      }
+async function handleAgentChat() {
+  const inputEl = document.getElementById('agent-input');
+  const text = inputEl.value.trim();
+  if(!text) return;
+  
+  const msgContainer = document.getElementById('agent-messages');
+  
+  // Append User Message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'agent-msg user';
+  userMsg.innerHTML = `<div class="agent-bubble">${text}</div>`;
+  msgContainer.appendChild(userMsg);
+  
+  inputEl.value = '';
+  msgContainer.scrollTop = msgContainer.scrollHeight;
+  
+  // Typing Indicator
+  const typingMsg = document.createElement('div');
+  typingMsg.className = 'agent-msg ai typing-temp';
+  typingMsg.innerHTML = `<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+  msgContainer.appendChild(typingMsg);
+  msgContainer.scrollTop = msgContainer.scrollHeight;
+  
+  try {
+    const response = await fetch('/.netlify/functions/agent', {
+      method: 'POST',
+      body: JSON.stringify({ message: text })
     });
-    </script>
-  </body>
+    if (!response.ok) throw new Error('API Offline');
+    const data = await response.json();
+    
+    msgContainer.removeChild(typingMsg);
+    const aiMsg = document.createElement('div');
+    aiMsg.className = 'agent-msg ai';
+    aiMsg.innerHTML = `<div class="agent-bubble">${data.reply}</div>`;
+    msgContainer.appendChild(aiMsg);
+    msgContainer.scrollTop = msgContainer.scrollHeight;
+  } catch (err) {
+    setTimeout(() => {
+      msgContainer.removeChild(typingMsg);
+      const aiMsg = document.createElement('div');
+      aiMsg.className = 'agent-msg ai';
+      aiMsg.innerHTML = `<div class="agent-bubble">${getAgentResponse(text)}</div>`;
+      msgContainer.appendChild(aiMsg);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+    }, 800);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hostname.includes('netlify.app')) {
+    const alertBanner = document.getElementById('env-alert');
+    if (alertBanner) {
+      alertBanner.style.display = 'none';
+    }
+  }
+});
+</script>
+</body>
 </html>
