@@ -103,6 +103,64 @@
         .res-job .role { color: var(--sn-accent); font-weight: 600; margin-bottom: 0.5rem; }
         .res-job ul { padding-left: 1.5rem; color: #cbd5e1; font-size: 0.95rem; }
         .res-job li { margin-bottom: 0.4rem; }
+
+/* --- MOBILE RESPONSIVENESS FIX --- */
+        @media (max-width: 768px) {
+            /* Stack the entire app vertically */
+            body { flex-direction: column; }
+            
+            /* Convert sidebar to a top navigation bar */
+            .sidebar { 
+                width: 100%; 
+                border-right: none; 
+                border-bottom: 1px solid var(--sn-border); 
+                flex-direction: row; 
+                align-items: center; 
+                justify-content: space-between;
+                flex-wrap: wrap;
+                flex-shrink: 0;
+            }
+            .sidebar-header { padding: 1rem; border-bottom: none; width: auto; }
+            .sidebar-header p { display: none; } /* Hide agent status to save space */
+            
+            /* Horizontal Nav Buttons */
+            .nav-items { padding: 0; display: flex; width: auto; flex-grow: 1; justify-content: flex-end; }
+            .nav-btn { 
+                width: auto; 
+                padding: 1rem; 
+                font-size: 0.8rem; 
+                border-left: none; 
+                border-bottom: 3px solid transparent; 
+                text-align: center; 
+            }
+            .nav-btn:hover, .nav-btn.active { 
+                border-left-color: transparent; 
+                border-bottom-color: var(--sn-brand); 
+                background: rgba(56, 189, 248, 0.05);
+            }
+            .contact-info { display: none; } /* Hide contact info on small screens */
+
+            /* Main Workspace Adjustments */
+            .header-bar { padding: 0 1rem; height: 50px; flex-shrink: 0; }
+            .workspace { padding: 1rem; overflow-y: auto; }
+            
+            /* Incident View: Stack ticket details on top of chat */
+            #view-incident { flex-direction: column; overflow: visible; height: auto; gap: 1rem; }
+            .ticket-details { width: 100%; padding: 1rem; }
+            .ci-flasher { margin-top: 1rem; }
+            
+            /* Activity Stream */
+            .activity-stream { min-height: 500px; border-radius: 6px; flex-shrink: 0; }
+            .stream-header { padding: 1rem; }
+            .stream-content { padding: 1rem; }
+            .chat-block { max-width: 95%; } /* Let chat bubbles use more screen real estate */
+            
+            /* Dashboard & Resume Mobile Adjustments */
+            .grid-cards { grid-template-columns: 1fr; gap: 1rem; }
+            #view-resume { padding: 1.5rem; }
+            .res-job-header { flex-direction: column; }
+            .res-job .dates { margin-top: 0.25rem; font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
