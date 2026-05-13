@@ -22,7 +22,7 @@
   --body:'DM Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6} /* Font increased */
+body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6} 
 
 /* SIDEBAR */
 .sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden}
@@ -253,7 +253,7 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 
     <div id="view-dashboard">
       <div class="dash-intro">
-        <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation: greeting → triage → root cause → live tool commands → device visuals → resolution → closing. Skills on your resume are also <span class="hi">clickable</span> — they route directly to the matching scenario.</p>
+        <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation: greeting → triage → root cause → live tool commands → device visuals → resolution → closing. Skills on your resume are also <span class="hi">clickable</span> — they route directly to the matching Knowledge Base.</p>
       </div>
       <div id="layer-sections"></div>
     </div>
@@ -316,13 +316,25 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
       </div>
 
       <div class="res-sec">
-        <div class="res-sec-title">Core Competencies</div>
+        <div class="res-sec-title">Core Competencies (Click to Explore)</div>
         <div class="res-tags">
+          <span class="res-tag" onclick="openCert('multi-cloud')">Multi-Cloud Hub Architecture</span>
+          <span class="res-tag" onclick="openCert('aiops')">AIOps & Predictive Maintenance</span>
+          <span class="res-tag" onclick="openCert('iac-automation')">IaC (Terraform & Ansible)</span>
+          <span class="res-tag" onclick="openCert('python-ops')">Python Automation</span>
+          
+          <span class="res-tag" onclick="openCert('bgp-routing')">BGP & MPLS Routing</span>
+          <span class="res-tag" onclick="openCert('subnetting')">Advanced IPv4/IPv6 VLSM</span>
+          <span class="res-tag" onclick="openCert('meraki')">SD-WAN Edge Architecture</span>
+          <span class="res-tag" onclick="openCert('docker')">Docker Containerization</span>
+          <span class="res-tag" onclick="openCert('wireshark')">Deep Packet Inspection</span>
+
+          <span class="res-tag" onclick="openCert('network-security')">Defensive Cybersecurity Ops</span>
+          <span class="res-tag" onclick="openCert('sec-plus')">NIST Framework & Compliance</span>
+          <span class="res-tag" onclick="openCert('kali')">Kali Linux / Pentesting</span>
           <span class="res-tag" onclick="openCert('windows-troubleshoot')">Modern Windows Triage</span>
           <span class="res-tag" onclick="openCert('redhat')">RedHat Admin (RHCSA)</span>
-          <span class="res-tag" onclick="openCert('kali')">Kali Linux / Pentesting</span>
           <span class="res-tag" onclick="openCert('itil')">ITIL 4 Framework</span>
-          <span class="res-tag" onclick="openCert('ai-prompt')">Advanced Prompt Engineering</span>
         </div>
       </div>
 
@@ -417,6 +429,7 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
     </div>
 
   </div>
+  <button id="topBtn" onclick="document.querySelector('.workspace').scrollTo(0,0)" style="position:fixed; bottom:20px; right:20px; background:var(--surface3); color:var(--text); border:1px solid var(--border2); padding:10px; border-radius:5px; cursor:pointer; font-size:12px; display:none; z-index:100;">↑ Top</button>
 </main>
 
 <script>
@@ -568,6 +581,236 @@ const certData = {
         </div>
       </div>
     `
+  },
+  'network-security': {
+    title: 'Network Security & Defensive Operations | The SME Masterclass',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Module 1: Defensive Architecture</h4>
+          <ul>
+            <li><strong>Zero Trust (ZTA):</strong> "Never trust, always verify" — moving security to the resource level.</li>
+            <li><strong>Micro-segmentation:</strong> Using East-West firewalls to prevent lateral movement.</li>
+            <li><strong>DMZ & Air-Gapping:</strong> Isolating critical assets from public-facing interfaces.</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Module 2: Offense to Inform Defense</h4>
+          <ul>
+            <li><strong>Kali Linux Tooling:</strong> Nmap (Scanning), Wireshark (Sniffing), Metasploit (Validation).</li>
+            <li><strong>Scanning:</strong> <code>nmap -sV -T4 [Target]</code> to identify vulnerable service versions.</li>
+            <li><strong>Hardening:</strong> Disabling unused services (Telnet, HTTP) in favor of SSH and HTTPS.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="res-sec-title" style="margin-top:2rem">Windows & Enterprise Hardening Checklist</div>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Identity & Access (IAM)</h4>
+          <ul>
+            <li><strong>MFA/2FA:</strong> Deploying Push-based authentication (Duo/Microsoft).</li>
+            <li><strong>Privileged Access (PAM):</strong> Using "Just-in-Time" permissions for admin tasks.</li>
+            <li><strong>Group Policy (GPO):</strong> Enforcing BitLocker and disabling USB storage.</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>The "SOC" Skillset</h4>
+          <ul>
+            <li><strong>SIEM:</strong> Centralizing logs from Meraki, Cisco, and Windows for correlation.</li>
+            <li><strong>DDoS Mitigation:</strong> Implementing rate-limiting and scrubbers at the edge.</li>
+            <li><strong>BCDR:</strong> Testing immutable backups to ensure 3-2-1 data redundancy.</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:15px; background:var(--red-dim); padding:15px; border-left:3px solid var(--red); font-size:13px;">
+        <strong>SME Pro-Tip:</strong> Security is a process, not a product. Always follow the <strong>NIST Cybersecurity Framework:</strong> Identify, Protect, Detect, Respond, and Recover.
+      </div>
+    `
+  },
+  'sec-plus': {
+    title: 'CompTIA Security+ SY0-701 | Full Domain Masterclass',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Module 1: General Security Concepts</h4>
+          <ul>
+            <li><strong>CIA Triad:</strong> Confidentiality, Integrity, Availability.</li>
+            <li><strong>Non-Repudiation:</strong> Ensuring a party cannot deny an action (Digital Signatures).</li>
+            <li><strong>Control Types:</strong> Managerial, Operational, and Technical controls.</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Module 2: Threats, Attacks & Vulnerabilities</h4>
+          <ul>
+            <li><strong>Social Engineering:</strong> Phishing, Whaling, Vishing, and Tailgating.</li>
+            <li><strong>Application Attacks:</strong> SQL Injection, Cross-Site Scripting (XSS).</li>
+            <li><strong>Network Attacks:</strong> Man-in-the-Middle (MitM), DDoS, and Replay attacks.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="res-sec-title" style="margin-top:2rem">Deep Dive: Digital Forensics & Incident Response (DFIR)</div>
+      <div class="kb-card" style="width:100%">
+        <p><strong>The Order of Volatility:</strong> 1. CPU Cache/Registers → 2. Routing Table/ARP Cache → 3. RAM → 4. Temp Files → 5. Disk/SSD → 6. Remote Logs.</p>
+        <p style="margin-top:10px; color:var(--green)"><em>"When responding to a breach, always capture RAM before pulling the power plug."</em></p>
+      </div>
+    `
+  },
+  'multi-cloud': {
+    title: 'Multi-Cloud Networking Masterclass | AWS & Azure Connectivity',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card"><h4>AWS Networking</h4><ul><li>VPC & Subnets (Public/Private)</li><li>Transit Gateway (TGW)</li><li>Direct Connect (DX)</li></ul></div>
+        <div class="kb-card"><h4>Azure Networking</h4><ul><li>VNet Peering</li><li>Azure ExpressRoute</li><li>VPN Gateway (Route-based)</li></ul></div>
+        <div class="kb-card"><h4>The Glue: BGP</h4><ul><li>ASN 64512 (Default Private)</li><li>Keepalive & Hold-Time Synchronization</li><li>Path Selection (MED vs Local Pref)</li></ul></div>
+      </div>`
+  },
+  'aiops': {
+    title: 'AIOps & Predictive Operations | The 2026 Standard',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card"><h4>Concepts</h4><ul><li><strong>Deduplication:</strong> Filtering noise into single master incidents.</li><li><strong>Anomaly Detection:</strong> Identifying "deviations from normal" without static thresholds.</li><li><strong>Root Cause Analysis:</strong> Automated correlation across the stack.</li></ul></div>
+        <div class="kb-card"><h4>The Tech Stack</h4><ul><li>Cisco AI Assistant (AI Canvas)</li><li>Juniper Marvis (HPE) - Digital Twins</li><li>Arista AVA (Autonomous Virtual Assist)</li></ul></div>
+      </div>`
+  },
+  'iac-automation': {
+    title: 'Infrastructure as Code (IaC) | Terraform & Ansible Lab',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card"><h4>Terraform (Stateful)</h4><ul><li>Providers (Cisco, Meraki, Azure)</li><li>HCL Syntax (Resources & Variables)</li><li>State Management: <code>terraform plan/apply</code></li></ul></div>
+        <div class="kb-card"><h4>Ansible (Procedural)</h4><ul><li>Playbooks (YAML) & Roles</li><li>Inventory Files (Host groups)</li><li>Modules: ios_config, meraki_network</li></ul></div>
+      </div>`
+  },
+  'python-ops': {
+    title: 'Python for Network Engineers | Automation & Scalability',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Lesson 1: The Automation Stack</h4>
+          <ul>
+            <li><strong>Netmiko:</strong> SSH library for multi-vendor network devices.</li>
+            <li><strong>Requests:</strong> Interaction with REST APIs (Meraki, ServiceNow).</li>
+            <li><strong>Pandas:</strong> Analyzing large-scale CSV log exports.</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Lesson 2: Logic & Flow</h4>
+          <p>Writing scripts to perform <strong>"Pre-flight Checks"</strong>: Verify OSPF neighbors before pushing a BGP config change.</p>
+        </div>
+      </div>
+    `
+  },
+  'bgp-routing': {
+    title: 'BGP (Border Gateway Protocol) | The Protocol of the Internet',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>BGP Characteristics</h4>
+          <ul>
+            <li>Path Vector Protocol (not link-state).</li>
+            <li>Uses TCP Port 179 for reliability.</li>
+            <li>eBGP (External) vs iBGP (Internal).</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Troubleshooting "Nbr Down"</h4>
+          <ol style="margin-left:20px; font-size:14px; color:var(--muted)">
+            <li>Verify L3 reachability (Ping the peer IP).</li>
+            <li>Check if AS numbers match the peer config.</li>
+            <li>Verify 'update-source' for loopback peering.</li>
+            <li>Check 'multihop' if peers are not directly connected.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="res-sec-title" style="margin-top:2rem">Common BGP CLI Commands</div>
+      <pre style="background:var(--bg); padding:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; overflow-x:auto;">
+# show ip bgp summary (Check neighbor status)
+# show ip bgp (View the BGP table)
+# clear ip bgp * soft (Refresh routes without dropping session)
+      </pre>
+    `
+  },
+  'subnetting': {
+    title: 'Mastering IPv4 Subnetting | The Network Engineer\'s Math',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Cheat Sheet</h4>
+          <ul>
+            <li>/24 = 256 IPs (254 Usable)</li>
+            <li>/25 = 128 IPs (126 Usable)</li>
+            <li>/26 = 64 IPs (62 Usable)</li>
+            <li>/30 = 4 IPs (2 Usable - WAN links)</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>The Logic</h4>
+          <p style="font-size:13px; color:var(--muted)">Number of Hosts = 2^n - 2 (where n is the number of host bits). The "-2" is for the Network and Broadcast addresses.</p>
+        </div>
+      </div>
+    `
+  },
+  'meraki': {
+    title: 'Cisco Meraki | Cloud-Managed Infrastructure & Field Manual',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>Hardware Gallery & Use Cases</h4>
+          <ul>
+            <li><strong>MX68/85:</strong> Small to Mid-sized Retail.</li>
+            <li><strong>MS120/225:</strong> Layer 2/3 Access Switching with PoE+.</li>
+            <li><strong>MR36/44:</strong> Wi-Fi 6 Cloud-Managed Access Points.</li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Initial Provisioning (A to Z)</h4>
+          <ol style="margin-left: 20px; font-size:14px; color:var(--muted);">
+            <li>Whitelist Serial Numbers in Dashboard.</li>
+            <li>Connect WAN1 to Internet (DHCP/Static).</li>
+            <li>Verify Power/Status LED (White = Online).</li>
+            <li>Configure VLANs & SD-WAN policies.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="res-sec-title" style="margin-top:2rem">Field Repair & Troubleshooting Guide</div>
+      <table style="width:100%; border-collapse:collapse; font-size:13px; color:var(--muted); background:var(--surface2); border:1px solid var(--border);">
+        <thead>
+          <tr style="background:var(--surface3); color:var(--text); text-align:left;">
+            <th style="padding:10px; border:1px solid var(--border);">Issue</th>
+            <th style="padding:10px; border:1px solid var(--border);">Root Cause</th>
+            <th style="padding:10px; border:1px solid var(--border);">The Repair</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); color:var(--amber);">Solid Orange LED</td>
+            <td style="padding:10px; border:1px solid var(--border);">Hardware failing to fetch IP</td>
+            <td style="padding:10px; border:1px solid var(--border);">Check Layer 1 cable; verify DHCP pool on upstream ISP modem.</td>
+          </tr>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); color:var(--amber);">VPN Tunnel Down</td>
+            <td style="padding:10px; border:1px solid var(--border);">UDP 4500 Blocked</td>
+            <td style="padding:10px; border:1px solid var(--border);">Verify ISP is not blocking Non-Standard VPN ports.</td>
+          </tr>
+        </tbody>
+      </table>
+    `
+  },
+  'docker': {
+    title: 'Docker | Containerization for Network Ops',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card"><h4>Core Concepts</h4><ul><li>Images vs. Containers</li><li>Dockerfile Syntax</li><li>Persistent Volumes</li></ul></div>
+        <div class="kb-card"><h4>Networking</h4><ul><li>Bridge vs. Host Networking</li><li>Exposing Ports (80:8080)</li><li>Docker Compose for Multi-container Apps</li></ul></div>
+        <div class="kb-card" style="grid-column: 1 / -1;"><h4>Use Case</h4><p>Deploying automated network monitoring agents (SNMP/Zabbix) across distributed endpoints using lightweight containers.</p></div>
+      </div>`
+  },
+  'wireshark': {
+    title: 'Wireshark | Protocol Analysis & Deep Packet Inspection',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card"><h4>Traffic Capture</h4><ul><li>Promiscuous Mode vs. Monitor Mode</li><li>Capture Filters (BPF Syntax)</li><li>Pcapng File Management</li></ul></div>
+        <div class="kb-card"><h4>Troubleshooting Filters</h4><ul><li><strong>TCP Retransmissions:</strong> <code>tcp.analysis.retransmission</code></li><li><strong>DNS Errors:</strong> <code>dns.flags.rcode != 0</code></li><li><strong>Latency:</strong> <code>tcp.time_delta > 0.5</code></li></ul></div>
+      </div>`
   }
 };
 
@@ -598,178 +841,28 @@ function switchView(v){
   const titles = { dashboard: 'Incident Dashboard', resume: 'Candidate Profile', incident: 'Agent Workspace', cert: 'Technical Classroom' };
   document.getElementById('header-title').textContent = titles[v] || 'Agent Workspace';
   document.querySelector('.workspace').scrollTo(0,0);
+  
+  // Floating Top Button Logic
+  document.getElementById('topBtn').style.display = (v === 'cert' || v === 'resume') ? 'block' : 'none';
 }
 
 // ─── SVG ILLUSTRATIONS ───
 const svgs={
-  fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="20" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/>
-    <text x="50" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text>
-    <line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/>
-    <rect x="130" y="55" width="60" height="30" rx="3" fill="#1c2330" stroke="#d29922" stroke-width="1.5"/>
-    <text x="160" y="73" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">SPLICE</text>
-    <text x="160" y="83" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">DAMAGED</text>
-    <line x1="190" y1="70" x2="240" y2="70" stroke="#3fb950" stroke-width="3"/>
-    <rect x="240" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/>
-    <text x="270" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text>
-    <text x="50" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">TX End</text>
-    <text x="270" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">RX End</text>
-    <circle cx="160" cy="70" r="4" fill="#f85149"/>
-    <text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text>
-    <text x="160" y="130" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Single-Mode Fiber — OS2 — 9/125μm</text>
-  </svg>`,
-  otdr:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="10" y="10" width="200" height="120" rx="4" fill="#0d1117" stroke="#334155"/>
-    <text x="110" y="25" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">OTDR TRACE — REFLECTOMETRY</text>
-    <polyline points="20,90 60,88 100,86 140,60 150,110 160,88 190,87 200,87" fill="none" stroke="#3fb950" stroke-width="1.5"/>
-    <line x1="20" y1="90" x2="200" y2="90" stroke="#1c2330" stroke-width="1"/>
-    <text x="140" y="55" fill="#f85149" font-size="6" font-family="monospace">FAULT</text>
-    <text x="140" y="63" fill="#f85149" font-size="6" font-family="monospace">2.3km</text>
-    <text x="220" y="40" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold">OTDR</text>
-    <text x="220" y="55" fill="#7d8590" font-size="7" font-family="monospace">JDSU T-BERD</text>
-    <text x="220" y="68" fill="#7d8590" font-size="7" font-family="monospace">5800-100G</text>
-    <text x="220" y="85" fill="#484f58" font-size="6" font-family="monospace">Wave: 1310/1550nm</text>
-    <text x="220" y="97" fill="#484f58" font-size="6" font-family="monospace">Range: 120km</text>
-    <text x="220" y="109" fill="#484f58" font-size="6" font-family="monospace">Dead Zone: 1.5m</text>
-    <rect x="210" y="115" width="100" height="16" rx="2" fill="#0d1117" stroke="#3fb950" stroke-width="1"/>
-    <text x="260" y="127" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">EXPORT REPORT</text>
-  </svg>`,
-  meraki_mx:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="30" y="45" width="260" height="60" rx="4" fill="#161b22" stroke="#334155" stroke-width="1.5"/>
-    <text x="100" y="38" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold">Cisco Meraki MX68</text>
-    <text x="100" y="48" fill="#7d8590" font-size="7" font-family="monospace">Security Appliance · SD-WAN</text>
-    <circle cx="55" cy="75" r="5" fill="#3fb950"/>
-    <text x="55" y="92" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">PWR</text>
-    <rect x="70" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/>
-    <text x="76" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN1</text>
-    <circle cx="76" cy="70" r="2" fill="#f85149"/>
-    <rect x="86" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/>
-    <text x="92" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN2</text>
-    <circle cx="92" cy="70" r="2" fill="#3fb950"/>
-    <text x="160" y="80" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">LTE FAILOVER ACTIVE</text>
-    <rect x="255" y="65" width="20" height="8" rx="1" fill="#0d1117" stroke="#3fb950" stroke-width="1"/>
-    <text x="265" y="72" fill="#3fb950" font-size="5" font-family="monospace" text-anchor="middle">4G</text>
-    <text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Throughput: 450Mbps · VPN: 150Mbps · Up to 5 SSIDs</text>
-  </svg>`,
-  cable_tester:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="20" y="20" width="110" height="100" rx="6" fill="#161b22" stroke="#334155" stroke-width="1.5"/>
-    <text x="75" y="38" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Fluke Networks</text>
-    <text x="75" y="49" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">MicroScanner2</text>
-    <rect x="35" y="55" width="80" height="40" rx="2" fill="#0d1117" stroke="#484f58"/>
-    <text x="75" y="68" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">WIREMAP OK</text>
-    <text x="75" y="80" fill="#d29922" font-size="6" font-family="monospace" text-anchor="middle">PAIR 3-6: OPEN</text>
-    <text x="75" y="90" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">LENGTH: 84m</text>
-    <circle cx="45" cy="108" r="4" fill="#3fb950"/>
-    <circle cx="60" cy="108" r="4" fill="#f85149"/>
-    <circle cx="75" cy="108" r="4" fill="#3fb950"/>
-    <circle cx="90" cy="108" r="4" fill="#3fb950"/>
-    <text x="200" y="38" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Cat6A Cable</text>
-    <text x="200" y="52" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Panduit TX6A 10Gig</text>
-    <rect x="155" y="60" width="90" height="50" rx="2" fill="#0d1117" stroke="#334155"/>
-    <text x="200" y="78" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Bandwidth: 750MHz</text>
-    <text x="200" y="90" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Max Length: 100m</text>
-    <text x="200" y="102" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Standard: ANSI/TIA-568</text>
-    <text x="200" y="128" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">⚠ Replace run at panel port 14</text>
-  </svg>`,
-  switch_cisco:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="15" y="40" width="290" height="70" rx="3" fill="#161b22" stroke="#334155" stroke-width="1.5"/>
-    <text x="160" y="33" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">Cisco Catalyst 2960-X</text>
-    <text x="160" y="43" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">48-Port Managed Switch · PoE+</text>
-    ${Array.from({length:24},(_,i)=>{
-      const x=25+i*11,color=i===7?'#f85149':i===8?'#d29922':'#3fb950';
-      return `<rect x="${x}" y="52" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${56}" r="2" fill="${color}"/>`;
-    }).join('')}
-    ${Array.from({length:24},(_,i)=>{
-      const x=25+i*11,color='#3fb950';
-      return `<rect x="${x}" y="72" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${76}" r="2" fill="${color}"/>`;
-    }).join('')}
-    <text x="90" y="102" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">↑ Gi0/8 — PORT DOWN</text>
-    <text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Ports: 48x GbE PoE+ · 4x SFP+ · VLAN · Spanning Tree · LACP</text>
-  </svg>`,
-  wireshark:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/>
-    <rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/>
-    <text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text>
-    <text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text>
-    <rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/>
-    <text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text>
-    <text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text>
-    <text x="20" y="80" fill="#7d8590" font-size="6" font-family="monospace">1425   0.001312  192.168.1.45   10.0.0.1        TCP       [ACK] Seq=1 Ack=1</text>
-    <rect x="10" y="82" width="300" height="10" fill="rgba(248,81,73,0.1)"/>
-    <text x="20" y="90" fill="#f85149" font-size="6" font-family="monospace">1426   4.001998  192.168.1.45   10.0.0.1        TCP       [RST] — CONNECTION RESET</text>
-    <text x="20" y="102" fill="#7d8590" font-size="6" font-family="monospace">1427   4.002010  —              —               —         Retransmission timeout</text>
-    <text x="160" y="125" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">⚠ TCP RST at packet 1426 — MTU mismatch or firewall drop</text>
-  </svg>`,
-  azure_entra:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="20" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/>
-    <text x="85" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Azure Entra ID</text>
-    <text x="85" y="44" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access</text>
-    <rect x="35" y="52" width="100" height="18" rx="2" fill="#0d1117" stroke="#f85149" stroke-width="1"/>
-    <text x="85" y="64" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">BLOCKED</text>
-    <text x="85" y="76" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Policy: Zero_Trust_Geo</text>
-    <text x="85" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">IP: 91.203.114.88</text>
-    <text x="85" y="100" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Location: Frankfurt,DE</text>
-    <rect x="35" y="108" width="100" height="12" rx="2" fill="rgba(63,185,80,0.1)" stroke="rgba(63,185,80,.3)"/>
-    <text x="85" y="117" fill="#3fb950" font-size="6" font-family="monospace" text-anchor="middle">MFA PUSH → APPROVED</text>
-    <rect x="170" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/>
-    <text x="235" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Sign-in Log</text>
-    <text x="235" y="48" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">User: vip.exec@corp.com</text>
-    <text x="235" y="62" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">App: Office 365</text>
-    <text x="235" y="76" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Client: Win11 Outlook</text>
-    <text x="235" y="90" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">Result: FAILURE</text>
-    <text x="235" y="104" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Error: 53003</text>
-    <text x="235" y="116" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access Block</text>
-  </svg>`,
-  lenovo_bios:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="15" y="10" width="290" height="120" rx="4" fill="#0d0d0d" stroke="#484f58"/>
-    <rect x="15" y="10" width="290" height="20" rx="4" fill="#0d1117" stroke="#484f58"/>
-    <text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Lenovo ThinkPad BIOS Setup Utility v1.47</text>
-    <text x="30" y="46" fill="#3fb950" font-size="8" font-family="monospace">Main  Config  Security  Startup  Restart</text>
-    <text x="30" y="62" fill="#7d8590" font-size="7" font-family="monospace">▸ Storage Devices</text>
-    <text x="45" y="74" fill="#79c0ff" font-size="6" font-family="monospace">SK Hynix PC711 NVMe  512GB   DETECTED ✓</text>
-    <text x="45" y="84" fill="#7d8590" font-size="6" font-family="monospace">SMART Status: PASS   Temp: 31°C</text>
-    <text x="30" y="96" fill="#7d8590" font-size="7" font-family="monospace">▸ Boot Configuration</text>
-    <text x="45" y="108" fill="#f85149" font-size="6" font-family="monospace">Windows Boot Manager   ERROR: BCD corrupt</text>
-    <text x="45" y="118" fill="#484f58" font-size="6" font-family="monospace">Secure Boot: ON  · UEFI Mode: Active</text>
-    <text x="240" y="74" fill="#484f58" font-size="6" font-family="monospace">F1  Help</text>
-    <text x="240" y="84" fill="#484f58" font-size="6" font-family="monospace">F9  Default</text>
-    <text x="240" y="94" fill="#484f58" font-size="6" font-family="monospace">F10 Save/Exit</text>
-  </svg>`,
-  tls_cert:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="10" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/>
-    <text x="82" y="28" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">TLS 1.3 Handshake</text>
-    <text x="30" y="44" fill="#7d8590" font-size="6" font-family="monospace">Client → Server: ClientHello</text>
-    <text x="30" y="56" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: ServerHello</text>
-    <text x="30" y="68" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: Certificate</text>
-    <text x="30" y="80" fill="#f85149" font-size="6" font-family="monospace">❌ Verify: EXPIRED</text>
-    <text x="30" y="92" fill="#f85149" font-size="6" font-family="monospace">ERR_CERT_DATE_INVALID</text>
-    <text x="30" y="110" fill="#484f58" font-size="6" font-family="monospace">Expired: 2025-11-01</text>
-    <text x="30" y="122" fill="#484f58" font-size="6" font-family="monospace">Issuer: DigiCert CA</text>
-    <rect x="165" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/>
-    <text x="237" y="28" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">New Certificate</text>
-    <text x="178" y="44" fill="#7d8590" font-size="6" font-family="monospace">Subject: *.corp.internal</text>
-    <text x="178" y="56" fill="#7d8590" font-size="6" font-family="monospace">Valid: 2025-12-01</text>
-    <text x="178" y="68" fill="#3fb950" font-size="6" font-family="monospace">Expires: 2026-12-01</text>
-    <text x="178" y="80" fill="#7d8590" font-size="6" font-family="monospace">Alg: RSA-4096 / SHA-256</text>
-    <text x="178" y="92" fill="#7d8590" font-size="6" font-family="monospace">SAN: 12 alt names</text>
-    <text x="178" y="110" fill="#3fb950" font-size="6" font-family="monospace">✓ Issued by DigiCert</text>
-    <text x="178" y="122" fill="#3fb950" font-size="6" font-family="monospace">✓ Chain: VALID</text>
-  </svg>`
+  fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/><text x="50" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><rect x="130" y="55" width="60" height="30" rx="3" fill="#1c2330" stroke="#d29922" stroke-width="1.5"/><text x="160" y="73" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">SPLICE</text><text x="160" y="83" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">DAMAGED</text><line x1="190" y1="70" x2="240" y2="70" stroke="#3fb950" stroke-width="3"/><rect x="240" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/><text x="270" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text><text x="50" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">TX End</text><text x="270" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">RX End</text><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text><text x="160" y="130" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Single-Mode Fiber — OS2 — 9/125μm</text></svg>`,
+  otdr:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="200" height="120" rx="4" fill="#0d1117" stroke="#334155"/><text x="110" y="25" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">OTDR TRACE — REFLECTOMETRY</text><polyline points="20,90 60,88 100,86 140,60 150,110 160,88 190,87 200,87" fill="none" stroke="#3fb950" stroke-width="1.5"/><line x1="20" y1="90" x2="200" y2="90" stroke="#1c2330" stroke-width="1"/><text x="140" y="55" fill="#f85149" font-size="6" font-family="monospace">FAULT</text><text x="140" y="63" fill="#f85149" font-size="6" font-family="monospace">2.3km</text><text x="220" y="40" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold">OTDR</text><text x="220" y="55" fill="#7d8590" font-size="7" font-family="monospace">JDSU T-BERD</text><text x="220" y="68" fill="#7d8590" font-size="7" font-family="monospace">5800-100G</text><text x="220" y="85" fill="#484f58" font-size="6" font-family="monospace">Wave: 1310/1550nm</text><text x="220" y="97" fill="#484f58" font-size="6" font-family="monospace">Range: 120km</text><text x="220" y="109" fill="#484f58" font-size="6" font-family="monospace">Dead Zone: 1.5m</text><rect x="210" y="115" width="100" height="16" rx="2" fill="#0d1117" stroke="#3fb950" stroke-width="1"/><text x="260" y="127" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">EXPORT REPORT</text></svg>`,
+  meraki_mx:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="30" y="45" width="260" height="60" rx="4" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="100" y="38" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold">Cisco Meraki MX68</text><text x="100" y="48" fill="#7d8590" font-size="7" font-family="monospace">Security Appliance · SD-WAN</text><circle cx="55" cy="75" r="5" fill="#3fb950"/><text x="55" y="92" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">PWR</text><rect x="70" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="76" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN1</text><circle cx="76" cy="70" r="2" fill="#f85149"/><rect x="86" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="92" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN2</text><circle cx="92" cy="70" r="2" fill="#3fb950"/><text x="160" y="80" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">LTE FAILOVER ACTIVE</text><rect x="255" y="65" width="20" height="8" rx="1" fill="#0d1117" stroke="#3fb950" stroke-width="1"/><text x="265" y="72" fill="#3fb950" font-size="5" font-family="monospace" text-anchor="middle">4G</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Throughput: 450Mbps · VPN: 150Mbps · Up to 5 SSIDs</text></svg>`,
+  cable_tester:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="20" width="110" height="100" rx="6" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="75" y="38" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Fluke Networks</text><text x="75" y="49" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">MicroScanner2</text><rect x="35" y="55" width="80" height="40" rx="2" fill="#0d1117" stroke="#484f58"/><text x="75" y="68" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">WIREMAP OK</text><text x="75" y="80" fill="#d29922" font-size="6" font-family="monospace" text-anchor="middle">PAIR 3-6: OPEN</text><text x="75" y="90" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">LENGTH: 84m</text><circle cx="45" cy="108" r="4" fill="#3fb950"/><circle cx="60" cy="108" r="4" fill="#f85149"/><circle cx="75" cy="108" r="4" fill="#3fb950"/><circle cx="90" cy="108" r="4" fill="#3fb950"/><text x="200" y="38" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Cat6A Cable</text><text x="200" y="52" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Panduit TX6A 10Gig</text><rect x="155" y="60" width="90" height="50" rx="2" fill="#0d1117" stroke="#334155"/><text x="200" y="78" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Bandwidth: 750MHz</text><text x="200" y="90" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Max Length: 100m</text><text x="200" y="102" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Standard: ANSI/TIA-568</text><text x="200" y="128" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">⚠ Replace run at panel port 14</text></svg>`,
+  switch_cisco:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="40" width="290" height="70" rx="3" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="160" y="33" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">Cisco Catalyst 2960-X</text><text x="160" y="43" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">48-Port Managed Switch · PoE+</text>${Array.from({length:24},(_,i)=>{const x=25+i*11,color=i===7?'#f85149':i===8?'#d29922':'#3fb950';return `<rect x="${x}" y="52" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${56}" r="2" fill="${color}"/>`;}).join('')}${Array.from({length:24},(_,i)=>{const x=25+i*11,color='#3fb950';return `<rect x="${x}" y="72" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${76}" r="2" fill="${color}"/>`;}).join('')}<text x="90" y="102" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">↑ Gi0/8 — PORT DOWN</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Ports: 48x GbE PoE+ · 4x SFP+ · VLAN · Spanning Tree · LACP</text></svg>`,
+  wireshark:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/><rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text><text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text><rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/><text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text><text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text><text x="20" y="80" fill="#7d8590" font-size="6" font-family="monospace">1425   0.001312  192.168.1.45   10.0.0.1        TCP       [ACK] Seq=1 Ack=1</text><rect x="10" y="82" width="300" height="10" fill="rgba(248,81,73,0.1)"/><text x="20" y="90" fill="#f85149" font-size="6" font-family="monospace">1426   4.001998  192.168.1.45   10.0.0.1        TCP       [RST] — CONNECTION RESET</text><text x="20" y="102" fill="#7d8590" font-size="6" font-family="monospace">1427   4.002010  —              —               —         Retransmission timeout</text><text x="160" y="125" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">⚠ TCP RST at packet 1426 — MTU mismatch or firewall drop</text></svg>`,
+  azure_entra:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="85" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Azure Entra ID</text><text x="85" y="44" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access</text><rect x="35" y="52" width="100" height="18" rx="2" fill="#0d1117" stroke="#f85149" stroke-width="1"/><text x="85" y="64" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">BLOCKED</text><text x="85" y="76" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Policy: Zero_Trust_Geo</text><text x="85" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">IP: 91.203.114.88</text><text x="85" y="100" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Location: Frankfurt,DE</text><rect x="35" y="108" width="100" height="12" rx="2" fill="rgba(63,185,80,0.1)" stroke="rgba(63,185,80,.3)"/><text x="85" y="117" fill="#3fb950" font-size="6" font-family="monospace" text-anchor="middle">MFA PUSH → APPROVED</text><rect x="170" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="235" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Sign-in Log</text><text x="235" y="48" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">User: vip.exec@corp.com</text><text x="235" y="62" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">App: Office 365</text><text x="235" y="76" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Client: Win11 Outlook</text><text x="235" y="90" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">Result: FAILURE</text><text x="235" y="104" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Error: 53003</text><text x="235" y="116" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access Block</text></svg>`,
+  lenovo_bios:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="10" width="290" height="120" rx="4" fill="#0d0d0d" stroke="#484f58"/><rect x="15" y="10" width="290" height="20" rx="4" fill="#0d1117" stroke="#484f58"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Lenovo ThinkPad BIOS Setup Utility v1.47</text><text x="30" y="46" fill="#3fb950" font-size="8" font-family="monospace">Main  Config  Security  Startup  Restart</text><text x="30" y="62" fill="#7d8590" font-size="7" font-family="monospace">▸ Storage Devices</text><text x="45" y="74" fill="#79c0ff" font-size="6" font-family="monospace">SK Hynix PC711 NVMe  512GB   DETECTED ✓</text><text x="45" y="84" fill="#7d8590" font-size="6" font-family="monospace">SMART Status: PASS   Temp: 31°C</text><text x="30" y="96" fill="#7d8590" font-size="7" font-family="monospace">▸ Boot Configuration</text><text x="45" y="108" fill="#f85149" font-size="6" font-family="monospace">Windows Boot Manager   ERROR: BCD corrupt</text><text x="45" y="118" fill="#484f58" font-size="6" font-family="monospace">Secure Boot: ON  · UEFI Mode: Active</text><text x="240" y="74" fill="#484f58" font-size="6" font-family="monospace">F1  Help</text><text x="240" y="84" fill="#484f58" font-size="6" font-family="monospace">F9  Default</text><text x="240" y="94" fill="#484f58" font-size="6" font-family="monospace">F10 Save/Exit</text></svg>`,
+  tls_cert:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="82" y="28" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">TLS 1.3 Handshake</text><text x="30" y="44" fill="#7d8590" font-size="6" font-family="monospace">Client → Server: ClientHello</text><text x="30" y="56" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: ServerHello</text><text x="30" y="68" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: Certificate</text><text x="30" y="80" fill="#f85149" font-size="6" font-family="monospace">❌ Verify: EXPIRED</text><text x="30" y="92" fill="#f85149" font-size="6" font-family="monospace">ERR_CERT_DATE_INVALID</text><text x="30" y="110" fill="#484f58" font-size="6" font-family="monospace">Expired: 2025-11-01</text><text x="30" y="122" fill="#484f58" font-size="6" font-family="monospace">Issuer: DigiCert CA</text><rect x="165" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="237" y="28" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">New Certificate</text><text x="178" y="44" fill="#7d8590" font-size="6" font-family="monospace">Subject: *.corp.internal</text><text x="178" y="56" fill="#7d8590" font-size="6" font-family="monospace">Valid: 2025-12-01</text><text x="178" y="68" fill="#3fb950" font-size="6" font-family="monospace">Expires: 2026-12-01</text><text x="178" y="80" fill="#7d8590" font-size="6" font-family="monospace">Alg: RSA-4096 / SHA-256</text><text x="178" y="92" fill="#7d8590" font-size="6" font-family="monospace">SAN: 12 alt names</text><text x="178" y="110" fill="#3fb950" font-size="6" font-family="monospace">✓ Issued by DigiCert</text><text x="178" y="122" fill="#3fb950" font-size="6" font-family="monospace">✓ Chain: VALID</text></svg>`
 };
 
-// ─── FULL OSI SCENARIO LIBRARY ───
+// ─── FULL OSI SCENARIO LIBRARY (INCLUDING 2026 ADVANCED TICKETS) ───
 const scenarios=[
   {
-    id:'l1-fiber-break', layer:1, tier:'L1 · Tier 2',
+    id:'l1-fiber-break', layer:1, tier:'L1 · Tier 2', kb_link: 'ccna',
     title:'Fiber Optic Break — ISP Trunk',
     desc:'ISP single-mode fiber break detected on the carrier trunk. Diagnose with OTDR, coordinate carrier splice repair.',
     incNumber:'INC001-L1A', caller:'NOC Alert — Carrier Trunk Down',
@@ -799,7 +892,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l1-cable-bad', layer:1, tier:'L1 · Tier 1',
+    id:'l1-cable-bad', layer:1, tier:'L1 · Tier 1', kb_link: 'windows-troubleshoot',
     title:'Bad Ethernet Cable — Desktop Drop',
     desc:'User reports intermittent connectivity. Physical cable is faulty — wire map shows open pair. Full L1 triage and remediation.',
     incNumber:'INC002-L1B', caller:'End User — Marketing Dept',
@@ -827,7 +920,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l2-port-down', layer:2, tier:'L2 · Tier 2',
+    id:'l2-port-down', layer:2, tier:'L2 · Tier 2', kb_link: 'ccna',
     title:'Switch Port Down — VLAN Mismatch',
     desc:'Cisco Catalyst port Gi0/8 is down. Diagnose spanning tree, VLAN configuration, and PoE status.',
     incNumber:'INC003-L2A', caller:'Help Desk Escalation — Floor 3',
@@ -851,7 +944,21 @@ const scenarios=[
     ]
   },
   {
-    id:'l3-sdwan', layer:3, tier:'L3 · Tier 2',
+    id:'l2-arp-poison', layer:2, kb_link:'network-security',
+    title:'Security Incident — ARP Cache Poisoning',
+    desc:'Detecting unauthorized ARP responses. Mitigating Man-in-the-Middle (MitM) attacks using Dynamic ARP Inspection (DAI).',
+    incNumber:'INC-SEC-882', caller:'Network Intrusion Detection',
+    ci:'Core Switch 10G Uplink\nOSI Layer 2: Data Link / Security',
+    steps:[
+      {type:'alert',text:'🚨 CRITICAL: Duplicate MAC Address detected for Default Gateway 10.1.1.1',actionLabel:'Isolate Threat'},
+      {type:'cli',text:`Switch# show ip arp inspection statistics\nSource MAC Validation Failures: 1422\nInterface Gi0/4: 842 Dropped Packets (Invalid Bindings)`},
+      {type:'agent',name:'R. Rodney',text:'An attacker is spoofing the gateway to intercept traffic. I am enabling DAI and DHCP Snooping to enforce MAC-to-IP binding integrity.',comment:'// Security: DAI ensures only valid ARP requests from trusted DHCP bindings are permitted.'},
+      {type:'cli',text:`Switch(config)# ip dhcp snooping\nSwitch(config)# vlan 10 ip arp inspection\nSwitch(config-if)# ip dhcp snooping trust  ! (Uplink to Router)`},
+      {type:'system',text:'[SYS] Attack mitigated. Rogue port Gi0/4 placed in err-disabled state. Gateway integrity restored.'}
+    ]
+  },
+  {
+    id:'l3-sdwan', layer:3, tier:'L3 · Tier 2', kb_link: 'meraki',
     title:'SD-WAN Failover — Cisco Meraki MX68',
     desc:'Primary ISP OSPF adjacency drops. Force Meraki SD-WAN failover to LTE backup. 400-store retail chain.',
     incNumber:'INC004-L3A', caller:'Store 42 Manager — Honey Baked Ham',
@@ -874,7 +981,21 @@ const scenarios=[
     ]
   },
   {
-    id:'l4-tcp-reset', layer:4, tier:'L4 · Tier 2',
+    id:'l3-multi-cloud', layer:3, kb_link:'multi-cloud',
+    title:'Multi-Cloud Connectivity — AWS to Azure VPN',
+    desc:'Primary BGP session between AWS VGW and Azure VPN Gateway is flapping. Troubeshooting MTU and BGP timers.',
+    incNumber:'INC-CLD-901', caller:'Cloud Architecture Team',
+    ci:'AWS TGW to Azure vWAN\nOSI Layer 3: Network / Cloud',
+    steps:[
+      {type:'alert',text:'🚨 CLOUD ALERT: BGP Flapping — AWS Region US-East-1 to Azure East US',actionLabel:'Debug Tunnel'},
+      {type:'cli',text:`$ az network vpn-gateway show-bgp-settings\nBGP State: Connect (Retrying...)\n$ aws ec2 describe-vpn-connections\nVpnConnectionId: vpn-042... State: available, BGP: down`},
+      {type:'agent',name:'R. Rodney',text:'The BGP session is reaching "Connect" but never "Established." I am checking the IPSec Phase 2 parameters and Path MTU.',comment:'// Cloud: Most multi-cloud BGP issues are caused by MTU mismatches or mismatched Hold-Time timers.'},
+      {type:'cli',text:`$ ping 169.254.21.1 -l 1350 -f  # Testing MTU with "Do Not Fragment"\nPacket needs to be fragmented but DF set.\n# Fix: MSS Clamping to 1350 on Azure side`},
+      {type:'system',text:'[SYS] MSS Clamping applied. BGP State: ESTABLISHED. Multi-cloud traffic flowing.'}
+    ]
+  },
+  {
+    id:'l4-tcp-reset', layer:4, tier:'L4 · Tier 2', kb_link: 'wireshark',
     title:'TCP Connection Reset — MTU / Firewall',
     desc:'Application randomly drops connections. Wireshark reveals TCP RST at Layer 4. MTU mismatch diagnosis.',
     incNumber:'INC005-L4A', caller:'App Team Lead — Dev Dept',
@@ -898,7 +1019,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l5-vpn-drop', layer:5, tier:'L5 · Tier 2',
+    id:'l5-vpn-drop', layer:5, tier:'L5 · Tier 2', kb_link: 'network-security',
     title:'VPN Session Drops — IKEv2 Re-auth Failure',
     desc:'Remote workers VPN sessions drop every 8 hours. IKEv2 re-authentication timeout misconfiguration.',
     incNumber:'INC006-L5A', caller:'Remote Work Team Lead',
@@ -917,7 +1038,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l6-tls-cert', layer:6, tier:'L6 · Tier 2',
+    id:'l6-tls-cert', layer:6, tier:'L6 · Tier 2', kb_link: 'sec-plus',
     title:'Expired TLS Certificate — Internal App',
     desc:'Internal web application returning ERR_CERT_DATE_INVALID. TLS cert expired. Full renewal and deployment.',
     incNumber:'INC007-L6A', caller:'Finance Director — Corp Finance',
@@ -938,7 +1059,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l7-azure-iam', layer:7, tier:'L7 · Tier 2',
+    id:'l7-azure-iam', layer:7, tier:'L7 · Tier 2', kb_link: 'sec-plus',
     title:'Azure Entra ID — VIP Zero Trust Block',
     desc:'VIP executive locked out of M365 by Conditional Access geoblocking while traveling internationally.',
     incNumber:'INC008-L7A', caller:'VIP Executive — Board of Directors',
@@ -961,7 +1082,7 @@ const scenarios=[
     ]
   },
   {
-    id:'l7-ai-auto', layer:7, tier:'L7 · Tier 2',
+    id:'l7-ai-auto', layer:7, tier:'L7 · Tier 2', kb_link: 'ai-prompt',
     title:'AI Ticket Automation — Password Storm',
     desc:'50-ticket burst in 3 minutes. Advanced prompt engineering deployed to autonomously resolve 90% via GPT-4 orchestration.',
     incNumber:'INC009-L7B', caller:'ServiceNow Automation Engine',
@@ -976,6 +1097,20 @@ const scenarios=[
       {type:'cli',text:`# Manual processing — 5 complex cases\nTicket INC-50891: Account locked, MFA device lost\n→ Identity verified via manager callback · Temp code issued\n\nTicket INC-50894: Account locked, AD replication lag\n→ Force sync: repadmin /syncall /AdeP\n→ Account unlocked in target DC\n\n[3 more tickets processed similarly]`},
       {type:'system',text:'[SYS] QUEUE COMPLETE:\n  45/50 resolved via AI automation (90%)\n  5/50 resolved manually (10%)\n  Total elapsed: 00:18:30 · SLA: ALL MET ✓\n  Automation script saved: runbook/password-storm-v3.sh'},
       {type:'system',text:'[SYS] INC009-L7B → RESOLVED\n[SYS] AI orchestration: 45 tickets in 3:42 · 0 SLA breaches\n[SYS] Manual resolution: 5 complex cases · all closed < 18 min\n[SYS] Runbook updated · AI automation documented for future use'}
+    ]
+  },
+  {
+    id:'l7-ai-ops', layer:7, kb_link:'aiops', tier:'L7 · Tier 3',
+    title:'AIOps Predictive Alert — Capacity Threshold',
+    desc:'AI model predicts Link saturation on Store-42 within 15 minutes. Proactive bandwidth reallocation.',
+    incNumber:'INC-AI-772', caller:'Cisco AI Assistant (AIOps)',
+    ci:'Meraki SD-WAN Controller\nOSI Layer 7: Application / AIOps',
+    steps:[
+      {type:'alert',text:'🤖 PREDICTIVE ALERT: Interface Gi0/2 will reach 98% saturation at 14:15 EST',actionLabel:'Allocate Bandwidth'},
+      {type:'system',text:'[SYS] Analysis: Historical trend shows "End of Day" POS sync spike.\n[SYS] Recommendation: Shift non-essential guest traffic to WAN2 (LTE).'},
+      {type:'agent',name:'R. Rodney',text:'I am approving the AI recommendation. Executing the SD-WAN traffic shaping policy to prioritize POS traffic on the primary fiber.',comment:'// AIOps: Moving from reactive firefighting to proactive predictive maintenance.'},
+      {type:'cli',text:`Meraki_API# patch_traffic_shaping(network_id, "Guest_WiFi", limit=50000)\nResponse: 200 OK`},
+      {type:'system',text:'[SYS] Policy updated. High-priority traffic protected. Saturation avoided.'}
     ]
   }
 ];
@@ -1104,6 +1239,18 @@ function advanceIncident(){
     ciDot.classList.remove('on');
     document.getElementById('inc-state').className='badge badge-res';
     document.getElementById('inc-state').textContent='Resolved ✓';
+    
+    // Add Deep Dive Button at the end of the ticket
+    if(current.kb_link) {
+      const diveBtn = document.createElement('button');
+      diveBtn.className = "launch-btn";
+      diveBtn.style.marginTop = "15px";
+      diveBtn.innerHTML = "🔍 Take a Deeper Dive into this Curriculum";
+      diveBtn.onclick = () => openCert(current.kb_link);
+      stream.appendChild(diveBtn);
+      stream.scrollTo({top:stream.scrollHeight,behavior:'smooth'});
+    }
+
   }else if(autoPlay&&step.type!=='alert'){
     btn.style.display='none';
     const delay=step.type==='cli'?4000:step.type==='vis'?3500:3000;
