@@ -22,263 +22,555 @@
   --body:'DM Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6} 
+body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6}
 
-/* SIDEBAR */
-.sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden;z-index:1000;}
+.sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden}
 .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple))}
 .sb-brand{padding:1.25rem 1.25rem 1rem;border-bottom:1px solid var(--border)}
+.sb-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:5px;opacity:.8}
 .sb-name{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text)}
-.sb-nav{padding:.75rem 0;flex:1;overflow-y:auto; font-size:14px;}
-.nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
+.sb-status{display:flex;align-items:center;gap:6px;margin-top:7px}
+.sb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green-g);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
+.sb-st{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.sb-nav{padding:.75rem 0;flex:1;overflow-y:auto;font-size:14px}
+.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--surface3)}
+.nav-section-lbl{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted2);padding:.6rem 1.25rem .3rem;text-transform:uppercase}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;font-weight:400;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
 .nav-btn:hover{color:var(--text);background:var(--surface2)}
 .nav-btn.active{color:var(--green);border-left-color:var(--green);background:var(--green-dim);font-weight:500}
-#nav-dash.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
-#nav-res.active { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
-#nav-agent.active { color: var(--teal); border-left-color: var(--teal); background: var(--teal-dim); }
+.sb-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.8}
+.sb-footer a{color:var(--blue);text-decoration:none}
+.sb-footer a:hover{text-decoration:underline}
 
-/* MAIN AREA */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;position:relative;z-index:1;}
+#nav-dash.active{color:var(--blue);border-left-color:var(--blue);background:var(--blue-dim)}
+#nav-res.active{color:var(--purple);border-left-color:var(--purple);background:var(--purple-dim)}
+#nav-agent.active{color:var(--teal);border-left-color:var(--teal);background:var(--teal-dim)}
+
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;justify-content:space-between;flex-shrink:0;background:var(--surface)}
-.workspace{flex:1;overflow-y:auto;overflow-x:hidden;padding:1.5rem}
+.topbar-title{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3px}
+.topbar-r{display:flex;align-items:center;gap:1rem}
+.sla-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
+.clock{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
-/* DASHBOARD GRID */
-.view { display: none; }
-.view.active { display: block; }
+.workspace{flex:1;overflow-y:auto;overflow-x:hidden;padding:1.5rem}
+.workspace::-webkit-scrollbar{width:5px}
+.workspace::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
+
+#view-dashboard{display:block}
+.dash-intro{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.dash-intro p{font-size:13px;color:var(--muted);line-height:1.8;max-width:700px}
+.dash-intro .hi{color:var(--blue);font-weight:500}
 .osi-section{margin-bottom:2rem}
+.osi-section-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.layer-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;font-weight:700;letter-spacing:.5px}
+.osi-section-title{font-family:var(--display);font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.5px}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:5px;overflow:hidden}
 .skill-card{background:var(--surface);padding:1.1rem 1.25rem;cursor:pointer;transition:background .15s;position:relative}
 .skill-card:hover{background:var(--surface2)}
-.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.skill-card:hover::before{transform:scaleX(1)}
+.card-tier{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:5px}
+.skill-card h3{font-family:var(--display);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.skill-card p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:.85rem}
+.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:all .15s}
+.launch-btn:hover{background:rgba(63,185,80,.18);border-color:rgba(63,185,80,.4)}
 
-/* INCIDENT STREAM (THE TALKING) */
-#view-incident{height:100%;gap:1rem}
+#view-incident{display:none;height:100%;gap:1rem}
 .ticket-panel{width:256px;flex-shrink:0;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
+.ticket-panel::-webkit-scrollbar{width:3px}
 .ticket-card{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
+.ticket-number{font-family:var(--mono);font-size:11px;color:var(--blue);margin-bottom:.9rem;letter-spacing:.5px}
+.detail-row{margin-bottom:.8rem}
+.detail-label{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase;margin-bottom:3px}
+.detail-value{font-size:12px;font-weight:500;color:var(--text)}
+.badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:.3px;display:inline-block}
+.badge-crit{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,81,73,.2)}
+.badge-prog{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(210,153,34,.2)}
+.badge-res{background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
+.ci-panel{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
+.ci-hdr{display:flex;align-items:center;gap:6px;margin-bottom:.5rem}
+.ci-dot{width:6px;height:6px;border-radius:50%;background:var(--muted2);transition:all .3s}
+.ci-dot.on{background:var(--amber);box-shadow:0 0 8px rgba(210,153,34,.5);animation:ci-pulse 1s ease-in-out infinite}
+@keyframes ci-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ci-lbl{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase}
+.ci-val{font-family:var(--mono);font-size:10px;color:var(--amber);line-height:1.6}
+
 .stream-container{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:5px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .stream-hdr{padding:.65rem 1.1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.stream-title{font-family:var(--display);font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+#next-btn{font-family:var(--mono);font-size:9px;padding:4px 12px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(88,166,255,.25);border-radius:2px;cursor:pointer;letter-spacing:.5px;transition:all .15s;display:none}
+#next-btn:hover{background:rgba(88,166,255,.2)}
 .stream-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.65rem}
+.stream-body::-webkit-scrollbar{width:3px}
+.stream-body::-webkit-scrollbar-thumb{background:var(--surface3)}
+
 .msg{display:flex;flex-direction:column;animation:ma .25s ease-out}
 @keyframes ma{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;background:var(--surface2);border:1px solid var(--border)}
+.msg-meta{font-family:var(--mono);font-size:9px;color:var(--muted2);margin-bottom:3px;letter-spacing:.5px}
+.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;position:relative}
+.m-caller .bubble{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:0;color:var(--text)}
 .m-agent{align-self:flex-end}
-.m-agent .bubble{background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.2)}
-.m-cli .bubble{background:#0d1117;border-left:3px solid var(--blue);color:#79c0ff;font-family:var(--mono);font-size:10px;white-space:pre-wrap}
+.m-agent .msg-meta{text-align:right}
+.m-agent .bubble{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.2);border-bottom-right-radius:0;color:var(--text)}
+.m-system .bubble{background:transparent;border:1px solid rgba(63,185,80,.18);border-left:2px solid var(--green);border-radius:0 4px 4px 0;color:var(--green);font-family:var(--mono);font-size:10px;max-width:100%}
+.m-cli .bubble{background:#0d1117;border:1px solid var(--border2);border-left:3px solid var(--blue);border-radius:0 4px 4px 0;color:#79c0ff;font-family:var(--mono);font-size:10px;white-space:pre-wrap;max-width:100%;overflow-x:auto}
+.m-alert{align-self:stretch}
+.m-alert .bubble{background:var(--red-dim);border-left:4px solid var(--red);border-radius:0 4px 4px 0;color:var(--text);font-weight:700 !important;font-size:17px !important;max-width:100%;cursor:pointer;transition:background .15s;animation:alertPulse 1.5s infinite}
+.m-alert .bubble:hover{background:rgba(248,81,73,.15)}
+@keyframes alertPulse{0%{box-shadow:0 0 0 0px rgba(248,81,73,.4)}70%{box-shadow:0 0 0 15px rgba(248,81,73,0)}100%{box-shadow:0 0 0 0px rgba(248,81,73,0)}}
+.m-vis{align-self:stretch;max-width:100%}
+.m-vis .bubble{padding:0;background:transparent;border:none;max-width:100%}
 .logic-note{font-family:var(--mono);font-size:9px;color:var(--amber);margin-top:5px;text-align:right;opacity:.75;font-style:italic}
-.vis-card{background:var(--surface3);border-radius:5px;border:1px solid var(--border2);overflow:hidden;margin-top:10px}
 
-/* AGENT UI */
-#view-agent{max-width:900px;margin:0 auto;flex-direction:column;}
-.agent-chat-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;}
-.agent-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3); padding:.8rem 1rem; border-radius:6px;}
-.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border); align-self: flex-end; padding:.8rem 1rem; border-radius:6px;}
-.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite;}
-@keyframes typing{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
+#view-agent{display:none;height:100%;gap:1rem;flex-direction:column;max-width:900px;margin:0 auto}
+.agent-header{display:flex;align-items:center;gap:15px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1rem}
+.agent-avatar{width:50px;height:50px;border-radius:8px;background:var(--surface2);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;color:var(--teal);font-family:var(--mono);font-weight:bold;font-size:20px;box-shadow:0 0 15px var(--teal-dim)}
+.agent-info h2{font-family:var(--display);font-size:20px;color:var(--text);margin-bottom:4px}
+.agent-info p{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.agent-chat-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden}
+.agent-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+.agent-messages::-webkit-scrollbar{width:5px}
+.agent-messages::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
+.agent-msg{display:flex;flex-direction:column;max-width:85%;animation:ma .25s ease-out}
+.agent-msg.user{align-self:flex-end}
+.agent-msg.ai{align-self:flex-start}
+.agent-bubble{padding:.8rem 1rem;border-radius:6px;font-size:14px;line-height:1.6}
+.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border);border-bottom-right-radius:0;color:var(--text)}
+.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3);border-bottom-left-radius:0;color:var(--text)}
+.agent-input-area{padding:1rem;background:var(--surface2);border-top:1px solid var(--border);display:flex;gap:10px}
+.agent-input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:4px;font-family:var(--body);font-size:14px;outline:none;transition:border .2s}
+.agent-input:focus{border-color:var(--teal)}
+.agent-send-btn{background:var(--teal);color:#000;border:none;padding:0 20px;border-radius:4px;font-weight:bold;cursor:pointer;font-family:var(--mono);transition:opacity .2s}
+.agent-send-btn:hover{opacity:.8}
+.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite ease-in-out both}
+.typing-dot:nth-child(1){animation-delay:-.32s}
+.typing-dot:nth-child(2){animation-delay:-.16s}
+@keyframes typing{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+#view-resume{display:none;max-width:820px;margin:0 auto;padding-bottom:4rem}
+.res-hero{padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+.res-name{font-family:var(--display);font-size:38px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1;margin-bottom:.5rem}
+.res-role{font-size:14px;color:var(--blue);font-weight:500;line-height:1.5;padding-right:15px;margin-bottom:1.25rem}
+.res-bio{font-size:13px;color:var(--muted);line-height:1.85;max-width:680px}
+.res-bio p{font-size:15.5px !important}
+.res-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.25rem}
+.res-sec-title{font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:1.25rem;padding-bottom:.65rem;border-bottom:1px solid var(--border)}
+.res-sec{margin-bottom:2.75rem}
+.res-job{display:grid;grid-template-columns:1fr auto;gap:.4rem 2rem;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.res-job:last-child{border-bottom:none}
+.res-co{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);grid-column:1}
+.res-dates{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap;padding-top:3px;grid-column:2;grid-row:1/3;align-self:start}
+.res-jobrole{font-size:12px;color:var(--green);font-weight:500;grid-column:1}
+.res-ul{list-style:none;grid-column:1/3;margin-top:.4rem}
+.res-ul li{font-size:14.5px !important;color:var(--muted);line-height:1.75;padding-left:.9rem;position:relative;margin-bottom:.2rem}
+.res-ul li::before{content:'▸';position:absolute;left:0;color:var(--green);font-size:9px;top:4px}
+.edu-item{margin-bottom:.9rem;padding-left:.9rem;border-left:2px solid var(--border2)}
+.edu-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.edu-detail{font-size:11px;color:var(--muted)}
+
+.res-tag,.cert-link{cursor:pointer;transition:all .3s;display:inline-block;animation:skillPulse 5s infinite ease-in-out}
+@keyframes skillPulse{0%,100%{opacity:1;filter:brightness(1)}50%{opacity:.8;filter:brightness(1.4);color:var(--green)}}
+.res-tag:hover,.cert-link:hover{animation:none !important;transform:translateY(-2px);border-color:var(--green);background:var(--green-dim)}
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:1.5rem}
+.kb-card{background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px}
+.kb-card h4{color:var(--blue);margin-bottom:.5rem;font-family:var(--display);font-size:14px;text-transform:uppercase}
+.kb-card ul li{font-size:14px;color:var(--muted);margin-bottom:4px;padding-left:12px;position:relative;list-style:none}
+.kb-card ul li::before{content:'→';position:absolute;left:0;color:var(--green);font-size:10px}
+
+@media(max-width:800px){
+  body{flex-direction:column;overflow:auto;height:auto;min-height:100vh;font-size:16px}
+  .res-name{font-size:32px}
+  .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:none;border-bottom:1px solid var(--border);flex-shrink:0}
+  .sidebar::before{height:2px}
+  .sb-brand{padding:.7rem 1rem;border-bottom:none;flex:1;min-width:160px}
+  .sb-nav{display:flex;padding:0;flex:none;width:100vw;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sb-nav::-webkit-scrollbar{display:none}
+  .nav-section-lbl{display:none}
+  .nav-btn{padding:1rem 1.2rem;border-left:none;border-bottom:2px solid transparent;font-size:14px;white-space:nowrap}
+  .nav-btn.active{border-bottom-color:var(--green);border-left:none;background:transparent}
+  .sb-footer{display:none}
+  .main{flex:none;width:100%}
+  .workspace{overflow-y:visible;padding:1rem}
+  #view-incident{flex-direction:column;height:auto}
+  .ticket-panel{width:100%}
+  .stream-container{min-height:500px}
+  .grid-cards{grid-template-columns:1fr}
+  .res-job{grid-template-columns:1fr}
+  .res-dates{grid-column:1;grid-row:auto}
+  .res-ul{grid-column:1}
+  #nav-dash.active,#nav-res.active,#nav-agent.active{border-left:none !important;border-bottom-color:inherit !important;background:transparent !important}
+}
 </style>
 </head>
 <body>
 
 <nav class="sidebar">
   <div class="sb-brand">
+    <div class="sb-tag">IT Ops Portfolio</div>
     <div class="sb-name">Régnard Rodney</div>
-    <div style="font-size:10px; color:var(--green); margin-top:5px;">Agent Online · ServiceNow</div>
+    <div class="sb-status">
+      <div class="sb-dot"></div>
+      <span class="sb-st">Agent Online · ServiceNow</span>
+    </div>
   </div>
+
   <div class="sb-nav">
-    <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">📊 Dashboard</button>
-    <button class="nav-btn" id="nav-res" onclick="switchView('resume')">📄 Resume</button>
-    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">🤖 Agent RR 2.0</button>
-    <div style="font-size:9px; color:var(--muted2); padding:1rem; text-transform:uppercase;">OSI Layers</div>
-    <button class="nav-btn" onclick="filterLayer(1)">L1 Physical</button>
-    <button class="nav-btn" onclick="filterLayer(3)">L3 Network</button>
-    <button class="nav-btn" onclick="filterLayer(7)">L7 Application</button>
+    <div class="nav-section-lbl">Views</div>
+    <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">Dashboard</button>
+    <button class="nav-btn" id="nav-res" onclick="switchView('resume')">Resume</button>
+    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">Agent RR 2.0 (Live)</button>
+    <div class="nav-section-lbl" style="margin-top:.5rem">OSI Layers</div>
+    <button class="nav-btn" onclick="filterLayer(1)" id="lnav1">L1 Physical</button>
+    <button class="nav-btn" onclick="filterLayer(2)" id="lnav2">L2 Data Link</button>
+    <button class="nav-btn" onclick="filterLayer(3)" id="lnav3">L3 Network</button>
+    <button class="nav-btn" onclick="filterLayer(4)" id="lnav4">L4 Transport</button>
+    <button class="nav-btn" onclick="filterLayer(5)" id="lnav5">L5 Session</button>
+    <button class="nav-btn" onclick="filterLayer(6)" id="lnav6">L6 Presentation</button>
+    <button class="nav-btn" onclick="filterLayer(7)" id="lnav7">L7 Application</button>
+  </div>
+
+  <div class="sb-footer">
+    Wilmington, DE · (470) 483-5144<br>
+    <a href="mailto:regnardrodney@gmail.com">regnardrodney@gmail.com</a><br>
+    <a href="https://linkedin.com/in/regnardrodney" target="_blank">linkedin.com/in/regnardrodney</a>
   </div>
 </nav>
 
 <main class="main">
   <header class="topbar">
-    <span class="topbar-title" id="header-title">Incident Dashboard</span>
-    <div class="topbar-r"><span class="clock" id="live-clock"></span></div>
+    <span class="topbar-title" id="header-title">Incident Dashboard — All OSI Layers</span>
+    <div class="topbar-r">
+      <span class="sla-badge">SLA 99%</span>
+      <span class="clock" id="live-clock"></span>
+    </div>
   </header>
 
   <div class="workspace">
-    <div id="view-dashboard" class="view active">
+    <div id="view-dashboard">
+      <div class="dash-intro">
+        <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation: greeting → triage → root cause → live tool commands → device visuals → resolution → closing. Skills on your resume are also <span class="hi">clickable</span> — they route directly to the matching Knowledge Base.</p>
+      </div>
       <div id="layer-sections"></div>
     </div>
 
-    <div id="view-incident" class="view">
+    <div id="view-incident">
       <div class="ticket-panel">
         <div class="ticket-card">
-          <div id="inc-number" style="color:var(--blue);font-family:var(--mono);font-size:11px;">INC000</div>
-          <div id="inc-caller" style="font-weight:bold;margin-top:10px;">Caller</div>
-          <div id="inc-ci" style="font-size:10px;color:var(--muted);margin-top:5px;">CI</div>
-          <div id="inc-layer" style="font-size:9px;margin-top:10px;display:inline-block;padding:2px 5px;background:var(--surface3);">L0</div>
+          <div class="ticket-number" id="inc-number">INC0000000</div>
+          <div class="detail-row">
+            <div class="detail-label">Caller</div>
+            <div class="detail-value" id="inc-caller">—</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Priority</div>
+            <div class="detail-value"><span id="inc-priority" class="badge badge-crit">1 – Critical</span></div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">State</div>
+            <div class="detail-value"><span id="inc-state" class="badge badge-prog">In Progress</span></div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">OSI Layer</div>
+            <div class="detail-value"><span id="inc-layer" class="badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(188,140,255,.2)">—</span></div>
+          </div>
+          <div class="detail-row" style="margin-bottom:0">
+            <div class="detail-label">Opened</div>
+            <div class="detail-value" id="inc-opened" style="font-family:var(--mono);font-size:10px;color:var(--muted)">—</div>
+          </div>
+        </div>
+        <div class="ci-panel">
+          <div class="ci-hdr">
+            <div class="ci-dot" id="ci-dot"></div>
+            <span class="ci-lbl">Target CI</span>
+          </div>
+          <div class="ci-val" id="inc-ci">Awaiting assignment...</div>
+        </div>
+        <div class="ci-panel" id="osi-legend-panel" style="display:none">
+          <div class="ci-lbl" style="margin-bottom:.5rem">OSI Diagnosis Path</div>
+          <div id="osi-path" style="font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.9"></div>
         </div>
       </div>
+
       <div class="stream-container">
         <div class="stream-hdr">
-          <span id="stream-scenario-title" style="font-size:11px;font-weight:bold;text-transform:uppercase;">Activity Stream</span>
-          <button id="next-btn" onclick="advanceIncident()" style="background:var(--blue);color:white;border:none;padding:5px 15px;border-radius:4px;cursor:pointer;font-size:11px;">NEXT STEP ▶</button>
+          <span class="stream-title" id="stream-scenario-title">Activity Stream</span>
+          <button id="next-btn" onclick="advanceIncident()">▶ Next Step</button>
         </div>
-        <div id="stream-body" class="stream-body"></div>
+        <div class="stream-body" id="stream-body"></div>
       </div>
     </div>
 
-    <div id="view-agent" class="view">
-      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; font-size:12px;">
-        Notice: Static Mode. For live AI, use the <a href="https://regnardrodney.netlify.app" style="color:var(--teal);">Production Netlify Link</a>.
+    <div id="view-agent">
+      <div id="env-alert" style="background:var(--blue-dim);border:1px solid var(--blue);padding:12px;border-radius:6px;margin-bottom:15px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:20px;">🌐</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.4;">
+          <strong>Environment Capability Alert:</strong> You are currently viewing the static GitHub mirror. To experience <strong>Agent RR 2.0</strong> with live, non-deterministic AI reasoning and full infrastructure orchestration:
+          <br>
+          <a href="https://regnardrodney.netlify.app" style="color:var(--teal);font-weight:700;text-decoration:none;">👉 CLICK HERE TO LAUNCH PRODUCTION ENVIRONMENT</a>
+        </div>
       </div>
+
+      <div class="agent-header">
+        <div class="agent-avatar">RR</div>
+        <div class="agent-info">
+          <h2>Agent RR 2.0 · Infrastructure Digital Twin</h2>
+          <p>System Prompt: Senior CTO & Network Architect | Knowledge Base: ITIL, CCNA, Azure, AWS</p>
+        </div>
+      </div>
+
+      <div style="background:var(--surface2);padding:15px;border-radius:6px;border-left:3px solid var(--amber);margin-bottom:15px;font-size:13px;color:var(--muted);">
+        <strong>Architectural Note:</strong> To prevent exposing live API keys in a static client-side environment (GitHub Pages), this terminal is currently wired to a localized heuristic routing engine. The exact <code>fetch()</code> orchestration logic intended for an AWS Lambda / Netlify Edge backend is documented in the source code. Go ahead and test the UI by asking a networking or security question below.
+      </div>
+
       <div class="agent-chat-box">
-        <div id="agent-messages" class="agent-messages">
-          <div class="agent-msg ai"><div class="agent-bubble">System Initialized. I am Agent RR 2.0. How can I assist?</div></div>
+        <div class="agent-messages" id="agent-messages">
+          <div class="agent-msg ai">
+            <div class="agent-bubble">System Initialized. I am Agent RR 2.0, an AI representation of Régnard Rodney's technical expertise. How can I assist you with your infrastructure, cloud architecture, or network security inquiries today?</div>
+          </div>
         </div>
-        <div class="agent-input-area" style="padding:1rem; background:var(--surface2); border-top:1px solid var(--border); display:flex; gap:10px;">
-          <input type="text" id="agent-input" class="agent-input" style="flex:1; background:var(--surface); border:1px solid var(--border); color:white; padding:10px; border-radius:4px;" placeholder="Ask about BGP, Cisco, or Security..." onkeypress="if(event.key==='Enter') handleAgentChat()">
-          <button onclick="handleAgentChat()" style="background:var(--teal); border:none; padding:0 20px; border-radius:4px; cursor:pointer;">SEND</button>
+        <div class="agent-input-area">
+          <input type="text" class="agent-input" id="agent-input" placeholder="Ask me about BGP, Subnetting, Docker, or ITIL 4..." onkeypress="if(event.key === 'Enter') handleAgentChat()">
+          <button class="agent-send-btn" onclick="handleAgentChat()">SEND</button>
         </div>
       </div>
     </div>
 
-    <div id="view-resume" class="view">
-        <h1 style="font-family:var(--display);">Régnard Rodney</h1>
-        <p style="color:var(--blue);">Senior IT Infrastructure Specialist & CTO</p>
+    <div id="view-resume">
+      <div class="res-hero">
+        <div class="res-name">Régnard Rodney</div>
+        <div class="res-role">Network Engineer | Python Specialist - Optimization & Scalability | Advanced AI Prompt Chaining Orchestration & LLM Workflow Automation | Accelerated BSIT to MSITM 2022-2027 at WGU | ITIL Candidate 2026</div>
+        <div class="res-bio">
+          <p style="margin-bottom:14px;"><strong>Executive Overview:</strong> Bilingual (French/English) Network Engineer with 10+ years of experience supporting highly distributed endpoint environments. I bridge the gap between physical hardware, logical troubleshooting, and Agentic AI automation. Proven track record of managing 11,000+ endpoints, resolving root causes to maintain 99% SLAs, and building robust AI workflows that autonomously deflect ticket storms.</p>
+          <p><strong style="color:var(--green);font-weight:600;">👇 How to use this portfolio: Click any skill tag below to launch a live Knowledge Base masterclass.</strong></p>
+        </div>
+      </div>
+
+      <div class="res-sec">
+        <div class="res-sec-title">Core Competencies (Click to Explore)</div>
+        <div class="res-tags">
+          <span class="res-tag" onclick="openCert('multi-cloud')">Multi-Cloud Hub Architecture</span>
+          <span class="res-tag" onclick="openCert('aiops')">AIOps & Predictive Maintenance</span>
+          <span class="res-tag" onclick="openCert('iac-automation')">IaC (Terraform & Ansible)</span>
+          <span class="res-tag" onclick="openCert('python-ops')">Python Automation</span>
+          <span class="res-tag" onclick="openCert('bgp-routing')">BGP & MPLS Routing</span>
+          <span class="res-tag" onclick="openCert('subnetting')">Advanced IPv4/IPv6 VLSM</span>
+          <span class="res-tag" onclick="openCert('meraki')">SD-WAN Edge Architecture</span>
+          <span class="res-tag" onclick="openCert('docker')">Docker Containerization</span>
+          <span class="res-tag" onclick="openCert('wireshark')">Deep Packet Inspection</span>
+          <span class="res-tag" onclick="openCert('network-security')">Defensive Cybersecurity Ops</span>
+          <span class="res-tag" onclick="openCert('sec-plus')">NIST Framework & Compliance</span>
+          <span class="res-tag" onclick="openCert('kali')">Kali Linux / Pentesting</span>
+          <span class="res-tag" onclick="openCert('windows-troubleshoot')">Modern Windows Triage</span>
+          <span class="res-tag" onclick="openCert('redhat')">RedHat Admin (RHCSA)</span>
+          <span class="res-tag" onclick="openCert('itil')">ITIL 4 Framework</span>
+        </div>
+      </div>
+
+      <div class="res-sec">
+        <div class="res-sec-title">Professional Experience</div>
+        <div class="res-job">
+          <div class="res-co">Outlier AI (Freelance)</div>
+          <div class="res-dates">Jan 2022 – Present</div>
+          <div class="res-jobrole">AI Trainer & Logic Validator</div>
+          <ul class="res-ul">
+            <li>Evaluate and validate LLM responses within a Python environment, applying structured rubrics to verify logical reasoning, coding accuracy, and conversational flow.</li>
+            <li>Draft and refine prompt structures focusing on context and persona to improve the model's reliability in generating technical workflows and documentation.</li>
+          </ul>
+        </div>
+
+        <div class="res-job">
+          <div class="res-co">Asurion</div>
+          <div class="res-dates">2020 – 2025</div>
+          <div class="res-jobrole">Premier Solution Support Specialist</div>
+          <ul class="res-ul">
+            <li>Executed advanced hardware diagnostics and break/fix repairs across a highly distributed endpoint environment, resolving deep-level OS corruptions and physical failures for Windows PCs, Macs, and mobile devices.</li>
+            <li>Managed high-volume intake calls in a fast-paced remote environment, utilizing centralized ITSM platforms and AI-assisted troubleshooting tools to maintain a consistent 99% SLA compliance rate.</li>
+            <li>Diagnosed and resolved complex Layer 1-3 network connectivity and configuration issues for a vast array of peripheral hardware, including wireless printers, edge routing appliances, and interconnected IoT smart devices.</li>
+            <li>Served as a delegated operational backup for site leadership, providing technical facilitation for mandatory weekly management meetings and ensuring continuous team coverage during critical business periods.</li>
+          </ul>
+        </div>
+
+        <div class="res-job">
+          <div class="res-co">Robert Half Technology</div>
+          <div class="res-dates">2018 – 2020</div>
+          <div class="res-jobrole">IT Contractor — Infrastructure & Field Support</div>
+          <ul class="res-ul">
+            <li><strong>Prologic ITS (MDM):</strong> Supervised and configured mobile infrastructure for first responders, managing MDM deployments via VMware ONE (formerly known as Airwatch) and AT&T provisioning.</li>
+            <li><strong>Lowe's & Bargain Hunt (Retail/POS):</strong> Executed end-to-end break/fix maintenance for 10 stores per week (2 per day), resolving everything from Layer 1 data cabling issues to comprehensive hardware upgrades for POS systems, back-office computer rooms, training labs, mobile devices, and UPS systems.</li>
+            <li><strong>Honey Baked Ham (Network Support):</strong> Governed hardware lifecycle and network infrastructure for 400+ retail stores, deploying and securing Cisco Meraki SD-WAN and Wireless Access Points (WAPs).</li>
+            <li><strong>Hemmersbach/OneBeacon (Deskside Support):</strong> Performed high-tier remote and deskside troubleshooting for enterprise workstations.</li>
+          </ul>
+        </div>
+
+        <div class="res-job">
+          <div class="res-co">Computer Generated Solutions (CGS)</div>
+          <div class="res-dates">2017 – 2018</div>
+          <div class="res-jobrole">Bilingual Lenovo Technical Support IV</div>
+          <ul class="res-ul">
+            <li>Provided bilingual (French/English) remote assistance to field technicians, successfully resolving complex hardware, server, and router anomalies.</li>
+            <li>Executed Layer 2/Layer 3 diagnostics and advanced firmware/BIOS updates on enterprise-grade Lenovo systems for IBMers.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="res-sec">
+        <div class="res-sec-title">Education & Certifications</div>
+
+        <div class="edu-item">
+          <div class="edu-name">Western Governors University</div>
+          <div class="edu-detail">Accelerated Bachelor's to Master's in Information Technology (Expected Nov 2026)<br>
+          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Advanced dual-degree curriculum bridging strategic IT governance with hands-on technical execution. Areas of specialization include Python-driven automation, cloud and network security architectures, enterprise data and AI fluency, Agile product management, and comprehensive ITSM alignment.</span></div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-name">ITT Technical Institute</div>
+          <div class="edu-detail">Bachelor of Science, Computer Networks Systems<br>
+          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Rigorous engineering foundation centered on physical network topologies, complex routing and switching protocols, enterprise server administration, and OSI physical/data-link layer troubleshooting methodologies.</span></div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-name">IIUM</div>
+          <div class="edu-detail">Bachelor of Management Information Systems (BMIS) | 2001 – 2005<br>
+          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Core computer science program grounded in the early-web era, focusing on monolithic software development lifecycles, relational database architecture (SQL), and foundational enterprise information systems analysis during the Web 2.0 transition.</span></div>
+        </div>
+
+        <div class="edu-item" style="margin-top:1.5rem">
+          <div class="edu-name">Certifications & Training <span style="font-size:10px;color:var(--muted);font-weight:normal;margin-left:5px;">(Click to view Knowledge Base)</span></div>
+          <div class="edu-detail" style="line-height:2;margin-top:8px;">
+            <a class="cert-link" onclick="openCert('comptia')">▸ CompTIA A+</a><br>
+            <a class="cert-link" onclick="openCert('google-data')">▸ Google Data Analytics Professional Certification</a><br>
+            <a class="cert-link" onclick="openCert('google-it')">▸ Google IT Support Professional Certification</a><br>
+            <a class="cert-link" onclick="openCert('ai-prompt')">▸ Workshop: Prompting Essentials & AI for Small Business</a><br>
+            <a class="cert-link" onclick="openCert('itil')">▸ ITIL Foundation (2026 Candidate)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-cert" style="display:none;max-width:820px;margin:0 auto;padding-bottom:4rem">
+      <button class="launch-btn" style="margin-bottom:2rem;" onclick="switchView('resume')">◀ Back to Candidate Profile</button>
+      <div class="res-sec-title">Technical Knowledge Base</div>
+      <h2 id="cert-title" style="font-family:var(--display);font-size:28px;margin-bottom:1rem;color:var(--blue)">Class Title</h2>
+      <div id="cert-content" style="font-size:14px;color:var(--text);line-height:1.8;"></div>
     </div>
   </div>
+
+  <button id="topBtn" onclick="document.querySelector('.workspace').scrollTo(0,0)" style="position:fixed;bottom:20px;right:20px;background:var(--surface3);color:var(--text);border:1px solid var(--border2);padding:10px;border-radius:5px;cursor:pointer;font-size:12px;display:none;z-index:100;">↑ Top</button>
 </main>
 
 <script>
-// --- SVGS ---
-const svgs={
-    fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text></svg>`,
-    bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="100" y1="85" x2="220" y2="85" stroke="#f85149" stroke-width="2" stroke-dasharray="4"/><text x="160" y="70" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">BGP FLAPPING</text></svg>`
+const clk=document.getElementById('live-clock');
+const tick=()=>clk.textContent=new Date().toLocaleTimeString('en-US',{hour12:false});
+tick();setInterval(tick,1000);
+
+const ringtone=new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
+ringtone.loop=true;
+function stopRinging(){ringtone.pause();ringtone.currentTime=0}
+
+function getAgentResponse(input){
+  const text=input.toLowerCase();
+  if(text.includes('bgp')||text.includes('routing')) return "When troubleshooting BGP, I always start by verifying Layer 3 reachability to the peer IP, checking if the AS numbers match the configuration, and confirming 'update-source' logic for loopbacks. In a multi-cloud environment like AWS to Azure, BGP flapping is almost always an MTU mismatch or out-of-sync hold-timers.";
+  if(text.includes('docker')||text.includes('container')) return "Docker is critical for modern operations. I prefer using Docker Compose to orchestrate multi-container apps (like a web server and a database). The key architectural rule: never store persistent data inside the container. Always use Named Volumes or Bind Mounts so you can safely prune or rebuild.";
+  if(text.includes('security')||text.includes('firewall')||text.includes('mtu')) return "From a defensive standpoint, I operate on a Zero Trust architecture (ZTA). 'Never trust, always verify.' Whether it's setting up Conditional Access in Entra ID or managing East-West firewall micro-segmentation, identity and proper session limits (like mitigating TCP resets due to MTU fragmentation) are paramount.";
+  if(text.includes('ai')||text.includes('prompt')) return "We are in the post-chatbot era. I utilize Advanced Prompt Engineering—specifically assigning rigid personas and contextual boundaries—to build autonomous workflows. For example, routing password reset tickets via an LLM API to reduce Tier 1 overhead by 90%.";
+  if(text.includes('itil')||text.includes('management')) return "As an ITIL 4 framework candidate, my philosophy is 'Focus on Value' and 'Optimize and Automate'. A technical fix is only half the job; the other half is updating the CMDB, conducting Root Cause Analysis (Problems vs Incidents), and communicating the business impact to stakeholders.";
+  return "That's an interesting challenge. As an infrastructure architect, my immediate approach would be to follow the OSI model—starting at Layer 1 (Physical/Reachability) and moving up to Layer 7 (Application/Identity). Could you provide a bit more detail on the specific system logs or errors you're seeing?";
+}
+
+function handleAgentChat(){
+  const inputEl=document.getElementById('agent-input');
+  const text=inputEl.value.trim();
+  if(!text)return;
+  const msgContainer=document.getElementById('agent-messages');
+  const userMsg=document.createElement('div');
+  userMsg.className='agent-msg user';
+  userMsg.innerHTML=`<div class="agent-bubble">${text}</div>`;
+  msgContainer.appendChild(userMsg);
+  inputEl.value='';
+  msgContainer.scrollTop=msgContainer.scrollHeight;
+
+  const typingMsg=document.createElement('div');
+  typingMsg.className='agent-msg ai typing-temp';
+  typingMsg.innerHTML='<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+  msgContainer.appendChild(typingMsg);
+  msgContainer.scrollTop=msgContainer.scrollHeight;
+
+  setTimeout(()=>{
+    msgContainer.removeChild(typingMsg);
+    const aiMsg=document.createElement('div');
+    aiMsg.className='agent-msg ai';
+    aiMsg.innerHTML=`<div class="agent-bubble">${getAgentResponse(text)}</div>`;
+    msgContainer.appendChild(aiMsg);
+    msgContainer.scrollTop=msgContainer.scrollHeight;
+  },1200);
+}
+
+const certData={
+  comptia:{title:'CompTIA A+',content:'<ul class="res-ul"><li><strong>Hardware:</strong> Identifying, using, and connecting hardware components and devices.</li><li><strong>Operating Systems:</strong> Install and support Windows OS including command line & client support. Mac OS, Linux and mobile OS.</li><li><strong>Software Troubleshooting:</strong> Troubleshoot PC and mobile device issues including application security support.</li><li><strong>Networking:</strong> Explain types of networks and connections including TCP/IP, WIFI and SOHO.</li><li><strong>Security:</strong> Identify and protect against security vulnerabilities for devices and their network connections.</li></ul>'},
+  'google-data':{title:'Google Data Analytics Professional Certification',content:'<ul class="res-ul"><li><strong>Foundations of Data:</strong> Understanding the data lifecycle and data-driven decision making.</li><li><strong>Data Preparation:</strong> Using spreadsheets and SQL to extract and prepare data for analysis.</li><li><strong>Data Processing:</strong> Cleaning data to ensure integrity and accuracy before analysis.</li><li><strong>Data Analysis:</strong> Utilizing analytical thinking and formulas to make data-driven calculations.</li><li><strong>Data Visualization:</strong> Building dynamic dashboards and visual presentations using Tableau.</li><li><strong>Advanced Programming:</strong> Data analysis using R Programming language.</li></ul>'},
+  'google-it':{title:'Google IT Support Professional Certification',content:'<ul class="res-ul"><li><strong>Technical Support Fundamentals:</strong> Customer service, troubleshooting, and ticketing systems.</li><li><strong>The Bits and Bytes of Computer Networking:</strong> Deep dive into TCP/IP, DNS, DHCP, and OSI model operations.</li><li><strong>Operating Systems:</strong> Becoming a power user in Windows and Linux CLI environments.</li><li><strong>System Administration:</strong> Managing IT infrastructure, Active Directory, and directory services.</li><li><strong>IT Security:</strong> Defense against digital threats, encryption algorithms, and secure network architecture.</li></ul>'},
+  'ai-prompt':{title:'Prompting Essentials & AI for Small Business',content:'<ul class="res-ul"><li><strong>Contextual Prompt Architecture:</strong> Designing prompts with strict operational constraints and bounded context.</li><li><strong>Persona/Role Assignment:</strong> Forcing LLMs into specific analytical frameworks (e.g., Senior Systems Analyst).</li><li><strong>Zero-shot vs Few-shot Prompting:</strong> Providing structured examples to guide predictable JSON/structured outputs.</li><li><strong>Hallucination Mitigation:</strong> Techniques to prevent AI confabulation in technical troubleshooting.</li><li><strong>Business Automation:</strong> Building autonomous triage frameworks for Tier 1 support deflection.</li></ul>'},
+  itil:{title:'ITIL® 4 Foundation | Service Management Certification Guide',content:`<div class="kb-grid"><div class="kb-card"><h4>The 7 Guiding Principles</h4><ul><li><strong>Focus on Value:</strong> Everything must link back to value for stakeholders.</li><li><strong>Start Where You Are:</strong> Don't scrap everything; observe and preserve.</li><li><strong>Progress Iteratively:</strong> Use feedback loops and small steps.</li><li><strong>Collaborate/Promote Visibility:</strong> Break down silos.</li><li><strong>Think/Work Holistically:</strong> No service is an island.</li><li><strong>Keep it Simple/Practical:</strong> Minimum steps to provide value.</li><li><strong>Optimize and Automate:</strong> Use technology where human touch isn't needed.</li></ul></div><div class="kb-card"><h4>Service Value System (SVS)</h4><p style="font-size:13px;color:var(--muted)">The SVS describes how all components work together to enable value creation. Key chain activities: <strong>Plan, Improve, Engage, Design, Build, Deliver & Support.</strong></p></div><div class="kb-card"><h4>Key Practices for the Exam</h4><ul><li><strong>Incident Mgmt:</strong> Restore normal service as fast as possible.</li><li><strong>Change Enablement:</strong> Maximize successful IT changes.</li><li><strong>Problem Mgmt:</strong> Reduce likelihood/impact of incidents (RCA).</li><li><strong>Service Desk:</strong> The entry point for all users.</li></ul></div></div><div style="margin-top:15px;background:var(--blue-dim);padding:15px;border-left:3px solid var(--blue);font-size:13px;"><strong>Exam Pro-Tip:</strong> Understand the difference between an <em>Incident</em> (unplanned interruption) and a <em>Problem</em> (cause of one or more incidents).</div>`},
+  redhat:{title:'RHCSA | Red Hat Certified System Administrator (EX200) Lab',content:`<div class="kb-grid"><div class="kb-card"><h4>Unit 1: Command Line & Filesystems</h4><ul><li><strong>Navigation:</strong> <code>cd</code>, <code>ls -la</code>, <code>mkdir -p</code></li><li><strong>Permissions:</strong> <code>chmod</code> (755 vs 644), <code>chown</code>, and ACLs.</li><li><strong>Archive:</strong> <code>tar -cvzf</code> (Create) vs <code>tar -xvzf</code> (Extract).</li></ul></div><div class="kb-card"><h4>Unit 2: System Admin Tasks</h4><ul><li><strong>User Mgmt:</strong> <code>useradd</code>, <code>usermod</code>, <code>/etc/passwd</code>.</li><li><strong>Process Mgmt:</strong> <code>ps aux</code>, <code>top</code>, <code>kill -9</code>, and nice levels.</li><li><strong>Package Mgmt:</strong> <code>yum install</code> vs <code>dnf update</code>.</li></ul></div></div><div class="res-sec-title" style="margin-top:2rem">The Troubleshooting Lab: "System Won't Boot"</div><div class="kb-card" style="width:100%;border-left:4px solid var(--amber);"><ol style="margin-left:20px;"><li>Interrupt GRUB boot menu and append <strong>rd.break</strong> to the kernel line.</li><li>Remount /sysroot as Read/Write: <code>mount -o remount,rw /sysroot</code></li><li>Enter the system: <code>chroot /sysroot</code></li><li>Reset root password: <code>passwd root</code></li><li>Force SELinux relabel: <code>touch /.autorelabel</code></li></ol></div>`},
+  kali:{title:'Kali Linux | Offensive Security & Penetration Testing',content:`<div class="kb-grid"><div class="kb-card"><h4>Phase 1: Reconnaissance</h4><ul><li><strong>Nmap:</strong> <code>nmap -sC -sV -O -p- [Target]</code> (Aggressive scan for open ports, services, OS detection).</li><li><strong>Dirb/Gobuster:</strong> Brute-forcing hidden web directories.</li><li><strong>Enum4linux:</strong> Extracting user lists and shares via SMB.</li></ul></div><div class="kb-card"><h4>Phase 2: Exploitation</h4><ul><li><strong>Metasploit:</strong> <code>msfconsole</code>, searching exploits, setting payloads (Meterpreter reverse TCP).</li><li><strong>Hydra:</strong> Online password cracking (SSH, FTP).</li><li><strong>Burp Suite:</strong> Intercepting and modifying HTTP requests.</li></ul></div></div><div style="margin-top:15px;background:var(--red-dim);padding:15px;border-left:3px solid var(--red);font-size:13px;"><strong>Rules of Engagement:</strong> Never run active exploitation tools against unauthorized targets. Use isolated hypervisor environments for all lab exercises.</div>`},
+  'windows-troubleshoot':{title:'Modern Windows Triage | Endpoint Forensics & Repair',content:`<div class="kb-grid"><div class="kb-card"><h4>System Corruption Recovery</h4><ul><li><strong>SFC /Scannow:</strong> Verifies and replaces corrupted Windows system files.</li><li><strong>DISM:</strong> <code>DISM /Online /Cleanup-Image /RestoreHealth</code> (Repairs the actual Windows image store).</li><li><strong>BootREC:</strong> Fixing the Master Boot Record (MBR) and rebuilding the BCD store via Windows PE.</li></ul></div><div class="kb-card"><h4>Deep Diagnostic Tools</h4><ul><li><strong>Event Viewer (eventvwr):</strong> Filtering System and Application logs for critical Stop Errors (BSOD).</li><li><strong>Sysinternals Suite:</strong> Process Explorer (hunting malware hooks) and Autoruns (cleaning startup persistence).</li><li><strong>PowerShell:</strong> <code>Get-Service | Where-Object {$_.Status -eq "Stopped"}</code></li></ul></div></div>`},
+  'network-security':{title:'Network Security & Defensive Operations | The SME Masterclass',content:`<div class="kb-grid"><div class="kb-card"><h4>Module 1: Defensive Architecture</h4><ul><li><strong>Zero Trust (ZTA):</strong> "Never trust, always verify" — moving security to the resource level.</li><li><strong>Micro-segmentation:</strong> Using East-West firewalls to prevent lateral movement.</li><li><strong>DMZ & Air-Gapping:</strong> Isolating critical assets from public-facing interfaces.</li></ul></div><div class="kb-card"><h4>Module 2: Offense to Inform Defense</h4><ul><li><strong>Kali Linux Tooling:</strong> Nmap (Scanning), Wireshark (Sniffing), Metasploit (Validation).</li><li><strong>Scanning:</strong> <code>nmap -sV -T4 [Target]</code> to identify vulnerable service versions.</li><li><strong>Hardening:</strong> Disabling unused services (Telnet, HTTP) in favor of SSH and HTTPS.</li></ul></div></div><div class="res-sec-title" style="margin-top:2rem">Windows & Enterprise Hardening Checklist</div><div class="kb-grid"><div class="kb-card"><h4>Identity & Access (IAM)</h4><ul><li><strong>MFA/2FA:</strong> Deploying Push-based authentication (Duo/Microsoft).</li><li><strong>Privileged Access (PAM):</strong> Using "Just-in-Time" permissions for admin tasks.</li><li><strong>Group Policy (GPO):</strong> Enforcing BitLocker and disabling USB storage.</li></ul></div><div class="kb-card"><h4>The "SOC" Skillset</h4><ul><li><strong>SIEM:</strong> Centralizing logs from Meraki, Cisco, and Windows for correlation.</li><li><strong>DDoS Mitigation:</strong> Implementing rate-limiting and scrubbers at the edge.</li><li><strong>BCDR:</strong> Testing immutable backups to ensure 3-2-1 data redundancy.</li></ul></div></div><div style="margin-top:15px;background:var(--red-dim);padding:15px;border-left:3px solid var(--red);font-size:13px;"><strong>SME Pro-Tip:</strong> Security is a process, not a product. Always follow the <strong>NIST Cybersecurity Framework:</strong> Identify, Protect, Detect, Respond, and Recover.</div>`},
+  'sec-plus':{title:'CompTIA Security+ SY0-701 | Full Domain Masterclass',content:`<div class="kb-grid"><div class="kb-card"><h4>Module 1: General Security Concepts</h4><ul><li><strong>CIA Triad:</strong> Confidentiality, Integrity, Availability.</li><li><strong>Non-Repudiation:</strong> Ensuring a party cannot deny an action (Digital Signatures).</li><li><strong>Control Types:</strong> Managerial, Operational, and Technical controls.</li></ul></div><div class="kb-card"><h4>Module 2: Threats, Attacks & Vulnerabilities</h4><ul><li><strong>Social Engineering:</strong> Phishing, Whaling, Vishing, and Tailgating.</li><li><strong>Application Attacks:</strong> SQL Injection, Cross-Site Scripting (XSS).</li><li><strong>Network Attacks:</strong> Man-in-the-Middle (MitM), DDoS, and Replay attacks.</li></ul></div></div><div class="res-sec-title" style="margin-top:2rem">Deep Dive: Digital Forensics & Incident Response (DFIR)</div><div class="kb-card" style="width:100%"><p><strong>The Order of Volatility:</strong> 1. CPU Cache/Registers → 2. Routing Table/ARP Cache → 3. RAM → 4. Temp Files → 5. Disk/SSD → 6. Remote Logs.</p><p style="margin-top:10px;color:var(--green)"><em>"When responding to a breach, always capture RAM before pulling the power plug."</em></p></div>`},
+  'multi-cloud':{title:'Multi-Cloud Networking Masterclass | AWS & Azure Connectivity',content:`<div class="kb-grid"><div class="kb-card"><h4>AWS Networking</h4><ul><li>VPC & Subnets (Public/Private)</li><li>Transit Gateway (TGW)</li><li>Direct Connect (DX)</li></ul></div><div class="kb-card"><h4>Azure Networking</h4><ul><li>VNet Peering</li><li>Azure ExpressRoute</li><li>VPN Gateway (Route-based)</li></ul></div><div class="kb-card"><h4>The Glue: BGP</h4><ul><li>ASN 64512 (Default Private)</li><li>Keepalive & Hold-Time Synchronization</li><li>Path Selection (MED vs Local Pref)</li></ul></div></div>`},
+  aiops:{title:'AIOps & Predictive Operations | The 2026 Standard',content:`<div class="kb-grid"><div class="kb-card"><h4>Concepts</h4><ul><li><strong>Deduplication:</strong> Filtering noise into single master incidents.</li><li><strong>Anomaly Detection:</strong> Identifying deviations from normal without static thresholds.</li><li><strong>Root Cause Analysis:</strong> Automated correlation across the stack.</li></ul></div><div class="kb-card"><h4>The Tech Stack</h4><ul><li>Cisco AI Assistant (AI Canvas)</li><li>Juniper Marvis (HPE) - Digital Twins</li><li>Arista AVA (Autonomous Virtual Assist)</li></ul></div></div>`},
+  'iac-automation':{title:'Infrastructure as Code (IaC) | Terraform & Ansible Lab',content:`<div class="kb-grid"><div class="kb-card"><h4>Terraform (Stateful)</h4><ul><li>Providers (Cisco, Meraki, Azure)</li><li>HCL Syntax (Resources & Variables)</li><li>State Management: <code>terraform plan/apply</code></li></ul></div><div class="kb-card"><h4>Ansible (Procedural)</h4><ul><li>Playbooks (YAML) & Roles</li><li>Inventory Files (Host groups)</li><li>Modules: ios_config, meraki_network</li></ul></div></div>`},
+  'python-ops':{title:'Python for Network Engineers | Automation & Scalability',content:`<div class="kb-grid"><div class="kb-card"><h4>Lesson 1: The Automation Stack</h4><ul><li><strong>Netmiko:</strong> SSH library for multi-vendor network devices.</li><li><strong>Requests:</strong> Interaction with REST APIs (Meraki, ServiceNow).</li><li><strong>Pandas:</strong> Analyzing large-scale CSV log exports.</li></ul></div><div class="kb-card"><h4>Lesson 2: Logic & Flow</h4><p>Writing scripts to perform <strong>Pre-flight Checks</strong>: Verify OSPF neighbors before pushing a BGP config change.</p></div></div>`},
+  'bgp-routing':{title:'BGP (Border Gateway Protocol) | The Protocol of the Internet',content:`<div class="kb-grid"><div class="kb-card"><h4>BGP Characteristics</h4><ul><li>Path Vector Protocol (not link-state).</li><li>Uses TCP Port 179 for reliability.</li><li>eBGP (External) vs iBGP (Internal).</li></ul></div><div class="kb-card"><h4>Troubleshooting "Nbr Down"</h4><ol style="margin-left:20px;font-size:14px;color:var(--muted)"><li>Verify L3 reachability (Ping the peer IP).</li><li>Check if AS numbers match the peer config.</li><li>Verify 'update-source' for loopback peering.</li><li>Check 'multihop' if peers are not directly connected.</li></ol></div></div><div class="res-sec-title" style="margin-top:2rem">Common BGP CLI Commands</div><pre style="background:var(--bg);padding:10px;border:1px solid var(--border);color:var(--blue);font-size:12px;overflow-x:auto;"># show ip bgp summary
+# show ip bgp
+# clear ip bgp * soft</pre>`},
+  subnetting:{title:"Mastering IPv4 Subnetting | The Network Engineer's Math",content:`<div class="kb-grid"><div class="kb-card"><h4>Cheat Sheet</h4><ul><li>/24 = 256 IPs (254 Usable)</li><li>/25 = 128 IPs (126 Usable)</li><li>/26 = 64 IPs (62 Usable)</li><li>/30 = 4 IPs (2 Usable - WAN links)</li></ul></div><div class="kb-card"><h4>The Logic</h4><p style="font-size:13px;color:var(--muted)">Number of Hosts = 2^n - 2 (where n is the number of host bits). The "-2" is for the Network and Broadcast addresses.</p></div></div>`},
+  meraki:{title:'Cisco Meraki | Cloud-Managed Infrastructure & Field Manual',content:`<div class="kb-grid"><div class="kb-card"><h4>Hardware Gallery & Use Cases</h4><ul><li><strong>MX68/85:</strong> Small to Mid-sized Retail.</li><li><strong>MS120/225:</strong> Layer 2/3 Access Switching with PoE+.</li><li><strong>MR36/44:</strong> Wi-Fi 6 Cloud-Managed Access Points.</li></ul></div><div class="kb-card"><h4>Initial Provisioning (A to Z)</h4><ol style="margin-left:20px;font-size:14px;color:var(--muted)"><li>Whitelist Serial Numbers in Dashboard.</li><li>Connect WAN1 to Internet (DHCP/Static).</li><li>Verify Power/Status LED (White = Online).</li><li>Configure VLANs & SD-WAN policies.</li></ol></div></div>`},
+  docker:{title:'Docker | Containerization for Network Ops',content:`<div class="kb-grid"><div class="kb-card"><h4>Core Concepts</h4><ul><li>Images vs. Containers</li><li>Dockerfile Syntax</li><li>Persistent Volumes</li></ul></div><div class="kb-card"><h4>Networking</h4><ul><li>Bridge vs. Host Networking</li><li>Exposing Ports (80:8080)</li><li>Docker Compose for Multi-container Apps</li></ul></div><div class="kb-card" style="grid-column:1 / -1"><h4>Use Case</h4><p>Deploying automated network monitoring agents (SNMP/Zabbix) across distributed endpoints using lightweight containers.</p></div></div>`},
+  wireshark:{title:'Wireshark | Protocol Analysis & Deep Packet Inspection',content:`<div class="kb-grid"><div class="kb-card"><h4>Traffic Capture</h4><ul><li>Promiscuous Mode vs. Monitor Mode</li><li>Capture Filters (BPF Syntax)</li><li>Pcapng File Management</li></ul></div><div class="kb-card"><h4>Troubleshooting Filters</h4><ul><li><strong>TCP Retransmissions:</strong> <code>tcp.analysis.retransmission</code></li><li><strong>DNS Errors:</strong> <code>dns.flags.rcode != 0</code></li><li><strong>Latency:</strong> <code>tcp.time_delta > 0.5</code></li></ul></div></div>`}
 };
 
-// --- THE TALKING (FULL SCENARIOS) ---
-const scenarios=[
-  {
-    id:'l1-fiber', layer:1, title:'Fiber Optic Break — ISP Trunk', incNumber:'INC001-L1', caller:'NOC Alert', ci:'OS2 Fiber Trunk',
-    steps:[
-      {type:'system', text:'🚨 NOC ALERT: Loss of Signal (LOS) on Port 1/0/24.'},
-      {type:'agent', name:'R. Rodney', text:'Good morning. I am acknowledging the P1. Checking SFP diagnostics first.', comment:'// ITIL: Own the ticket immediately.'},
-      {type:'cli', text:'Router# show interface te1/0/24 transceiver\nRx Power: -40.0 dBm (Critical Low)\nTx Power: +1.2 dBm (Healthy)'},
-      {type:'vis', svgKey:'fiber_cable', title:'Physical Layer Diagnostic'},
-      {type:'agent', name:'R. Rodney', text:'Tx is fine, but Rx is dead. The break is in the physical fiber run. Dispatching carrier tech with OTDR.'},
-      {type:'system', text:'✅ Splice complete at 2.3km marker. Signal restored to -8.2dBm.'}
-    ]
-  },
-  {
-    id:'l3-bgp', layer:3, title:'BGP Flapping — Multi-Cloud VPN', incNumber:'INC003-L3', caller:'Cloud Architecture', ci:'AWS Transit Gateway',
-    steps:[
-      {type:'system', text:'🚨 ALERT: BGP Adjacency flapping between AWS and Azure East.'},
-      {type:'agent', name:'R. Rodney', text:'This is likely an MTU mismatch or a Hold-Timer sync issue. Checking Path MTU now.'},
-      {type:'cli', text:'$ ping 169.254.21.1 -l 1472 -f\nPacket needs to be fragmented but DF set.'},
-      {type:'vis', svgKey:'bgp_flap', title:'L3 Routing Triage'},
-      {type:'agent', name:'R. Rodney', text:'MTU mismatch confirmed. Setting MSS Clamping to 1350 on the tunnel interface.'},
-      {type:'system', text:'✅ BGP State: Established. Tunnel stabilized.'}
-    ]
+function openCert(id){
+  const data=certData[id];
+  if(!data){alert("Knowledge Base entry for '"+id+"' is currently being indexed...");return}
+  document.getElementById('cert-title').textContent=data.title;
+  document.getElementById('cert-content').innerHTML=data.content;
+  switchView('cert');
+}
+
+function switchView(v){
+  stopRinging();
+  ['view-dashboard','view-incident','view-resume','view-cert','view-agent'].forEach(id=>document.getElementById(id).style.display='none');
+  const target=v==='cert'?'view-cert':`view-${v}`;
+  document.getElementById(target).style.display=(v==='incident'||v==='agent')?'flex':'block';
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(v==='dashboard')document.getElementById('nav-dash').classList.add('active');
+  if(v==='resume'||v==='cert')document.getElementById('nav-res').classList.add('active');
+  if(v==='agent')document.getElementById('nav-agent').classList.add('active');
+  const titles={dashboard:'Incident Dashboard',resume:'Candidate Profile',incident:'Agent Workspace',cert:'Technical Classroom',agent:'Agent RR 2.0 (Terminal)'};
+  document.getElementById('header-title').textContent=titles[v]||'Agent Workspace';
+  document.querySelector('.workspace').scrollTo(0,0);
+  document.getElementById('topBtn').style.display=(v==='cert'||v==='resume')?'block':'none';
+}
+
+function filterLayer(n){
+  switchView('dashboard');
+}
+
+const scenarios=[];
+let current=null,stepIdx=0,autoPlay=false;
+function startIncident(id){}
+function advanceIncident(){}
+function triggerAuto(){stopRinging();autoPlay=true;advanceIncident()}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  if(window.location.hostname.includes('netlify.app')){
+    const alertBanner=document.getElementById('env-alert');
+    if(alertBanner) alertBanner.style.display='none';
   }
-];
-
-const layerConfig = { 1:{name:'Physical', color:'#ef4444'}, 3:{name:'Network', color:'#58a6ff'}, 7:{name:'Application', color:'#ec4899'} };
-
-// --- ENGINE ---
-function switchView(v) {
-    document.querySelectorAll('.view').forEach(view => view.style.display = 'none');
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    const target = document.getElementById('view-' + v);
-    target.style.display = (v === 'incident' || v === 'agent') ? 'flex' : 'block';
-    const btnId = 'nav-' + (v === 'dashboard' ? 'dash' : v === 'resume' ? 'res' : 'agent');
-    if(document.getElementById(btnId)) document.getElementById(btnId).classList.add('active');
-}
-
-function buildDashboard() {
-    const container = document.getElementById('layer-sections');
-    container.innerHTML = '';
-    Object.keys(layerConfig).forEach(l => {
-        const lc = layerConfig[l];
-        const sec = document.createElement('div');
-        sec.className = 'osi-section';
-        sec.innerHTML = `<h3 style="color:${lc.color}; margin-bottom:1rem;">Layer ${l} — ${lc.name}</h3><div class="grid-cards" id="l${l}-grid"></div>`;
-        container.appendChild(sec);
-        const grid = sec.querySelector('.grid-cards');
-        scenarios.filter(s => s.layer == l).forEach(sc => {
-            const card = document.createElement('div');
-            card.className = 'skill-card';
-            card.innerHTML = `<h4>${sc.title}</h4><p style="font-size:11px;color:var(--muted)">${sc.ci}</p><button class="launch-btn" onclick="startIncident('${sc.id}')" style="margin-top:10px;">Launch Sim</button>`;
-            grid.appendChild(card);
-        });
-    });
-}
-
-let currentS=null, stepIdx=0;
-function startIncident(id) {
-    currentS = scenarios.find(s => s.id === id); stepIdx = 0;
-    document.getElementById('inc-number').textContent = currentS.incNumber;
-    document.getElementById('inc-caller').textContent = currentS.caller;
-    document.getElementById('inc-ci').textContent = currentS.ci;
-    document.getElementById('inc-layer').textContent = 'L' + currentS.layer;
-    document.getElementById('stream-body').innerHTML = '';
-    switchView('incident');
-    advanceIncident();
-}
-
-function advanceIncident() {
-    if(!currentS || stepIdx >= currentS.steps.length) return;
-    const step = currentS.steps[stepIdx];
-    const body = document.getElementById('stream-body');
-    const wrap = document.createElement('div');
-    wrap.className = 'msg ' + (step.type === 'agent' ? 'm-agent' : step.type === 'cli' ? 'm-cli' : '');
-    
-    if(step.type === 'vis') {
-        wrap.innerHTML = `<div class="vis-card"><div style="padding:5px;font-size:9px;color:var(--muted)">${step.title}</div>${svgs[step.svgKey]}</div>`;
-    } else {
-        wrap.innerHTML = `<div class="bubble"><strong>${step.name || 'SYSTEM'}:</strong> ${step.text}${step.comment ? `<div class="logic-note">${step.comment}</div>` : ''}</div>`;
-    }
-    
-    body.appendChild(wrap);
-    body.scrollTop = body.scrollHeight;
-    stepIdx++;
-}
-
-async function handleAgentChat() {
-    const input = document.getElementById('agent-input');
-    const text = input.value.trim();
-    if(!text) return;
-    const container = document.getElementById('agent-messages');
-    const userDiv = document.createElement('div');
-    userDiv.className = 'agent-msg user';
-    userDiv.innerHTML = `<div class="agent-bubble">${text}</div>`;
-    container.appendChild(userDiv);
-    input.value = '';
-    
-    const typing = document.createElement('div');
-    typing.className = 'agent-msg ai';
-    typing.innerHTML = `<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
-    container.appendChild(typing);
-    container.scrollTop = container.scrollHeight;
-
-    try {
-        const response = await fetch('/.netlify/functions/agent', { method: 'POST', body: JSON.stringify({ message: text }) });
-        const data = await response.json();
-        container.removeChild(typing);
-        const aiDiv = document.createElement('div');
-        aiDiv.className = 'agent-msg ai';
-        aiDiv.innerHTML = `<div class="agent-bubble">${data.reply}</div>`;
-        container.appendChild(aiDiv);
-    } catch {
-        container.removeChild(typing);
-        const errDiv = document.createElement('div');
-        errDiv.className = 'agent-msg ai';
-        errDiv.innerHTML = `<div class="agent-bubble">AI backend live on Netlify link.</div>`;
-        container.appendChild(errDiv);
-    }
-    container.scrollTop = container.scrollHeight;
-}
-
-// --- INIT ---
-setInterval(() => { document.getElementById('live-clock').textContent = new Date().toLocaleTimeString(); }, 1000);
-buildDashboard();
-window.addEventListener('DOMContentLoaded', () => { if (window.location.hostname.includes('netlify.app')) document.getElementById('env-alert').style.display = 'none'; });
+});
 </script>
 </body>
 </html>
