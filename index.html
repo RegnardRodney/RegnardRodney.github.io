@@ -25,1467 +25,260 @@
 body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6} 
 
 /* SIDEBAR */
-.sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden}
+.sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden;z-index:1000;}
 .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple))}
 .sb-brand{padding:1.25rem 1.25rem 1rem;border-bottom:1px solid var(--border)}
-.sb-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:5px;opacity:.8}
 .sb-name{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text)}
-.sb-status{display:flex;align-items:center;gap:6px;margin-top:7px}
-.sb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green-g);animation:pdot 2s ease-in-out infinite}
-@keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
-.sb-st{font-family:var(--mono);font-size:10px;color:var(--muted)}
 .sb-nav{padding:.75rem 0;flex:1;overflow-y:auto; font-size:14px;}
-.sb-nav::-webkit-scrollbar{width:3px}
-.sb-nav::-webkit-scrollbar-thumb{background:var(--surface3)}
-.nav-section-lbl{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted2);padding:.6rem 1.25rem .3rem;text-transform:uppercase}
-.nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;font-weight:400;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
 .nav-btn:hover{color:var(--text);background:var(--surface2)}
 .nav-btn.active{color:var(--green);border-left-color:var(--green);background:var(--green-dim);font-weight:500}
-.sb-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.8}
-.sb-footer a{color:var(--blue);text-decoration:none}
-.sb-footer a:hover{text-decoration:underline}
-
-/* CUSTOM NAV COLORS */
 #nav-dash.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
 #nav-res.active { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
 #nav-agent.active { color: var(--teal); border-left-color: var(--teal); background: var(--teal-dim); }
 
-/* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+/* MAIN AREA */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;position:relative;z-index:1;}
 .topbar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;justify-content:space-between;flex-shrink:0;background:var(--surface)}
-.topbar-title{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3px}
-.topbar-r{display:flex;align-items:center;gap:1rem}
-.sla-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
-.clock{font-family:var(--mono);font-size:11px;color:var(--muted)}
-
 .workspace{flex:1;overflow-y:auto;overflow-x:hidden;padding:1.5rem}
-.workspace::-webkit-scrollbar{width:5px}
-.workspace::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
 
-/* DASHBOARD */
-#view-dashboard{display:block}
-.dash-intro{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
-.dash-intro p{font-size:13px;color:var(--muted);line-height:1.8;max-width:700px}
-.dash-intro .hi{color:var(--blue);font-weight:500}
+/* DASHBOARD GRID */
+.view { display: none; }
+.view.active { display: block; }
 .osi-section{margin-bottom:2rem}
-.osi-section-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
-.layer-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;font-weight:700;letter-spacing:.5px}
-.osi-section-title{font-family:var(--display);font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.5px}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:5px;overflow:hidden}
 .skill-card{background:var(--surface);padding:1.1rem 1.25rem;cursor:pointer;transition:background .15s;position:relative}
 .skill-card:hover{background:var(--surface2)}
-.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s}
-.skill-card:hover::before{transform:scaleX(1)}
-.card-tier{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:5px}
-.skill-card h3{font-family:var(--display);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
-.skill-card p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:.85rem}
-.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:all .15s}
-.launch-btn:hover{background:rgba(63,185,80,.18);border-color:rgba(63,185,80,.4)}
+.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;}
 
-/* INCIDENT VIEW */
-#view-incident{display:none;height:100%;gap:1rem}
+/* INCIDENT STREAM (THE TALKING) */
+#view-incident{height:100%;gap:1rem}
 .ticket-panel{width:256px;flex-shrink:0;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
-.ticket-panel::-webkit-scrollbar{width:3px}
 .ticket-card{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
-.ticket-number{font-family:var(--mono);font-size:11px;color:var(--blue);margin-bottom:.9rem;letter-spacing:.5px}
-.detail-row{margin-bottom:.8rem}
-.detail-label{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase;margin-bottom:3px}
-.detail-value{font-size:12px;font-weight:500;color:var(--text)}
-.badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:.3px;display:inline-block}
-.badge-crit{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,81,73,.2)}
-.badge-prog{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(210,153,34,.2)}
-.badge-res{background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
-.ci-panel{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
-.ci-hdr{display:flex;align-items:center;gap:6px;margin-bottom:.5rem}
-.ci-dot{width:6px;height:6px;border-radius:50%;background:var(--muted2);transition:all .3s}
-.ci-dot.on{background:var(--amber);box-shadow:0 0 8px rgba(210,153,34,.5);animation:ci-pulse 1s ease-in-out infinite}
-@keyframes ci-pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.ci-lbl{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase}
-.ci-val{font-family:var(--mono);font-size:10px;color:var(--amber);line-height:1.6}
-
-/* STREAM */
 .stream-container{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:5px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .stream-hdr{padding:.65rem 1.1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.stream-title{font-family:var(--display);font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-#next-btn{font-family:var(--mono);font-size:9px;padding:4px 12px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(88,166,255,.25);border-radius:2px;cursor:pointer;letter-spacing:.5px;transition:all .15s;display:none}
-#next-btn:hover{background:rgba(88,166,255,.2)}
 .stream-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.65rem}
-.stream-body::-webkit-scrollbar{width:3px}
-.stream-body::-webkit-scrollbar-thumb{background:var(--surface3)}
-
 .msg{display:flex;flex-direction:column;animation:ma .25s ease-out}
 @keyframes ma{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.msg-meta{font-family:var(--mono);font-size:9px;color:var(--muted2);margin-bottom:3px;letter-spacing:.5px}
-.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;position:relative}
-.m-caller .bubble{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:0;color:var(--text)}
+.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;background:var(--surface2);border:1px solid var(--border)}
 .m-agent{align-self:flex-end}
-.m-agent .msg-meta{text-align:right}
-.m-agent .bubble{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.2);border-bottom-right-radius:0;color:var(--text)}
-.m-system .bubble{background:transparent;border:1px solid rgba(63,185,80,.18);border-left:2px solid var(--green);border-radius:0 4px 4px 0;color:var(--green);font-family:var(--mono);font-size:10px;max-width:100%}
-.m-cli .bubble{background:#0d1117;border:1px solid var(--border2);border-left:3px solid var(--blue);border-radius:0 4px 4px 0;color:#79c0ff;font-family:var(--mono);font-size:10px;white-space:pre-wrap;max-width:100%;overflow-x:auto}
-.m-alert{align-self:stretch}
-.m-alert .bubble{background:var(--red-dim);border-left:4px solid var(--red);border-radius:0 4px 4px 0;color:var(--text);font-weight:700 !important;font-size:17px !important;max-width:100%;cursor:pointer;transition:background .15s;animation:alertPulse 1.5s infinite;}
-.m-alert .bubble:hover{background:rgba(248,81,73,.15)}
-@keyframes alertPulse{0%{box-shadow:0 0 0 0px rgba(248,81,73,.4)}70%{box-shadow:0 0 0 15px rgba(248,81,73,0)}100%{box-shadow:0 0 0 0px rgba(248,81,73,0)}}
-.m-vis{align-self:stretch;max-width:100%}
-.m-vis .bubble{padding:0;background:transparent;border:none;max-width:100%}
+.m-agent .bubble{background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.2)}
+.m-cli .bubble{background:#0d1117;border-left:3px solid var(--blue);color:#79c0ff;font-family:var(--mono);font-size:10px;white-space:pre-wrap}
 .logic-note{font-family:var(--mono);font-size:9px;color:var(--amber);margin-top:5px;text-align:right;opacity:.75;font-style:italic}
+.vis-card{background:var(--surface3);border-radius:5px;border:1px solid var(--border2);overflow:hidden;margin-top:10px}
 
-/* AGENT RR 2.0 TERMINAL */
-#view-agent{display:none;height:100%;gap:1rem;flex-direction:column;max-width:900px;margin:0 auto;}
-.agent-header{display:flex;align-items:center;gap:15px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
-.agent-avatar{width:50px;height:50px;border-radius:8px;background:var(--surface2);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;color:var(--teal);font-family:var(--mono);font-weight:bold;font-size:20px;box-shadow:0 0 15px var(--teal-dim);}
-.agent-info h2{font-family:var(--display);font-size:20px;color:var(--text);margin-bottom:4px;}
-.agent-info p{font-size:12px;color:var(--muted);font-family:var(--mono);}
+/* AGENT UI */
+#view-agent{max-width:900px;margin:0 auto;flex-direction:column;}
 .agent-chat-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;}
 .agent-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.agent-messages::-webkit-scrollbar{width:5px}
-.agent-messages::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
-.agent-msg{display:flex;flex-direction:column;max-width:85%;animation:ma .25s ease-out;}
-.agent-msg.user{align-self:flex-end;}
-.agent-msg.ai{align-self:flex-start;}
-.agent-bubble{padding:.8rem 1rem;border-radius:6px;font-size:14px;line-height:1.6;}
-.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border);border-bottom-right-radius:0;color:var(--text);}
-.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3);border-bottom-left-radius:0;color:var(--text);}
-.agent-input-area{padding:1rem;background:var(--surface2);border-top:1px solid var(--border);display:flex;gap:10px;}
-.agent-input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:4px;font-family:var(--body);font-size:14px;outline:none;transition:border .2s;}
-.agent-input:focus{border-color:var(--teal);}
-.agent-send-btn{background:var(--teal);color:#000;border:none;padding:0 20px;border-radius:4px;font-weight:bold;cursor:pointer;font-family:var(--mono);transition:opacity .2s;}
-.agent-send-btn:hover{opacity:0.8;}
-.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite ease-in-out both;}
-.typing-dot:nth-child(1){animation-delay:-0.32s;}
-.typing-dot:nth-child(2){animation-delay:-0.16s;}
+.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3); padding:.8rem 1rem; border-radius:6px;}
+.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border); align-self: flex-end; padding:.8rem 1rem; border-radius:6px;}
+.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite;}
 @keyframes typing{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
-
-/* RESUME */
-#view-resume{display:none;max-width:820px;margin:0 auto;padding-bottom:4rem}
-.res-hero{padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
-.res-name{font-family:var(--display);font-size:38px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1;margin-bottom:.5rem}
-.res-role{font-size:14px;color:var(--blue);font-weight:500;line-height:1.5;padding-right:15px;margin-bottom:1.25rem}
-.res-bio{font-size:13px;color:var(--muted);line-height:1.85;max-width:680px}
-.res-bio p{font-size:15.5px !important;}
-.res-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.25rem}
-.res-sec-title{font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:1.25rem;padding-bottom:.65rem;border-bottom:1px solid var(--border)}
-.res-sec{margin-bottom:2.75rem}
-.res-job{display:grid;grid-template-columns:1fr auto;gap:.4rem 2rem;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
-.res-job:last-child{border-bottom:none}
-.res-co{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text);grid-column:1}
-.res-dates{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap;padding-top:3px;grid-column:2;grid-row:1/3;align-self:start}
-.res-jobrole{font-size:12px;color:var(--green);font-weight:500;grid-column:1}
-.res-ul{list-style:none;grid-column:1/3;margin-top:.4rem}
-.res-ul li{font-size:14.5px !important;color:var(--muted);line-height:1.75;padding-left:.9rem;position:relative;margin-bottom:.2rem}
-.res-ul li::before{content:'▸';position:absolute;left:0;color:var(--green);font-size:9px;top:4px}
-.edu-item{margin-bottom:.9rem;padding-left:.9rem;border-left:2px solid var(--border2)}
-.edu-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
-.edu-detail{font-size:11px;color:var(--muted)}
-
-/* --- KNOWLEDGE BASE CSS --- */
-.res-tag, .cert-link { 
-  cursor: pointer; 
-  transition: all 0.3s; 
-  display: inline-block;
-  animation: skillPulse 5s infinite ease-in-out;
-}
-@keyframes skillPulse { 0%, 100% { opacity: 1; filter: brightness(1); } 50% { opacity: 0.8; filter: brightness(1.4); color: var(--green); } }
-.res-tag:hover, .cert-link:hover { animation: none !important; transform: translateY(-2px); border-color: var(--green); background: var(--green-dim); }
-.kb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-.kb-card { background: var(--surface2); border: 1px solid var(--border); padding: 1.2rem; border-radius: 6px; }
-.kb-card h4 { color: var(--blue); margin-bottom: 0.5rem; font-family: var(--display); font-size: 14px; text-transform: uppercase; }
-.kb-card ul li { font-size: 14px; color: var(--muted); margin-bottom: 4px; padding-left: 12px; position: relative; list-style: none; }
-.kb-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 10px; }
-
-/* MOBILE RESPONSIVENESS */
-@media(max-width:800px){
-  body{flex-direction:column;overflow:auto;height:auto;min-height:100vh; font-size:16px;}
-  .res-name { font-size: 32px; }
-  .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:none;border-bottom:1px solid var(--border);flex-shrink:0}
-  .sidebar::before{height:2px}
-  .sb-brand{padding:.7rem 1rem;border-bottom:none;flex:1;min-width:160px}
-  .sb-nav { display: flex; padding: 0; flex: none; width: 100vw; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .sb-nav::-webkit-scrollbar { display: none; }
-  .nav-section-lbl{display:none}
-  .nav-btn{padding:1rem 1.2rem;border-left:none;border-bottom:2px solid transparent;font-size:14px;white-space:nowrap}
-  .nav-btn.active{border-bottom-color:var(--green);border-left:none;background:transparent}
-  .sb-footer{display:none}
-  .main{flex:none;width:100%}
-  .workspace{overflow-y:visible;padding:1rem}
-  #view-incident{flex-direction:column;height:auto}
-  .ticket-panel{width:100%}
-  .stream-container{min-height:500px}
-  .grid-cards{grid-template-columns:1fr}
-  .res-job{grid-template-columns:1fr}
-  .res-dates{grid-column:1;grid-row:auto}
-  .res-ul{grid-column:1}
-  #nav-dash.active { border-left: none !important; border-bottom-color: var(--blue) !important; background: transparent !important; }
-  #nav-res.active { border-left: none !important; border-bottom-color: var(--purple) !important; background: transparent !important; }
-  #nav-agent.active { border-left: none !important; border-bottom-color: var(--teal) !important; background: transparent !important; }
-}
 </style>
 </head>
 <body>
 
 <nav class="sidebar">
   <div class="sb-brand">
-    <div class="sb-tag">IT Ops Portfolio</div>
     <div class="sb-name">Régnard Rodney</div>
-    <div class="sb-status">
-      <div class="sb-dot"></div>
-      <span class="sb-st">Agent Online · ServiceNow</span>
-    </div>
+    <div style="font-size:10px; color:var(--green); margin-top:5px;">Agent Online · ServiceNow</div>
   </div>
-
   <div class="sb-nav">
-    <div class="nav-section-lbl">Views</div>
-    <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M0 4h7V0H0v4zm0 12h7V5H0v11zm8 0h8V8H8v8zm0-16v7h8V0H8z"/></svg> Dashboard
-    </button>
-    <button class="nav-btn" id="nav-res" onclick="switchView('resume')">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 4h8v1H4V4zm0 3h8v1H4V7zm0 3h5v1H4v-1zM2 0C.9 0 0 .9 0 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2H2zm12 14H2V2h12v12z"/></svg> Resume
-    </button>
-    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm3-7H5v2h6V7z"/></svg> Agent RR 2.0 (Live)
-    </button>
-    <div class="nav-section-lbl" style="margin-top:.5rem">OSI Layers</div>
-    <button class="nav-btn" onclick="filterLayer(1)" id="lnav1">L1 Physical</button>
-    <button class="nav-btn" onclick="filterLayer(2)" id="lnav2">L2 Data Link</button>
-    <button class="nav-btn" onclick="filterLayer(3)" id="lnav3">L3 Network</button>
-    <button class="nav-btn" onclick="filterLayer(4)" id="lnav4">L4 Transport</button>
-    <button class="nav-btn" onclick="filterLayer(5)" id="lnav5">L5 Session</button>
-    <button class="nav-btn" onclick="filterLayer(6)" id="lnav6">L6 Presentation</button>
-    <button class="nav-btn" onclick="filterLayer(7)" id="lnav7">L7 Application</button>
-  </div>
-
-  <div class="sb-footer">
-    Wilmington, DE · (470) 483-5144<br>
-    <a href="mailto:regnardrodney@gmail.com">regnardrodney@gmail.com</a><br>
-    <a href="https://linkedin.com/in/regnardrodney" target="_blank">linkedin.com/in/regnardrodney</a>
+    <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">📊 Dashboard</button>
+    <button class="nav-btn" id="nav-res" onclick="switchView('resume')">📄 Resume</button>
+    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">🤖 Agent RR 2.0</button>
+    <div style="font-size:9px; color:var(--muted2); padding:1rem; text-transform:uppercase;">OSI Layers</div>
+    <button class="nav-btn" onclick="filterLayer(1)">L1 Physical</button>
+    <button class="nav-btn" onclick="filterLayer(3)">L3 Network</button>
+    <button class="nav-btn" onclick="filterLayer(7)">L7 Application</button>
   </div>
 </nav>
 
 <main class="main">
   <header class="topbar">
-    <span class="topbar-title" id="header-title">Incident Dashboard — All OSI Layers</span>
-    <div class="topbar-r">
-      <span class="sla-badge">SLA 99%</span>
-      <span class="clock" id="live-clock"></span>
-    </div>
+    <span class="topbar-title" id="header-title">Incident Dashboard</span>
+    <div class="topbar-r"><span class="clock" id="live-clock"></span></div>
   </header>
 
   <div class="workspace">
-
-    <div id="view-dashboard">
-      <div class="dash-intro">
-        <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation: greeting → triage → root cause → live tool commands → device visuals → resolution → closing. Skills on your resume are also <span class="hi">clickable</span> — they route directly to the matching Knowledge Base.</p>
-      </div>
+    <div id="view-dashboard" class="view active">
       <div id="layer-sections"></div>
     </div>
 
-    <div id="view-incident">
+    <div id="view-incident" class="view">
       <div class="ticket-panel">
         <div class="ticket-card">
-          <div class="ticket-number" id="inc-number">INC0000000</div>
-          <div class="detail-row">
-            <div class="detail-label">Caller</div>
-            <div class="detail-value" id="inc-caller">—</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Priority</div>
-            <div class="detail-value"><span id="inc-priority" class="badge badge-crit">1 – Critical</span></div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">State</div>
-            <div class="detail-value"><span id="inc-state" class="badge badge-prog">In Progress</span></div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">OSI Layer</div>
-            <div class="detail-value"><span id="inc-layer" class="badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(188,140,255,.2)">—</span></div>
-          </div>
-          <div class="detail-row" style="margin-bottom:0">
-            <div class="detail-label">Opened</div>
-            <div class="detail-value" id="inc-opened" style="font-family:var(--mono);font-size:10px;color:var(--muted)">—</div>
-          </div>
-        </div>
-        <div class="ci-panel">
-          <div class="ci-hdr">
-            <div class="ci-dot" id="ci-dot"></div>
-            <span class="ci-lbl">Target CI</span>
-          </div>
-          <div class="ci-val" id="inc-ci">Awaiting assignment...</div>
-        </div>
-        <div class="ci-panel" id="osi-legend-panel" style="display:none">
-          <div class="ci-lbl" style="margin-bottom:.5rem">OSI Diagnosis Path</div>
-          <div id="osi-path" style="font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.9"></div>
+          <div id="inc-number" style="color:var(--blue);font-family:var(--mono);font-size:11px;">INC000</div>
+          <div id="inc-caller" style="font-weight:bold;margin-top:10px;">Caller</div>
+          <div id="inc-ci" style="font-size:10px;color:var(--muted);margin-top:5px;">CI</div>
+          <div id="inc-layer" style="font-size:9px;margin-top:10px;display:inline-block;padding:2px 5px;background:var(--surface3);">L0</div>
         </div>
       </div>
-
       <div class="stream-container">
         <div class="stream-hdr">
-          <span class="stream-title" id="stream-scenario-title">Activity Stream</span>
-          <button id="next-btn" onclick="advanceIncident()">▶ Next Step</button>
+          <span id="stream-scenario-title" style="font-size:11px;font-weight:bold;text-transform:uppercase;">Activity Stream</span>
+          <button id="next-btn" onclick="advanceIncident()" style="background:var(--blue);color:white;border:none;padding:5px 15px;border-radius:4px;cursor:pointer;font-size:11px;">NEXT STEP ▶</button>
         </div>
-        <div class="stream-body" id="stream-body"></div>
+        <div id="stream-body" class="stream-body"></div>
       </div>
     </div>
 
-    <div id="view-agent">
-      
-      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; display:flex; align-items:center; gap:12px;">
-        <div style="font-size:20px;">🌐</div>
-        <div style="font-size:12px; color:var(--text); line-height:1.4;">
-          <strong>Environment Capability Alert:</strong> You are currently viewing the static GitHub mirror. To experience <strong>Agent RR 2.0</strong> with live, non-deterministic AI reasoning and full infrastructure orchestration:
-          <br>
-          <a href="https://regnardrodney.netlify.app" style="color:var(--teal); font-weight:700; text-decoration:none;">👉 CLICK HERE TO LAUNCH PRODUCTION ENVIRONMENT</a>
-        </div>
+    <div id="view-agent" class="view">
+      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; font-size:12px;">
+        Notice: Static Mode. For live AI, use the <a href="https://regnardrodney.netlify.app" style="color:var(--teal);">Production Netlify Link</a>.
       </div>
-
-      <div class="agent-header">
-        ...
-      <div class="agent-header">
-        <div class="agent-avatar">RR</div>
-        <div class="agent-info">
-          <h2>Agent RR 2.0 · Infrastructure Digital Twin</h2>
-          <p>System Prompt: Senior CTO & Network Architect | Knowledge Base: ITIL, CCNA, Azure, AWS</p>
-        </div>
-      </div>
-      
-      <div style="background:var(--surface2); padding:15px; border-radius:6px; border-left:3px solid var(--amber); margin-bottom:15px; font-size:13px; color:var(--muted);">
-        <strong>Architectural Note:</strong> To prevent exposing live API keys in a static client-side environment (GitHub Pages), this terminal is currently wired to a localized heuristic routing engine. The exact <code>fetch()</code> orchestration logic intended for an AWS Lambda / Netlify Edge backend is documented in the source code. Go ahead and test the UI by asking a networking or security question below.
-      </div>
-
       <div class="agent-chat-box">
-        <div class="agent-messages" id="agent-messages">
-          <div class="agent-msg ai">
-            <div class="agent-bubble">System Initialized. I am Agent RR 2.0, an AI representation of Régnard Rodney's technical expertise. How can I assist you with your infrastructure, cloud architecture, or network security inquiries today?</div>
-          </div>
+        <div id="agent-messages" class="agent-messages">
+          <div class="agent-msg ai"><div class="agent-bubble">System Initialized. I am Agent RR 2.0. How can I assist?</div></div>
         </div>
-        <div class="agent-input-area">
-          <input type="text" class="agent-input" id="agent-input" placeholder="Ask me about BGP, Subnetting, Docker, or ITIL 4..." onkeypress="if(event.key === 'Enter') handleAgentChat()">
-          <button class="agent-send-btn" onclick="handleAgentChat()">SEND</button>
+        <div class="agent-input-area" style="padding:1rem; background:var(--surface2); border-top:1px solid var(--border); display:flex; gap:10px;">
+          <input type="text" id="agent-input" class="agent-input" style="flex:1; background:var(--surface); border:1px solid var(--border); color:white; padding:10px; border-radius:4px;" placeholder="Ask about BGP, Cisco, or Security..." onkeypress="if(event.key==='Enter') handleAgentChat()">
+          <button onclick="handleAgentChat()" style="background:var(--teal); border:none; padding:0 20px; border-radius:4px; cursor:pointer;">SEND</button>
         </div>
       </div>
     </div>
 
-    <div id="view-resume">
-      <div class="res-hero">
-        <div class="res-name">Régnard Rodney</div>
-        <div class="res-role">Network Engineer | Python Specialist - Optimization & Scalability | Advanced AI Prompt Chaining Orchestration & LLM Workflow Automation | Accelerated BSIT to MSITM 2022-2027 at WGU | ITIL Candidate 2026</div>
-        <div class="res-bio">
-          <p style="margin-bottom:14px;"><strong>Executive Overview:</strong> Bilingual (French/English) Network Engineer with 10+ years of experience supporting highly distributed endpoint environments. I bridge the gap between physical hardware, logical troubleshooting, and Agentic AI automation. Proven track record of managing 11,000+ endpoints, resolving root causes to maintain 99% SLAs, and building robust AI workflows that autonomously deflect ticket storms.</p>
-          <p><strong style="color:var(--green); font-weight:600;">👇 How to use this portfolio: Click any skill tag below to launch a live Knowledge Base masterclass.</strong></p>
-        </div>
-      </div>
-
-      <div class="res-sec">
-        <div class="res-sec-title">Core Competencies (Click to Explore)</div>
-        <div class="res-tags">
-          <span class="res-tag" onclick="openCert('multi-cloud')">Multi-Cloud Hub Architecture</span>
-          <span class="res-tag" onclick="openCert('aiops')">AIOps & Predictive Maintenance</span>
-          <span class="res-tag" onclick="openCert('iac-automation')">IaC (Terraform & Ansible)</span>
-          <span class="res-tag" onclick="openCert('python-ops')">Python Automation</span>
-          
-          <span class="res-tag" onclick="openCert('bgp-routing')">BGP & MPLS Routing</span>
-          <span class="res-tag" onclick="openCert('subnetting')">Advanced IPv4/IPv6 VLSM</span>
-          <span class="res-tag" onclick="openCert('meraki')">SD-WAN Edge Architecture</span>
-          <span class="res-tag" onclick="openCert('docker')">Docker Containerization</span>
-          <span class="res-tag" onclick="openCert('wireshark')">Deep Packet Inspection</span>
-
-          <span class="res-tag" onclick="openCert('network-security')">Defensive Cybersecurity Ops</span>
-          <span class="res-tag" onclick="openCert('sec-plus')">NIST Framework & Compliance</span>
-          <span class="res-tag" onclick="openCert('kali')">Kali Linux / Pentesting</span>
-          <span class="res-tag" onclick="openCert('windows-troubleshoot')">Modern Windows Triage</span>
-          <span class="res-tag" onclick="openCert('redhat')">RedHat Admin (RHCSA)</span>
-          <span class="res-tag" onclick="openCert('itil')">ITIL 4 Framework</span>
-        </div>
-      </div>
-
-      <div class="res-sec">
-        <div class="res-sec-title">Professional Experience</div>
-        
-        <div class="res-job">
-          <div class="res-co">Outlier AI (Freelance)</div>
-          <div class="res-dates">Jan 2022 – Present</div>
-          <div class="res-jobrole">AI Trainer & Logic Validator</div>
-          <ul class="res-ul">
-            <li>Evaluate and validate LLM responses within a Python environment, applying structured rubrics to verify logical reasoning, coding accuracy, and conversational flow.</li>
-            <li>Draft and refine prompt structures focusing on context and persona to improve the model's reliability in generating technical workflows and documentation.</li>
-          </ul>
-        </div>
-
-        <div class="res-job">
-          <div class="res-co">Asurion</div>
-          <div class="res-dates">2020 – 2025</div>
-          <div class="res-jobrole">Premier Solution Support Specialist</div>
-          <ul class="res-ul">
-            <li>Executed advanced hardware diagnostics and break/fix repairs across a highly distributed endpoint environment, resolving deep-level OS corruptions and physical failures for Windows PCs, Macs, and mobile devices.</li>
-            <li>Managed high-volume intake calls in a fast-paced remote environment, utilizing centralized ITSM platforms and AI-assisted troubleshooting tools to maintain a consistent 99% SLA compliance rate.</li>
-            <li>Diagnosed and resolved complex Layer 1-3 network connectivity and configuration issues for a vast array of peripheral hardware, including wireless printers, edge routing appliances, and interconnected IoT smart devices.</li>
-            <li>Served as a delegated operational backup for site leadership, providing technical facilitation for mandatory weekly management meetings and ensuring continuous team coverage during critical business periods.</li>
-          </ul>
-        </div>
-        
-        <div class="res-job">
-          <div class="res-co">Robert Half Technology</div>
-          <div class="res-dates">2018 – 2020</div>
-          <div class="res-jobrole">IT Contractor — Infrastructure & Field Support</div>
-          <ul class="res-ul">
-            <li><strong>Prologic ITS (MDM):</strong> Supervised and configured mobile infrastructure for first responders, managing MDM deployments via VMware ONE (formerly known as Airwatch) and AT&T provisioning.</li>
-            <li><strong>Lowe's & Bargain Hunt (Retail/POS):</strong> Executed end-to-end break/fix maintenance for 10 stores per week (2 per day), resolving everything from Layer 1 data cabling issues to comprehensive hardware upgrades for POS systems, back-office computer rooms, training labs, mobile devices, and UPS systems.</li>
-            <li><strong>Honey Baked Ham (Network Support):</strong> Governed hardware lifecycle and network infrastructure for 400+ retail stores, deploying and securing Cisco Meraki SD-WAN and Wireless Access Points (WAPs).</li>
-            <li><strong>Hemmersbach/OneBeacon (Deskside Support):</strong> Performed high-tier remote and deskside troubleshooting for enterprise workstations.</li>
-          </ul>
-        </div>
-        
-        <div class="res-job">
-          <div class="res-co">Computer Generated Solutions (CGS)</div>
-          <div class="res-dates">2017 – 2018</div>
-          <div class="res-jobrole">Bilingual Lenovo Technical Support IV</div>
-          <ul class="res-ul">
-            <li>Provided bilingual (French/English) remote assistance to field technicians, successfully resolving complex hardware, server, and router anomalies.</li>
-            <li>Executed Layer 2/Layer 3 diagnostics and advanced firmware/BIOS updates on enterprise-grade Lenovo systems for IBMers.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="res-sec">
-        <div class="res-sec-title">Education & Certifications</div>
-        
-        <div class="edu-item">
-          <div class="edu-name">Western Governors University</div>
-          <div class="edu-detail">Accelerated Bachelor's to Master's in Information Technology (Expected Nov 2026) <br>
-          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Advanced dual-degree curriculum bridging strategic IT governance with hands-on technical execution. Areas of specialization include Python-driven automation, cloud and network security architectures, enterprise data and AI fluency, Agile product management, and comprehensive ITSM alignment.</span></div>
-        </div>
-
-        <div class="edu-item">
-          <div class="edu-name">ITT Technical Institute</div>
-          <div class="edu-detail">Bachelor of Science, Computer Networks Systems<br>
-          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Rigorous engineering foundation centered on physical network topologies, complex routing and switching protocols, enterprise server administration, and OSI physical/data-link layer troubleshooting methodologies.</span></div>
-        </div>
-
-        <div class="edu-item">
-          <div class="edu-name">IIUM</div>
-          <div class="edu-detail">Bachelor of Management Information Systems (BMIS) | 2001 – 2005<br>
-          <span style="font-size:11px;opacity:0.8;display:block;margin-top:2px;">Core computer science program grounded in the early-web era, focusing on monolithic software development lifecycles, relational database architecture (SQL), and foundational enterprise information systems analysis during the Web 2.0 transition.</span></div>
-        </div>
-
-        <div class="edu-item" style="margin-top:1.5rem">
-          <div class="edu-name">Certifications & Training <span style="font-size:10px;color:var(--muted);font-weight:normal;margin-left:5px;">(Click to view Knowledge Base)</span></div>
-          <div class="edu-detail" style="line-height:2; margin-top:8px;">
-            <a class="cert-link" onclick="openCert('comptia')">▸ CompTIA A+</a><br>
-            <a class="cert-link" onclick="openCert('google-data')">▸ Google Data Analytics Professional Certification</a><br>
-            <a class="cert-link" onclick="openCert('google-it')">▸ Google IT Support Professional Certification</a><br>
-            <a class="cert-link" onclick="openCert('ai-prompt')">▸ Workshop: Prompting Essentials & AI for Small Business</a><br>
-            <a class="cert-link" onclick="openCert('itil')">▸ ITIL Foundation (2026 Candidate)</a>
-          </div>
-        </div>
-      </div>
+    <div id="view-resume" class="view">
+        <h1 style="font-family:var(--display);">Régnard Rodney</h1>
+        <p style="color:var(--blue);">Senior IT Infrastructure Specialist & CTO</p>
     </div>
-
-    <div id="view-cert" style="display:none; max-width:820px; margin:0 auto; padding-bottom:4rem">
-      <button class="launch-btn" style="margin-bottom: 2rem;" onclick="switchView('resume')">◀ Back to Candidate Profile</button>
-      <div class="res-sec-title">Technical Knowledge Base</div>
-      <h2 id="cert-title" style="font-family:var(--display);font-size:28px;margin-bottom:1rem;color:var(--blue)">Class Title</h2>
-      <div id="cert-content" style="font-size:14px;color:var(--text);line-height:1.8;">
-      </div>
-    </div>
-
   </div>
-  <button id="topBtn" onclick="document.querySelector('.workspace').scrollTo(0,0)" style="position:fixed; bottom:20px; right:20px; background:var(--surface3); color:var(--text); border:1px solid var(--border2); padding:10px; border-radius:5px; cursor:pointer; font-size:12px; display:none; z-index:100;">↑ Top</button>
 </main>
 
 <script>
-// ─── CLOCK ───
-const clk=document.getElementById('live-clock');
-const tick=()=>clk.textContent=new Date().toLocaleTimeString('en-US',{hour12:false});
-tick();setInterval(tick,1000);
-
-// ─── AUDIO ENGINE ───
-const ringtone = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
-ringtone.loop = true;
-
-function stopRinging() {
-  ringtone.pause();
-  ringtone.currentTime = 0;
-}
-
-// ─── AGENT RR 2.0 ORCHESTRATION ───
-/* ARCHITECTURE NOTE: 
-  This is the blueprint for connecting to an external Edge Function.
-  Do NOT commit API keys to this file. 
-
-  async function fetchBackendLLM(userText) {
-    const response = await fetch('https://your-aws-lambda-url.com/api/agent-rr', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          prompt: userText, 
-          system_context: "You are Agent RR 2.0, CTO and infrastructure architect..." 
-        })
-    });
-    const data = await response.json();
-    return data.reply;
-  }
-*/
-
-// Local Heuristic Fallback Engine for Portfolio Demonstration
-function getAgentResponse(input) {
-  const text = input.toLowerCase();
-  if(text.includes('bgp') || text.includes('routing')) {
-    return "When troubleshooting BGP, I always start by verifying Layer 3 reachability to the peer IP, checking if the AS numbers match the configuration, and confirming 'update-source' logic for loopbacks. In a multi-cloud environment like AWS to Azure, BGP flapping is almost always an MTU mismatch or out-of-sync hold-timers.";
-  } else if (text.includes('docker') || text.includes('container')) {
-    return "Docker is critical for modern operations. I prefer using Docker Compose to orchestrate multi-container apps (like a web server and a database). The key architectural rule: never store persistent data inside the container. Always use Named Volumes or Bind Mounts so you can safely prune or rebuild.";
-  } else if (text.includes('security') || text.includes('firewall') || text.includes('mtu')) {
-    return "From a defensive standpoint, I operate on a Zero Trust architecture (ZTA). 'Never trust, always verify.' Whether it's setting up Conditional Access in Entra ID or managing East-West firewall micro-segmentation, identity and proper session limits (like mitigating TCP resets due to MTU fragmentation) are paramount.";
-  } else if (text.includes('ai') || text.includes('prompt')) {
-    return "We are in the post-chatbot era. I utilize Advanced Prompt Engineering—specifically assigning rigid personas and contextual boundaries—to build autonomous workflows. For example, routing password reset tickets via an LLM API to reduce Tier 1 overhead by 90%.";
-  } else if (text.includes('itil') || text.includes('management')) {
-    return "As an ITIL 4 framework candidate, my philosophy is 'Focus on Value' and 'Optimize and Automate'. A technical fix is only half the job; the other half is updating the CMDB, conducting Root Cause Analysis (Problems vs Incidents), and communicating the business impact to stakeholders.";
-  } else {
-    return "That's an interesting challenge. As an infrastructure architect, my immediate approach would be to follow the OSI model—starting at Layer 1 (Physical/Reachability) and moving up to Layer 7 (Application/Identity). Could you provide a bit more detail on the specific system logs or errors you're seeing?";
-  }
-}
-
-function handleAgentChat() {
-  const inputEl = document.getElementById('agent-input');
-  const text = inputEl.value.trim();
-  if(!text) return;
-  
-  const msgContainer = document.getElementById('agent-messages');
-  
-  // Append User Message
-  const userMsg = document.createElement('div');
-  userMsg.className = 'agent-msg user';
-  userMsg.innerHTML = `<div class="agent-bubble">${text}</div>`;
-  msgContainer.appendChild(userMsg);
-  
-  inputEl.value = '';
-  msgContainer.scrollTop = msgContainer.scrollHeight;
-  
-  // Typing Indicator
-  const typingMsg = document.createElement('div');
-  typingMsg.className = 'agent-msg ai typing-temp';
-  typingMsg.innerHTML = `<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
-  msgContainer.appendChild(typingMsg);
-  msgContainer.scrollTop = msgContainer.scrollHeight;
-  
-  // Simulate Network Delay & Fetch Response
-  setTimeout(() => {
-    msgContainer.removeChild(typingMsg);
-    const aiMsg = document.createElement('div');
-    aiMsg.className = 'agent-msg ai';
-    aiMsg.innerHTML = `<div class="agent-bubble">${getAgentResponse(text)}</div>`;
-    msgContainer.appendChild(aiMsg);
-    msgContainer.scrollTop = msgContainer.scrollHeight;
-  }, 1200);
-}
-
-// ─── KNOWLEDGE BASE DATA ───
-const certData = {
-  'comptia': {
-    title: 'CompTIA A+',
-    content: '<ul class="res-ul"><li><strong>Hardware:</strong> Identifying, using, and connecting hardware components and devices.</li><li><strong>Operating Systems:</strong> Install and support Windows OS including command line & client support. Mac OS, Linux and mobile OS.</li><li><strong>Software Troubleshooting:</strong> Troubleshoot PC and mobile device issues including application security support.</li><li><strong>Networking:</strong> Explain types of networks and connections including TCP/IP, WIFI and SOHO.</li><li><strong>Security:</strong> Identify and protect against security vulnerabilities for devices and their network connections.</li></ul>'
-  },
-  'google-data': {
-    title: 'Google Data Analytics Professional Certification',
-    content: '<ul class="res-ul"><li><strong>Foundations of Data:</strong> Understanding the data lifecycle and data-driven decision making.</li><li><strong>Data Preparation:</strong> Using spreadsheets and SQL to extract and prepare data for analysis.</li><li><strong>Data Processing:</strong> Cleaning data to ensure integrity and accuracy before analysis.</li><li><strong>Data Analysis:</strong> Utilizing analytical thinking and formulas to make data-driven calculations.</li><li><strong>Data Visualization:</strong> Building dynamic dashboards and visual presentations using Tableau.</li><li><strong>Advanced Programming:</strong> Data analysis using R Programming language.</li></ul>'
-  },
-  'google-it': {
-    title: 'Google IT Support Professional Certification',
-    content: '<ul class="res-ul"><li><strong>Technical Support Fundamentals:</strong> Customer service, troubleshooting, and ticketing systems.</li><li><strong>The Bits and Bytes of Computer Networking:</strong> Deep dive into TCP/IP, DNS, DHCP, and OSI model operations.</li><li><strong>Operating Systems:</strong> Becoming a power user in Windows and Linux CLI environments.</li><li><strong>System Administration:</strong> Managing IT infrastructure, Active Directory, and directory services.</li><li><strong>IT Security:</strong> Defense against digital threats, encryption algorithms, and secure network architecture.</li></ul>'
-  },
-  'ai-prompt': {
-    title: 'Prompting Essentials & AI for Small Business',
-    content: '<ul class="res-ul"><li><strong>Contextual Prompt Architecture:</strong> Designing prompts with strict operational constraints and bounded context.</li><li><strong>Persona/Role Assignment:</strong> Forcing LLMs into specific analytical frameworks (e.g., Senior Systems Analyst).</li><li><strong>Zero-shot vs Few-shot Prompting:</strong> Providing structured examples to guide predictable JSON/structured outputs.</li><li><strong>Hallucination Mitigation:</strong> Techniques to prevent AI confabulation in technical troubleshooting.</li><li><strong>Business Automation:</strong> Building autonomous triage frameworks for Tier 1 support deflection.</li></ul>'
-  },
-  'itil': {
-    title: 'ITIL® 4 Foundation | Service Management Certification Guide',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>The 7 Guiding Principles</h4>
-          <ul>
-            <li><strong>Focus on Value:</strong> Everything must link back to value for stakeholders.</li>
-            <li><strong>Start Where You Are:</strong> Don't scrap everything; observe and preserve.</li>
-            <li><strong>Progress Iteratively:</strong> Use feedback loops and small steps.</li>
-            <li><strong>Collaborate/Promote Visibility:</strong> Break down silos.</li>
-            <li><strong>Think/Work Holistically:</strong> No service is an island.</li>
-            <li><strong>Keep it Simple/Practical:</strong> Minimum steps to provide value.</li>
-            <li><strong>Optimize and Automate:</strong> Use technology where human touch isn't needed.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Service Value System (SVS)</h4>
-          <p style="font-size:13px; color:var(--muted)">The SVS describes how all components work together to enable value creation. Key chain activities: <strong>Plan, Improve, Engage, Design, Build, Deliver & Support.</strong></p>
-        </div>
-        <div class="kb-card">
-          <h4>Key Practices for the Exam</h4>
-          <ul>
-            <li><strong>Incident Mgmt:</strong> Restore normal service as fast as possible.</li>
-            <li><strong>Change Enablement:</strong> Maximize successful IT changes.</li>
-            <li><strong>Problem Mgmt:</strong> Reduce likelihood/impact of incidents (RCA).</li>
-            <li><strong>Service Desk:</strong> The entry point for all users.</li>
-          </ul>
-        </div>
-      </div>
-      <div style="margin-top:15px; background:var(--blue-dim); padding:15px; border-left:3px solid var(--blue); font-size:13px;">
-        <strong>Exam Pro-Tip:</strong> Understand the difference between an <em>Incident</em> (unplanned interruption) and a <em>Problem</em> (cause of one or more incidents).
-      </div>
-    `
-  },
-  'redhat': {
-    title: 'RHCSA | Red Hat Certified System Administrator (EX200) Lab',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Unit 1: Command Line & Filesystems</h4>
-          <ul>
-            <li><strong>Navigation:</strong> <code>cd</code>, <code>ls -la</code>, <code>mkdir -p</code></li>
-            <li><strong>Permissions:</strong> <code>chmod</code> (755 vs 644), <code>chown</code>, and ACLs.</li>
-            <li><strong>Archive:</strong> <code>tar -cvzf</code> (Create) vs <code>tar -xvzf</code> (Extract).</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Unit 2: System Admin Tasks</h4>
-          <ul>
-            <li><strong>User Mgmt:</strong> <code>useradd</code>, <code>usermod</code>, <code>/etc/passwd</code>.</li>
-            <li><strong>Process Mgmt:</strong> <code>ps aux</code>, <code>top</code>, <code>kill -9</code>, and nice levels.</li>
-            <li><strong>Package Mgmt:</strong> <code>yum install</code> vs <code>dnf update</code>.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="res-sec-title" style="margin-top:2rem">The Troubleshooting Lab: "System Won't Boot"</div>
-      <div class="kb-card" style="width:100%; border-left: 4px solid var(--amber);">
-        <ol style="margin-left: 20px;">
-          <li>Interrupt GRUB boot menu and append <strong>rd.break</strong> to the kernel line.</li>
-          <li>Remount /sysroot as Read/Write: <code>mount -o remount,rw /sysroot</code></li>
-          <li>Enter the system: <code>chroot /sysroot</code></li>
-          <li>Reset root password: <code>passwd root</code></li>
-          <li>Force SELinux relabel: <code>touch /.autorelabel</code></li>
-        </ol>
-      </div>
-    `
-  },
-  'kali': {
-    title: 'Kali Linux | Offensive Security & Penetration Testing',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Phase 1: Reconnaissance</h4>
-          <ul>
-            <li><strong>Nmap:</strong> <code>nmap -sC -sV -O -p- [Target]</code> (Aggressive scan for open ports, services, OS detection).</li>
-            <li><strong>Dirb/Gobuster:</strong> Brute-forcing hidden web directories.</li>
-            <li><strong>Enum4linux:</strong> Extracting user lists and shares via SMB.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Phase 2: Exploitation</h4>
-          <ul>
-            <li><strong>Metasploit:</strong> <code>msfconsole</code>, searching exploits, setting payloads (Meterpreter reverse TCP).</li>
-            <li><strong>Hydra:</strong> Online password cracking (SSH, FTP).</li>
-            <li><strong>Burp Suite:</strong> Intercepting and modifying HTTP requests.</li>
-          </ul>
-        </div>
-      </div>
-      <div style="margin-top:15px; background:var(--red-dim); padding:15px; border-left:3px solid var(--red); font-size:13px;">
-        <strong>Rules of Engagement:</strong> Never run active exploitation tools against unauthorized targets. Use isolated hypervisor environments for all lab exercises.
-      </div>
-    `
-  },
-  'windows-troubleshoot': {
-    title: 'Modern Windows Triage | Endpoint Forensics & Repair',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>System Corruption Recovery</h4>
-          <ul>
-            <li><strong>SFC /Scannow:</strong> Verifies and replaces corrupted Windows system files.</li>
-            <li><strong>DISM:</strong> <code>DISM /Online /Cleanup-Image /RestoreHealth</code> (Repairs the actual Windows image store).</li>
-            <li><strong>BootREC:</strong> Fixing the Master Boot Record (MBR) and rebuilding the BCD store via Windows PE.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Deep Diagnostic Tools</h4>
-          <ul>
-            <li><strong>Event Viewer (eventvwr):</strong> Filtering System and Application logs for critical Stop Errors (BSOD).</li>
-            <li><strong>Sysinternals Suite:</strong> Process Explorer (hunting malware hooks) and Autoruns (cleaning startup persistence).</li>
-            <li><strong>PowerShell:</strong> <code>Get-Service | Where-Object {$_.Status -eq "Stopped"}</code></li>
-          </ul>
-        </div>
-      </div>
-    `
-  },
-  'network-security': {
-    title: 'Network Security & Defensive Operations | The SME Masterclass',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Module 1: Defensive Architecture</h4>
-          <ul>
-            <li><strong>Zero Trust (ZTA):</strong> "Never trust, always verify" — moving security to the resource level.</li>
-            <li><strong>Micro-segmentation:</strong> Using East-West firewalls to prevent lateral movement.</li>
-            <li><strong>DMZ & Air-Gapping:</strong> Isolating critical assets from public-facing interfaces.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Module 2: Offense to Inform Defense</h4>
-          <ul>
-            <li><strong>Kali Linux Tooling:</strong> Nmap (Scanning), Wireshark (Sniffing), Metasploit (Validation).</li>
-            <li><strong>Scanning:</strong> <code>nmap -sV -T4 [Target]</code> to identify vulnerable service versions.</li>
-            <li><strong>Hardening:</strong> Disabling unused services (Telnet, HTTP) in favor of SSH and HTTPS.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="res-sec-title" style="margin-top:2rem">Windows & Enterprise Hardening Checklist</div>
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Identity & Access (IAM)</h4>
-          <ul>
-            <li><strong>MFA/2FA:</strong> Deploying Push-based authentication (Duo/Microsoft).</li>
-            <li><strong>Privileged Access (PAM):</strong> Using "Just-in-Time" permissions for admin tasks.</li>
-            <li><strong>Group Policy (GPO):</strong> Enforcing BitLocker and disabling USB storage.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>The "SOC" Skillset</h4>
-          <ul>
-            <li><strong>SIEM:</strong> Centralizing logs from Meraki, Cisco, and Windows for correlation.</li>
-            <li><strong>DDoS Mitigation:</strong> Implementing rate-limiting and scrubbers at the edge.</li>
-            <li><strong>BCDR:</strong> Testing immutable backups to ensure 3-2-1 data redundancy.</li>
-          </ul>
-        </div>
-      </div>
-      <div style="margin-top:15px; background:var(--red-dim); padding:15px; border-left:3px solid var(--red); font-size:13px;">
-        <strong>SME Pro-Tip:</strong> Security is a process, not a product. Always follow the <strong>NIST Cybersecurity Framework:</strong> Identify, Protect, Detect, Respond, and Recover.
-      </div>
-    `
-  },
-  'sec-plus': {
-    title: 'CompTIA Security+ SY0-701 | Full Domain Masterclass',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Module 1: General Security Concepts</h4>
-          <ul>
-            <li><strong>CIA Triad:</strong> Confidentiality, Integrity, Availability.</li>
-            <li><strong>Non-Repudiation:</strong> Ensuring a party cannot deny an action (Digital Signatures).</li>
-            <li><strong>Control Types:</strong> Managerial, Operational, and Technical controls.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Module 2: Threats, Attacks & Vulnerabilities</h4>
-          <ul>
-            <li><strong>Social Engineering:</strong> Phishing, Whaling, Vishing, and Tailgating.</li>
-            <li><strong>Application Attacks:</strong> SQL Injection, Cross-Site Scripting (XSS).</li>
-            <li><strong>Network Attacks:</strong> Man-in-the-Middle (MitM), DDoS, and Replay attacks.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="res-sec-title" style="margin-top:2rem">Deep Dive: Digital Forensics & Incident Response (DFIR)</div>
-      <div class="kb-card" style="width:100%">
-        <p><strong>The Order of Volatility:</strong> 1. CPU Cache/Registers → 2. Routing Table/ARP Cache → 3. RAM → 4. Temp Files → 5. Disk/SSD → 6. Remote Logs.</p>
-        <p style="margin-top:10px; color:var(--green)"><em>"When responding to a breach, always capture RAM before pulling the power plug."</em></p>
-      </div>
-    `
-  },
-  'multi-cloud': {
-    title: 'Multi-Cloud Networking Masterclass | AWS & Azure Connectivity',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card"><h4>AWS Networking</h4><ul><li>VPC & Subnets (Public/Private)</li><li>Transit Gateway (TGW)</li><li>Direct Connect (DX)</li></ul></div>
-        <div class="kb-card"><h4>Azure Networking</h4><ul><li>VNet Peering</li><li>Azure ExpressRoute</li><li>VPN Gateway (Route-based)</li></ul></div>
-        <div class="kb-card"><h4>The Glue: BGP</h4><ul><li>ASN 64512 (Default Private)</li><li>Keepalive & Hold-Time Synchronization</li><li>Path Selection (MED vs Local Pref)</li></ul></div>
-      </div>`
-  },
-  'aiops': {
-    title: 'AIOps & Predictive Operations | The 2026 Standard',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card"><h4>Concepts</h4><ul><li><strong>Deduplication:</strong> Filtering noise into single master incidents.</li><li><strong>Anomaly Detection:</strong> Identifying "deviations from normal" without static thresholds.</li><li><strong>Root Cause Analysis:</strong> Automated correlation across the stack.</li></ul></div>
-        <div class="kb-card"><h4>The Tech Stack</h4><ul><li>Cisco AI Assistant (AI Canvas)</li><li>Juniper Marvis (HPE) - Digital Twins</li><li>Arista AVA (Autonomous Virtual Assist)</li></ul></div>
-      </div>`
-  },
-  'iac-automation': {
-    title: 'Infrastructure as Code (IaC) | Terraform & Ansible Lab',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card"><h4>Terraform (Stateful)</h4><ul><li>Providers (Cisco, Meraki, Azure)</li><li>HCL Syntax (Resources & Variables)</li><li>State Management: <code>terraform plan/apply</code></li></ul></div>
-        <div class="kb-card"><h4>Ansible (Procedural)</h4><ul><li>Playbooks (YAML) & Roles</li><li>Inventory Files (Host groups)</li><li>Modules: ios_config, meraki_network</li></ul></div>
-      </div>`
-  },
-  'python-ops': {
-    title: 'Python for Network Engineers | Automation & Scalability',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Lesson 1: The Automation Stack</h4>
-          <ul>
-            <li><strong>Netmiko:</strong> SSH library for multi-vendor network devices.</li>
-            <li><strong>Requests:</strong> Interaction with REST APIs (Meraki, ServiceNow).</li>
-            <li><strong>Pandas:</strong> Analyzing large-scale CSV log exports.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Lesson 2: Logic & Flow</h4>
-          <p>Writing scripts to perform <strong>"Pre-flight Checks"</strong>: Verify OSPF neighbors before pushing a BGP config change.</p>
-        </div>
-      </div>
-    `
-  },
-  'bgp-routing': {
-    title: 'BGP (Border Gateway Protocol) | The Protocol of the Internet',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>BGP Characteristics</h4>
-          <ul>
-            <li>Path Vector Protocol (not link-state).</li>
-            <li>Uses TCP Port 179 for reliability.</li>
-            <li>eBGP (External) vs iBGP (Internal).</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Troubleshooting "Nbr Down"</h4>
-          <ol style="margin-left:20px; font-size:14px; color:var(--muted)">
-            <li>Verify L3 reachability (Ping the peer IP).</li>
-            <li>Check if AS numbers match the peer config.</li>
-            <li>Verify 'update-source' for loopback peering.</li>
-            <li>Check 'multihop' if peers are not directly connected.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="res-sec-title" style="margin-top:2rem">Common BGP CLI Commands</div>
-      <pre style="background:var(--bg); padding:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; overflow-x:auto;">
-# show ip bgp summary (Check neighbor status)
-# show ip bgp (View the BGP table)
-# clear ip bgp * soft (Refresh routes without dropping session)
-      </pre>
-    `
-  },
-  'subnetting': {
-    title: 'Mastering IPv4 Subnetting | The Network Engineer\'s Math',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Cheat Sheet</h4>
-          <ul>
-            <li>/24 = 256 IPs (254 Usable)</li>
-            <li>/25 = 128 IPs (126 Usable)</li>
-            <li>/26 = 64 IPs (62 Usable)</li>
-            <li>/30 = 4 IPs (2 Usable - WAN links)</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>The Logic</h4>
-          <p style="font-size:13px; color:var(--muted)">Number of Hosts = 2^n - 2 (where n is the number of host bits). The "-2" is for the Network and Broadcast addresses.</p>
-        </div>
-      </div>
-    `
-  },
-  'meraki': {
-    title: 'Cisco Meraki | Cloud-Managed Infrastructure & Field Manual',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card">
-          <h4>Hardware Gallery & Use Cases</h4>
-          <ul>
-            <li><strong>MX68/85:</strong> Small to Mid-sized Retail.</li>
-            <li><strong>MS120/225:</strong> Layer 2/3 Access Switching with PoE+.</li>
-            <li><strong>MR36/44:</strong> Wi-Fi 6 Cloud-Managed Access Points.</li>
-          </ul>
-        </div>
-        <div class="kb-card">
-          <h4>Initial Provisioning (A to Z)</h4>
-          <ol style="margin-left: 20px; font-size:14px; color:var(--muted);">
-            <li>Whitelist Serial Numbers in Dashboard.</li>
-            <li>Connect WAN1 to Internet (DHCP/Static).</li>
-            <li>Verify Power/Status LED (White = Online).</li>
-            <li>Configure VLANs & SD-WAN policies.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="res-sec-title" style="margin-top:2rem">Field Repair & Troubleshooting Guide</div>
-      <table style="width:100%; border-collapse:collapse; font-size:13px; color:var(--muted); background:var(--surface2); border:1px solid var(--border);">
-        <thead>
-          <tr style="background:var(--surface3); color:var(--text); text-align:left;">
-            <th style="padding:10px; border:1px solid var(--border);">Issue</th>
-            <th style="padding:10px; border:1px solid var(--border);">Root Cause</th>
-            <th style="padding:10px; border:1px solid var(--border);">The Repair</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:10px; border:1px solid var(--border); color:var(--amber);">Solid Orange LED</td>
-            <td style="padding:10px; border:1px solid var(--border);">Hardware failing to fetch IP</td>
-            <td style="padding:10px; border:1px solid var(--border);">Check Layer 1 cable; verify DHCP pool on upstream ISP modem.</td>
-          </tr>
-          <tr>
-            <td style="padding:10px; border:1px solid var(--border); color:var(--amber);">VPN Tunnel Down</td>
-            <td style="padding:10px; border:1px solid var(--border);">UDP 4500 Blocked</td>
-            <td style="padding:10px; border:1px solid var(--border);">Verify ISP is not blocking Non-Standard VPN ports.</td>
-          </tr>
-        </tbody>
-      </table>
-    `
-  },
-  'docker': {
-    title: 'Docker | Containerization for Network Ops',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card"><h4>Core Concepts</h4><ul><li>Images vs. Containers</li><li>Dockerfile Syntax</li><li>Persistent Volumes</li></ul></div>
-        <div class="kb-card"><h4>Networking</h4><ul><li>Bridge vs. Host Networking</li><li>Exposing Ports (80:8080)</li><li>Docker Compose for Multi-container Apps</li></ul></div>
-        <div class="kb-card" style="grid-column: 1 / -1;"><h4>Use Case</h4><p>Deploying automated network monitoring agents (SNMP/Zabbix) across distributed endpoints using lightweight containers.</p></div>
-      </div>`
-  },
-  'wireshark': {
-    title: 'Wireshark | Protocol Analysis & Deep Packet Inspection',
-    content: `
-      <div class="kb-grid">
-        <div class="kb-card"><h4>Traffic Capture</h4><ul><li>Promiscuous Mode vs. Monitor Mode</li><li>Capture Filters (BPF Syntax)</li><li>Pcapng File Management</li></ul></div>
-        <div class="kb-card"><h4>Troubleshooting Filters</h4><ul><li><strong>TCP Retransmissions:</strong> <code>tcp.analysis.retransmission</code></li><li><strong>DNS Errors:</strong> <code>dns.flags.rcode != 0</code></li><li><strong>Latency:</strong> <code>tcp.time_delta > 0.5</code></li></ul></div>
-      </div>`
-  }
-};
-
-function openCert(id) {
-  const data = certData[id];
-  if(!data) {
-     alert("Knowledge Base entry for '" + id + "' is currently being indexed...");
-     return;
-  }
-  document.getElementById('cert-title').textContent = data.title;
-  document.getElementById('cert-content').innerHTML = data.content;
-  switchView('cert');
-}
-
-// ─── NAV ENGINE ───
-function switchView(v){
-  stopRinging();
-  const views = ['view-dashboard', 'view-incident', 'view-resume', 'view-cert', 'view-agent'];
-  views.forEach(id => document.getElementById(id).style.display = 'none');
-  
-  let target = 'view-' + v;
-  if(v === 'cert') target = 'view-cert';
-  if(v === 'agent') target = 'view-agent';
-  
-  document.getElementById(target).style.display = (v === 'incident' || v === 'agent') ? 'flex' : 'block';
-  
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  if(v === 'dashboard') document.querySelectorAll('.nav-btn')[0].classList.add('active');
-  if(v === 'resume' || v === 'cert') document.querySelectorAll('.nav-btn')[1].classList.add('active');
-  if(v === 'agent') document.querySelectorAll('.nav-btn')[2].classList.add('active');
-  
-  const titles = { dashboard: 'Incident Dashboard', resume: 'Candidate Profile', incident: 'Agent Workspace', cert: 'Technical Classroom', agent: 'Agent RR 2.0 (Terminal)' };
-  document.getElementById('header-title').textContent = titles[v] || 'Agent Workspace';
-  document.querySelector('.workspace').scrollTo(0,0);
-  
-  // Floating Top Button Logic
-  document.getElementById('topBtn').style.display = (v === 'cert' || v === 'resume') ? 'block' : 'none';
-}
-
-// ─── SVG ILLUSTRATIONS ───
+// --- SVGS ---
 const svgs={
-  fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/><text x="50" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><rect x="130" y="55" width="60" height="30" rx="3" fill="#1c2330" stroke="#d29922" stroke-width="1.5"/><text x="160" y="73" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">SPLICE</text><text x="160" y="83" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">DAMAGED</text><line x1="190" y1="70" x2="240" y2="70" stroke="#3fb950" stroke-width="3"/><rect x="240" y="60" width="60" height="20" rx="3" fill="#1c2330" stroke="#334155"/><text x="270" y="75" fill="#58a6ff" font-size="7" font-family="monospace" text-anchor="middle">LC/APC</text><text x="50" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">TX End</text><text x="270" y="105" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">RX End</text><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text><text x="160" y="130" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Single-Mode Fiber — OS2 — 9/125μm</text></svg>`,
-  otdr:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="200" height="120" rx="4" fill="#0d1117" stroke="#334155"/><text x="110" y="25" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">OTDR TRACE — REFLECTOMETRY</text><polyline points="20,90 60,88 100,86 140,60 150,110 160,88 190,87 200,87" fill="none" stroke="#3fb950" stroke-width="1.5"/><line x1="20" y1="90" x2="200" y2="90" stroke="#1c2330" stroke-width="1"/><text x="140" y="55" fill="#f85149" font-size="6" font-family="monospace">FAULT</text><text x="140" y="63" fill="#f85149" font-size="6" font-family="monospace">2.3km</text><text x="220" y="40" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold">OTDR</text><text x="220" y="55" fill="#7d8590" font-size="7" font-family="monospace">JDSU T-BERD</text><text x="220" y="68" fill="#7d8590" font-size="7" font-family="monospace">5800-100G</text><text x="220" y="85" fill="#484f58" font-size="6" font-family="monospace">Wave: 1310/1550nm</text><text x="220" y="97" fill="#484f58" font-size="6" font-family="monospace">Range: 120km</text><text x="220" y="109" fill="#484f58" font-size="6" font-family="monospace">Dead Zone: 1.5m</text><rect x="210" y="115" width="100" height="16" rx="2" fill="#0d1117" stroke="#3fb950" stroke-width="1"/><text x="260" y="127" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">EXPORT REPORT</text></svg>`,
-  meraki_mx:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="30" y="45" width="260" height="60" rx="4" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="100" y="38" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold">Cisco Meraki MX68</text><text x="100" y="48" fill="#7d8590" font-size="7" font-family="monospace">Security Appliance · SD-WAN</text><circle cx="55" cy="75" r="5" fill="#3fb950"/><text x="55" y="92" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">PWR</text><rect x="70" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="76" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN1</text><circle cx="76" cy="70" r="2" fill="#f85149"/><rect x="86" y="65" width="12" height="20" rx="1" fill="#0d1117" stroke="#334155"/><text x="92" y="92" fill="#7d8590" font-size="5" font-family="monospace" text-anchor="middle">WAN2</text><circle cx="92" cy="70" r="2" fill="#3fb950"/><text x="160" y="80" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">LTE FAILOVER ACTIVE</text><rect x="255" y="65" width="20" height="8" rx="1" fill="#0d1117" stroke="#3fb950" stroke-width="1"/><text x="265" y="72" fill="#3fb950" font-size="5" font-family="monospace" text-anchor="middle">4G</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Throughput: 450Mbps · VPN: 150Mbps · Up to 5 SSIDs</text></svg>`,
-  cable_tester:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="20" width="110" height="100" rx="6" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="75" y="38" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Fluke Networks</text><text x="75" y="49" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">MicroScanner2</text><rect x="35" y="55" width="80" height="40" rx="2" fill="#0d1117" stroke="#484f58"/><text x="75" y="68" fill="#3fb950" font-size="7" font-family="monospace" text-anchor="middle">WIREMAP OK</text><text x="75" y="80" fill="#d29922" font-size="6" font-family="monospace" text-anchor="middle">PAIR 3-6: OPEN</text><text x="75" y="90" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">LENGTH: 84m</text><circle cx="45" cy="108" r="4" fill="#3fb950"/><circle cx="60" cy="108" r="4" fill="#f85149"/><circle cx="75" cy="108" r="4" fill="#3fb950"/><circle cx="90" cy="108" r="4" fill="#3fb950"/><text x="200" y="38" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Cat6A Cable</text><text x="200" y="52" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">Panduit TX6A 10Gig</text><rect x="155" y="60" width="90" height="50" rx="2" fill="#0d1117" stroke="#334155"/><text x="200" y="78" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Bandwidth: 750MHz</text><text x="200" y="90" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Max Length: 100m</text><text x="200" y="102" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Standard: ANSI/TIA-568</text><text x="200" y="128" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">⚠ Replace run at panel port 14</text></svg>`,
-  switch_cisco:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="40" width="290" height="70" rx="3" fill="#161b22" stroke="#334155" stroke-width="1.5"/><text x="160" y="33" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">Cisco Catalyst 2960-X</text><text x="160" y="43" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">48-Port Managed Switch · PoE+</text>${Array.from({length:24},(_,i)=>{const x=25+i*11,color=i===7?'#f85149':i===8?'#d29922':'#3fb950';return `<rect x="${x}" y="52" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${56}" r="2" fill="${color}"/>`;}).join('')}${Array.from({length:24},(_,i)=>{const x=25+i*11,color='#3fb950';return `<rect x="${x}" y="72" width="8" height="16" rx="1" fill="#0d1117" stroke="#334155"/><circle cx="${x+4}" cy="${76}" r="2" fill="${color}"/>`;}).join('')}<text x="90" y="102" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">↑ Gi0/8 — PORT DOWN</text><text x="160" y="125" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Ports: 48x GbE PoE+ · 4x SFP+ · VLAN · Spanning Tree · LACP</text></svg>`,
-  wireshark:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/><rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text><text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text><rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/><text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text><text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text><text x="20" y="80" fill="#7d8590" font-size="6" font-family="monospace">1425   0.001312  192.168.1.45   10.0.0.1        TCP       [ACK] Seq=1 Ack=1</text><rect x="10" y="82" width="300" height="10" fill="rgba(248,81,73,0.1)"/><text x="20" y="90" fill="#f85149" font-size="6" font-family="monospace">1426   4.001998  192.168.1.45   10.0.0.1        TCP       [RST] — CONNECTION RESET</text><text x="20" y="102" fill="#7d8590" font-size="6" font-family="monospace">1427   4.002010  —              —               —         Retransmission timeout</text><text x="160" y="125" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">⚠ TCP RST at packet 1426 — MTU mismatch or firewall drop</text></svg>`,
-  azure_entra:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="20" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="85" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Azure Entra ID</text><text x="85" y="44" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access</text><rect x="35" y="52" width="100" height="18" rx="2" fill="#0d1117" stroke="#f85149" stroke-width="1"/><text x="85" y="64" fill="#f85149" font-size="7" font-family="monospace" text-anchor="middle">BLOCKED</text><text x="85" y="76" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Policy: Zero_Trust_Geo</text><text x="85" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">IP: 91.203.114.88</text><text x="85" y="100" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Location: Frankfurt,DE</text><rect x="35" y="108" width="100" height="12" rx="2" fill="rgba(63,185,80,0.1)" stroke="rgba(63,185,80,.3)"/><text x="85" y="117" fill="#3fb950" font-size="6" font-family="monospace" text-anchor="middle">MFA PUSH → APPROVED</text><rect x="170" y="15" width="130" height="110" rx="5" fill="#161b22" stroke="#334155"/><text x="235" y="32" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Sign-in Log</text><text x="235" y="48" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">User: vip.exec@corp.com</text><text x="235" y="62" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">App: Office 365</text><text x="235" y="76" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Client: Win11 Outlook</text><text x="235" y="90" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">Result: FAILURE</text><text x="235" y="104" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Error: 53003</text><text x="235" y="116" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Conditional Access Block</text></svg>`,
-  lenovo_bios:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="15" y="10" width="290" height="120" rx="4" fill="#0d0d0d" stroke="#484f58"/><rect x="15" y="10" width="290" height="20" rx="4" fill="#0d1117" stroke="#484f58"/><text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Lenovo ThinkPad BIOS Setup Utility v1.47</text><text x="30" y="46" fill="#3fb950" font-size="8" font-family="monospace">Main  Config  Security  Startup  Restart</text><text x="30" y="62" fill="#7d8590" font-size="7" font-family="monospace">▸ Storage Devices</text><text x="45" y="74" fill="#79c0ff" font-size="6" font-family="monospace">SK Hynix PC711 NVMe  512GB   DETECTED ✓</text><text x="45" y="84" fill="#7d8590" font-size="6" font-family="monospace">SMART Status: PASS   Temp: 31°C</text><text x="30" y="96" fill="#7d8590" font-size="7" font-family="monospace">▸ Boot Configuration</text><text x="45" y="108" fill="#f85149" font-size="6" font-family="monospace">Windows Boot Manager   ERROR: BCD corrupt</text><text x="45" y="118" fill="#484f58" font-size="6" font-family="monospace">Secure Boot: ON  · UEFI Mode: Active</text><text x="240" y="74" fill="#484f58" font-size="6" font-family="monospace">F1  Help</text><text x="240" y="84" fill="#484f58" font-size="6" font-family="monospace">F9  Default</text><text x="240" y="94" fill="#484f58" font-size="6" font-family="monospace">F10 Save/Exit</text></svg>`,
-  tls_cert:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="82" y="28" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">TLS 1.3 Handshake</text><text x="30" y="44" fill="#7d8590" font-size="6" font-family="monospace">Client → Server: ClientHello</text><text x="30" y="56" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: ServerHello</text><text x="30" y="68" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: Certificate</text><text x="30" y="80" fill="#f85149" font-size="6" font-family="monospace">❌ Verify: EXPIRED</text><text x="30" y="92" fill="#f85149" font-size="6" font-family="monospace">ERR_CERT_DATE_INVALID</text><text x="30" y="110" fill="#484f58" font-size="6" font-family="monospace">Expired: 2025-11-01</text><text x="30" y="122" fill="#484f58" font-size="6" font-family="monospace">Issuer: DigiCert CA</text><rect x="165" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="237" y="28" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">New Certificate</text><text x="178" y="44" fill="#7d8590" font-size="6" font-family="monospace">Subject: *.corp.internal</text><text x="178" y="56" fill="#7d8590" font-size="6" font-family="monospace">Valid: 2025-12-01</text><text x="178" y="68" fill="#3fb950" font-size="6" font-family="monospace">Expires: 2026-12-01</text><text x="178" y="80" fill="#7d8590" font-size="6" font-family="monospace">Alg: RSA-4096 / SHA-256</text><text x="178" y="92" fill="#7d8590" font-size="6" font-family="monospace">SAN: 12 alt names</text><text x="178" y="110" fill="#3fb950" font-size="6" font-family="monospace">✓ Issued by DigiCert</text><text x="178" y="122" fill="#3fb950" font-size="6" font-family="monospace">✓ Chain: VALID</text></svg>`,
-  bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="20" y="20" width="100" height="100" rx="4" fill="#161b22" stroke="#d29922"/>
-    <text x="70" y="40" fill="#d29922" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">AWS US-East</text>
-    <text x="70" y="55" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">ASN: 64512</text>
-    <rect x="40" y="70" width="60" height="30" rx="2" fill="#0d1117" stroke="#484f58"/>
-    <text x="70" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">Virtual Private GW</text>
-    
-    <rect x="200" y="20" width="100" height="100" rx="4" fill="#161b22" stroke="#58a6ff"/>
-    <text x="250" y="40" fill="#58a6ff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">Azure East US</text>
-    <text x="250" y="55" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">ASN: 65515</text>
-    <rect x="220" y="70" width="60" height="30" rx="2" fill="#0d1117" stroke="#484f58"/>
-    <text x="250" y="88" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">VPN Gateway</text>
-    
-    <line x1="100" y1="85" x2="220" y2="85" stroke="#f85149" stroke-width="2" stroke-dasharray="4"/>
-    <circle cx="160" cy="85" r="8" fill="#0a0f15" stroke="#f85149"/>
-    <text x="160" y="88" fill="#f85149" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">!</text>
-    <text x="160" y="70" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">BGP FLAPPING</text>
-    <text x="160" y="105" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">IPsec Phase 2 UP</text>
-  </svg>`,
-  aiops_graph: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/>
-    <text x="160" y="25" fill="#7d8590" font-size="7" font-family="monospace" text-anchor="middle">MERAKI AIOps — PREDICTIVE CAPACITY (Gi0/2)</text>
-    
-    <line x1="30" y1="100" x2="290" y2="100" stroke="#1c2330"/>
-    <line x1="30" y1="70" x2="290" y2="70" stroke="#1c2330"/>
-    <line x1="30" y1="40" x2="290" y2="40" stroke="#f85149" stroke-dasharray="2"/>
-    <text x="25" y="42" fill="#f85149" font-size="6" font-family="monospace" text-anchor="end">98%</text>
-    
-    <polyline points="30,95 70,85 110,90 150,70 190,65" fill="none" stroke="#58a6ff" stroke-width="2"/>
-    
-    <polyline points="190,65 230,50 270,35" fill="none" stroke="#d29922" stroke-width="2" stroke-dasharray="4"/>
-    
-    <circle cx="270" cy="35" r="3" fill="#f85149"/>
-    <rect x="210" y="15" width="80" height="14" rx="2" fill="#161b22" stroke="#f85149"/>
-    <text x="250" y="24" fill="#f85149" font-size="5" font-family="monospace" text-anchor="middle">PREDICTED PEAK: 14:15</text>
-    
-    <text x="160" y="120" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Time: 13:45 EST | Action Required: Traffic Shaping Reallocation</text>
-  </svg>`,
-  arp_spoof: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
-    <rect width="320" height="140" fill="#0a0f15"/>
-    <rect x="220" y="20" width="70" height="40" rx="4" fill="#161b22" stroke="#334155"/>
-    <text x="255" y="38" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Gateway</text>
-    <text x="255" y="50" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">10.1.1.1 (MAC: AA)</text>
-    
-    <rect x="30" y="20" width="70" height="40" rx="4" fill="#161b22" stroke="#334155"/>
-    <text x="65" y="38" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">User PC</text>
-    <text x="65" y="50" fill="#7d8590" font-size="6" font-family="monospace" text-anchor="middle">10.1.1.50</text>
-    
-    <rect x="125" y="80" width="70" height="40" rx="4" fill="#1c2330" stroke="#f85149"/>
-    <text x="160" y="98" fill="#f85149" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">Rogue Node</text>
-    <text x="160" y="110" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">MAC: BB (Spoofing)</text>
-    
-    <line x1="65" y1="60" x2="140" y2="80" stroke="#f85149" stroke-width="1.5" stroke-dasharray="2"/>
-    <line x1="255" y1="60" x2="180" y2="80" stroke="#f85149" stroke-width="1.5" stroke-dasharray="2"/>
-    
-    <text x="160" y="35" fill="#484f58" font-size="6" font-family="monospace" text-anchor="middle">Normal Traffic Path (Severed)</text>
-    <line x1="100" y1="40" x2="220" y2="40" stroke="#484f58" stroke-width="1"/>
-    <text x="160" y="42" fill="#484f58" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">X</text>
-    
-    <rect x="110" y="10" width="100" height="12" rx="2" fill="#f85149" opacity="0.1"/>
-    <text x="160" y="18" fill="#f85149" font-size="6" font-family="monospace" font-weight="bold" text-anchor="middle">ARP POISONING DETECTED</text>
-  </svg>`
+    fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text></svg>`,
+    bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="100" y1="85" x2="220" y2="85" stroke="#f85149" stroke-width="2" stroke-dasharray="4"/><text x="160" y="70" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">BGP FLAPPING</text></svg>`
 };
 
-// ─── LAYER CONFIG ───
-const layerConfig={
-  1:{color:'#ef4444',dim:'rgba(239,68,68,0.1)',label:'L1',name:'Physical'},
-  2:{color:'#f97316',dim:'rgba(249,115,22,0.1)',label:'L2',name:'Data Link'},
-  3:{color:'#eab308',dim:'rgba(234,179,8,0.1)',label:'L3',name:'Network'},
-  4:{color:'#3fb950',dim:'rgba(63,185,80,0.1)',label:'L4',name:'Transport'},
-  5:{color:'#06b6d4',dim:'rgba(6,182,212,0.1)',label:'L5',name:'Session'},
-  6:{color:'#8b5cf6',dim:'rgba(139,92,246,0.1)',label:'L6',name:'Presentation'},
-  7:{color:'#ec4899',dim:'rgba(236,72,153,0.1)',label:'L7',name:'Application'}
-};
-
-// ─── FULL OSI SCENARIO LIBRARY (INCLUDING 2026 ADVANCED TICKETS) ───
+// --- THE TALKING (FULL SCENARIOS) ---
 const scenarios=[
   {
-    id:'l1-fiber-break', layer:1, tier:'L1 · Tier 2', kb_link: 'ccna',
-    title:'Fiber Optic Break — ISP Trunk',
-    desc:'ISP single-mode fiber break detected on the carrier trunk. Diagnose with OTDR, coordinate carrier splice repair.',
-    incNumber:'INC001-L1A', caller:'NOC Alert — Carrier Trunk Down',
-    ci:'Single-Mode OS2 Fiber — ISP Trunk\nOSI Layer 1: Physical Medium',
+    id:'l1-fiber', layer:1, title:'Fiber Optic Break — ISP Trunk', incNumber:'INC001-L1', caller:'NOC Alert', ci:'OS2 Fiber Trunk',
     steps:[
-      {type:'alert',text:'🚨 P1 AUTO-ALERT — Carrier Trunk Down · All sites unreachable · Loss of Signal detected',actionLabel:'Acknowledge & Auto-Play'},
-      {type:'system',text:'[SYS] Alert source: Network Monitoring (SolarWinds)\n[SYS] Affected CI: ISP-TRUNK-EAST-01\n[SYS] Signal level: -∞ dBm (total loss)\n[SYS] Ticket auto-created: INC001-L1A — Priority 1 Critical'},
-      {type:'agent',name:'R. Rodney',text:'Good morning, IT Operations — Régnard speaking. I am confirming receipt of the P1 alert. Carrier trunk is down, and I am already in the NOC dashboard. Let me triage before paging the on-call engineer.',comment:'// ITIL: Own the ticket immediately. Do not escalate until you have triage data.'},
-      {type:'agent',name:'R. Rodney',text:'OSI Layer 1 check — I am looking at the physical signal first. Checking the SFP transceiver Rx power on the core router.',comment:'// OSI L1: Before anything else, verify the physical medium. Light = life on fiber.'},
-      {type:'cli',text:`Router# show interfaces TenGigabitEthernet0/1\nTenGigabitEthernet0/1 is down, line protocol is down\n  Hardware: SFP+, address: 00a0.c900.1234\n  Rx power: -40.0 dBm  ← BELOW THRESHOLD (-∞ means LOS)\n  Tx power: +1.2 dBm   ← Transmitter healthy\n  Connector: LC/APC duplex`},
-      {type:'vis',svgKey:'fiber_cable',title:'Fiber Run Diagram — OS2 Single-Mode',specs:[['Type','OS2 Single-Mode'],['Core','9/125μm'],['Connector','LC/APC'],['Max Loss','0.5 dB/km']]},
-      {type:'agent',name:'R. Rodney',text:'Tx power is fine — our equipment is transmitting. Rx is at total loss. This is not a transceiver failure. The break is somewhere in the physical fiber run between us and the ISP POP. I am requesting an OTDR test.',comment:'// OSI L1: Total Rx loss with healthy Tx = physical medium fault, not equipment.'},
-      {type:'agent',name:'R. Rodney',text:'Calling ISP NOC now to coordinate. They need to dispatch a fiber technician with an OTDR to locate the break precisely.',comment:''},
-      {type:'caller',name:'ISP NOC Technician',text:'We are seeing the same LOS on our end. Dispatching a tech with a JDSU T-BERD 5800 OTDR. ETA approximately 90 minutes on-site.'},
-      {type:'vis',svgKey:'otdr',title:'OTDR — Optical Time Domain Reflectometry',specs:[['Device','JDSU T-BERD 5800'],['Wavelength','1310/1550nm'],['Fault Distance','2.3 km'],['Event Type','Hard Break']]},
-      {type:'caller',name:'ISP NOC Technician',text:'OTDR found the break at 2.3 km from our POP. It is in the underground conduit — likely a backhoe strike from the construction on Route 202.'},
-      {type:'agent',name:'R. Rodney',text:'Confirmed. I am documenting the fault location: 2.3 km, hard break, suspected mechanical damage. I will activate our failover route and notify stakeholders while ISP performs the splice repair.',comment:'// ITIL: Restore service first via failover. Let physical repair happen in parallel.'},
-      {type:'cli',text:`ip route 0.0.0.0 0.0.0.0 203.0.113.1 10     ! Primary — ISP-TRUNK-EAST\nip route 0.0.0.0 0.0.0.0 198.51.100.1 20    ! Backup — ISP-WEST failover\n\nRouter# no ip route 0.0.0.0 0.0.0.0 203.0.113.1 10\nRouter# write memory\n[OK] — Traffic now routing via ISP-WEST`},
-      {type:'caller',name:'ISP NOC Technician',text:'Splice complete. We are seeing light on both ends. Rx power is back to -8.2 dBm — within spec. Trunk is live.'},
-      {type:'cli',text:`Router# show interfaces TenGigabitEthernet0/1\nTenGigabitEthernet0/1 is up, line protocol is up\n  Rx power: -8.2 dBm  ✓ NORMAL (-10 to -3 dBm)\n  Tx power: +1.2 dBm  ✓ NORMAL\n  5 minute input rate: 2,412,800 bits/sec\n  5 minute output rate: 1,890,000 bits/sec`},
-      {type:'system',text:'[SYS] SolarWinds alert cleared\n[SYS] Restoring primary route — removing failover static route\n[SYS] Trunk UP · Signal healthy · All downstream sites confirmed reachable'},
-      {type:'agent',name:'R. Rodney',text:'Trunk is fully restored. Reverting to primary ISP route and confirming all downstream sites are reachable. I am now documenting the RCA.',comment:'// ITIL: After service restoration, always perform Root Cause Analysis and update CMDB.'},
-      {type:'agent',name:'R. Rodney',text:'ISP NOC — thank you for the rapid response and on-site dispatch. The collaboration was excellent. I have the splice coordinates and fiber run map updated in our CMDB. Our sites are back and I am closing the P1.'},
-      {type:'caller',name:'ISP NOC Technician',text:'Appreciate the clear communication throughout. Closing on our end. We will mail you the OTDR test report for your records.'},
-      {type:'agent',name:'R. Rodney',text:'Perfect. I will attach that to the ticket. Thanks again — have a great rest of your shift.',comment:'// Always close professionally. The ISP tech is a partner, not just a vendor.'},
-      {type:'system',text:'[SYS] INC001-L1A → RESOLVED\n[SYS] Resolution: ISP fiber splice at 2.3km repaired\n[SYS] Total downtime: 97 minutes · RCA documented\n[SYS] CMDB updated: ISP-TRUNK-EAST-01 · SLA: Met ✓'}
+      {type:'system', text:'🚨 NOC ALERT: Loss of Signal (LOS) on Port 1/0/24.'},
+      {type:'agent', name:'R. Rodney', text:'Good morning. I am acknowledging the P1. Checking SFP diagnostics first.', comment:'// ITIL: Own the ticket immediately.'},
+      {type:'cli', text:'Router# show interface te1/0/24 transceiver\nRx Power: -40.0 dBm (Critical Low)\nTx Power: +1.2 dBm (Healthy)'},
+      {type:'vis', svgKey:'fiber_cable', title:'Physical Layer Diagnostic'},
+      {type:'agent', name:'R. Rodney', text:'Tx is fine, but Rx is dead. The break is in the physical fiber run. Dispatching carrier tech with OTDR.'},
+      {type:'system', text:'✅ Splice complete at 2.3km marker. Signal restored to -8.2dBm.'}
     ]
   },
   {
-    id:'l1-cable-bad', layer:1, tier:'L1 · Tier 1', kb_link: 'windows-troubleshoot',
-    title:'Bad Ethernet Cable — Desktop Drop',
-    desc:'User reports intermittent connectivity. Physical cable is faulty — wire map shows open pair. Full L1 triage and remediation.',
-    incNumber:'INC002-L1B', caller:'End User — Marketing Dept',
-    ci:'Cat6A Patch Cable — Workstation Drop\nFluke MicroScanner2 · Panduit TX6A',
+    id:'l3-bgp', layer:3, title:'BGP Flapping — Multi-Cloud VPN', incNumber:'INC003-L3', caller:'Cloud Architecture', ci:'AWS Transit Gateway',
     steps:[
-      {type:'alert',text:'📞 INCOMING CALL — End User: Intermittent internet — "it keeps cutting out"',actionLabel:'Answer & Auto-Play'},
-      {type:'caller',name:'Sarah (Marketing)',text:'Hi, my computer keeps losing the network. It comes back for a minute then drops again. It started this morning.'},
-      {type:'agent',name:'R. Rodney',text:'Hi Sarah! This is Régnard in IT. I am going to get you sorted out. Before we do anything complicated — can you tell me, is this only happening on your desktop, or are you seeing it on your laptop too when you plug in?',comment:'// L1 triage: Always isolate the device first. Is the problem the cable, the port, or the NIC?'},
-      {type:'caller',name:'Sarah (Marketing)',text:'I only have the desktop. But my coworker next to me is totally fine.'},
-      {type:'agent',name:'R. Rodney',text:'That is really helpful — if your neighbor is fine, we can rule out a switch or building issue. This is likely physical: either your cable or the wall port. I am coming to your desk in 5 minutes with a cable tester.',comment:'// L1 reasoning: Same switch, same VLAN, adjacent port fine → isolate to individual drop.'},
-      {type:'agent',name:'R. Rodney',text:'Sarah, while I am on my way — can you look at the back of your computer where the network cable plugs in? Tell me — is the little amber or green light blinking, solid, or completely off right now?',comment:''},
-      {type:'caller',name:'Sarah (Marketing)',text:'It is blinking kind of randomly. It was solid green a minute ago but now it is just blinking fast.'},
-      {type:'agent',name:'R. Rodney',text:'Blinking randomly versus solid is a classic sign of a flaky physical connection. I am almost at your desk.',comment:'// L1: Link-light behavior encodes physical layer health. Intermittent blink = intermittent contact.'},
-      {type:'vis',svgKey:'cable_tester',title:'Fluke Networks MicroScanner2 — Cable Test Results',specs:[['Standard','ANSI/TIA-568-C.2'],['Cable','Cat6A Panduit TX6A'],['Pair 3-6','OPEN FAULT'],['Length','84 meters']]},
-      {type:'agent',name:'R. Rodney',text:'Sarah, the Fluke MicroScanner2 confirms it — Pair 3-6 is showing an OPEN. That means two of the eight wires in your cable are not making contact reliably. The cable is physically damaged, likely a pinch under your desk.',comment:'// L1: Open pair = physical wire break or bad termination. No signal can pass on those pairs.'},
-      {type:'caller',name:'Sarah (Marketing)',text:'Oh — I did roll my chair over that cable a lot. Is it ruined?'},
-      {type:'agent',name:'R. Rodney',text:'Yes, it is toast, but no worries — I have a replacement Cat6A patch cable right here. Give me 30 seconds.',comment:''},
-      {type:'cli',text:`[On workstation after cable swap]\nC:\\> ipconfig /release && ipconfig /renew\n\nWindows IP Configuration\nAdapter: Intel Ethernet I219-LM\n  Connection-specific DNS Suffix: corp.local\n  IPv4 Address: 10.50.4.87\n  Subnet Mask: 255.255.255.0\n  Default Gateway: 10.50.4.1\n  DHCP Server: 10.50.0.10\n  Lease Obtained: Today 09:47 AM\n\nLink Speed: 1 Gbps · Full Duplex ✓`},
-      {type:'caller',name:'Sarah (Marketing)',text:'Oh wow, it is solid green now and the internet is flying! That is so much faster than before.'},
-      {type:'agent',name:'R. Rodney',text:'The new cable is running at full Gigabit. The old one was so damaged it was probably barely limping along. I am going to put a label on the bad cable and log it so facilities can clean up the cable run under your desk properly.',comment:'// Always label failed hardware and log it. Prevents the broken cable going back into use.'},
-      {type:'agent',name:'R. Rodney',text:'Sarah, is everything loading the way it should? Email, your files, all good?'},
-      {type:'caller',name:'Sarah (Marketing)',text:'Yes, everything is perfect! Thank you so much Régnard — you are a lifesaver!'},
-      {type:'agent',name:'R. Rodney',text:'My pleasure, Sarah! Enjoy the rest of your workday — and if anything else pops up, do not hesitate to call us.',comment:'// Always close warm. The user experience matters as much as the technical fix.'},
-      {type:'system',text:'[SYS] INC002-L1B → RESOLVED\n[SYS] Resolution: Cat6A patch cable replaced — Pair 3-6 open fault\n[SYS] FCR: Yes · SLA: Met ✓ · Asset logged: Defective cable disposed'}
-    ]
-  },
-  {
-    id:'l2-port-down', layer:2, tier:'L2 · Tier 2', kb_link: 'ccna',
-    title:'Switch Port Down — VLAN Mismatch',
-    desc:'Cisco Catalyst port Gi0/8 is down. Diagnose spanning tree, VLAN configuration, and PoE status.',
-    incNumber:'INC003-L2A', caller:'Help Desk Escalation — Floor 3',
-    ci:'Cisco Catalyst 2960-X · Gi0/8\nOSI Layer 2: Data Link / Switching',
-    steps:[
-      {type:'alert',text:'📞 ESCALATION — Floor 3: 6 users offline · Port Gi0/8 down · Tier 1 escalating',actionLabel:'Accept & Auto-Play'},
-      {type:'caller',name:'Tier 1 Agent',text:'Hey Régnard, I have 6 users on Floor 3 who suddenly lost network. I confirmed their PCs are fine. All six connect to switch port Gi0/8 via a mini-switch at that workstation cluster.'},
-      {type:'agent',name:'R. Rodney',text:'On it. Pulling up the switch now. I am going to check the port state, VLAN assignment, and spanning tree before we do anything physical.',comment:'// L2 triage order: port state → VLAN → spanning tree → MAC table → then physical.'},
-      {type:'vis',svgKey:'switch_cisco',title:'Cisco Catalyst 2960-X — 48-Port Managed Switch',specs:[['Model','WS-C2960X-48LPS-L'],['Ports','48x GbE PoE+'],['Uplinks','4x SFP+'],['IOS','15.2(7)E6']]},
-      {type:'cli',text:`Switch# show interfaces GigabitEthernet0/8 status\nPort    Name    Status       Vlan  Duplex  Speed  Type\nGi0/8            err-disabled 30    auto    auto   10/100/1000BaseTX\n\nSwitch# show interfaces GigabitEthernet0/8\nGigabitEthernet0/8 is err-disabled\n  %PHY-6-SPEED_ERR: Detected error — port placed in err-disabled state\n  Reason: bpduguard`},
-      {type:'agent',name:'R. Rodney',text:'Found it. Port Gi0/8 is in err-disabled state due to a BPDU Guard violation. Someone plugged in a mini-switch or access point with Spanning Tree enabled, which sent a BPDU into a port that is configured as an edge port. Port protection kicked in and shut it down.',comment:'// L2: BPDU Guard is a spanning tree protection feature. Edge ports should never receive BPDUs.'},
-      {type:'cli',text:`Switch# show spanning-tree interface GigabitEthernet0/8\nVLAN0030  Gi0/8 is err-disabled (BPDU guard)\n\nSwitch# show log | include Gi0/8\n%SPANTREE-2-BLOCK_BPDUGUARD: Received BPDU on port GigabitEthernet0/8\n  with BPDU Guard enabled. Disabling port.`},
-      {type:'caller',name:'Tier 1 Agent',text:'I just talked to the users — they said someone from facilities brought in a new 5-port unmanaged switch and plugged it into that port this morning.'},
-      {type:'agent',name:'R. Rodney',text:'That is exactly the problem. The unmanaged switch was forwarding BPDUs which triggered BPDU guard. I need to verify that switch does not create a loop before I re-enable the port. I will check the MAC table.',comment:'// L2: Never re-enable a BPDU-guard port without understanding the root cause first.'},
-      {type:'cli',text:`Switch# show mac address-table interface GigabitEthernet0/8\n         Mac Address Table\nVlan  Mac Address       Type    Ports\n30    a4:c3:f0:88:1a:22 DYNAMIC Gi0/8   ← Facilities TP-Link switch\n30    3c:52:82:0a:bb:01 DYNAMIC Gi0/8   ← User PC 1\n30    3c:52:82:0a:cc:02 DYNAMIC Gi0/8   ← User PC 2\n[4 more users...]`},
-      {type:'agent',name:'R. Rodney',text:'The MAC table shows the TP-Link facilities switch plus 6 user PCs. The TP-Link is unmanaged — it should NOT be sending BPDUs. It may be a cheap unit with STP accidentally enabled, or a firmware bug. I will re-enable the port with portfast and verify the loop does not recur.',comment:''},
-      {type:'cli',text:`Switch# conf t\nSwitch(config)# interface GigabitEthernet0/8\nSwitch(config-if)# shutdown\nSwitch(config-if)# no shutdown\nSwitch(config-if)# spanning-tree portfast\nSwitch(config-if)# spanning-tree bpduguard enable\nSwitch(config-if)# end\nSwitch# show interfaces GigabitEthernet0/8 status\nPort    Status    Vlan  Duplex  Speed\nGi0/8   connected 30    a-full  a-1000`},
-      {type:'caller',name:'Tier 1 Agent',text:'Users are calling in — they are all back online! All 6 of them confirmed.'},
-      {type:'agent',name:'R. Rodney',text:'Excellent. Port is back. I am going to flag the TP-Link switch for replacement — it needs to be an IT-approved managed switch so we control STP on all ports. Submitting a change request now.',comment:'// L2: Unmanaged switches from facilities are a recurring hazard. Document and remediate.'},
-      {type:'system',text:'[SYS] INC003-L2A → RESOLVED\n[SYS] Root Cause: Unmanaged switch BPDU triggered err-disable on Gi0/8\n[SYS] Fix: Port re-enabled, portfast retained, BPDU guard re-armed\n[SYS] Change Request submitted: Replace TP-Link with managed switch\n[SYS] SLA: Met ✓ · 6 users restored'}
-    ]
-  },
-  {
-    id:'l2-arp-poison', layer:2, kb_link:'network-security',
-    title:'Security Incident — ARP Cache Poisoning',
-    desc:'Detecting unauthorized ARP responses. Mitigating Man-in-the-Middle (MitM) attacks using Dynamic ARP Inspection (DAI).',
-    incNumber:'INC-SEC-882', caller:'Network Intrusion Detection',
-    ci:'Core Switch 10G Uplink\nOSI Layer 2: Data Link / Security',
-    steps:[
-      {type:'alert',text:'🚨 CRITICAL: Duplicate MAC Address detected for Default Gateway 10.1.1.1',actionLabel:'Isolate Threat'},
-      {type:'cli',text:`Switch# show ip arp inspection statistics\nSource MAC Validation Failures: 1422\nInterface Gi0/4: 842 Dropped Packets (Invalid Bindings)`},
-      {type:'agent',name:'R. Rodney',text:'An attacker is spoofing the gateway to intercept traffic. I am enabling DAI and DHCP Snooping to enforce MAC-to-IP binding integrity.',comment:'// Security: DAI ensures only valid ARP requests from trusted DHCP bindings are permitted.'},
-      {type:'cli',text:`Switch(config)# ip dhcp snooping\nSwitch(config)# vlan 10 ip arp inspection\nSwitch(config-if)# ip dhcp snooping trust  ! (Uplink to Router)`},
-      {type:'system',text:'[SYS] Attack mitigated. Rogue port Gi0/4 placed in err-disabled state. Gateway integrity restored.'}
-    ]
-  },
-  {
-    id:'l3-sdwan', layer:3, tier:'L3 · Tier 2', kb_link: 'meraki',
-    title:'SD-WAN Failover — Cisco Meraki MX68',
-    desc:'Primary ISP OSPF adjacency drops. Force Meraki SD-WAN failover to LTE backup. 400-store retail chain.',
-    incNumber:'INC004-L3A', caller:'Store 42 Manager — Honey Baked Ham',
-    ci:'Cisco Meraki MX68 · Store-42\nOSI Layer 3: Network / Routing',
-    steps:[
-      {type:'alert',text:'📞 INCOMING CALL — Store 42: POS offline · Cards not processing · Customers waiting',actionLabel:'Answer & Auto-Play'},
-      {type:'caller',name:'Store 42 Manager',text:'This is Lisa from Store 42. All our registers are down and we have a line of customers. We cannot process any card payments!'},
-      {type:'agent',name:'R. Rodney',text:'Lisa, this is Régnard in IT Operations. I hear you — customers are waiting and every minute counts. I am pulling up your Meraki dashboard right now. Stay with me.',comment:'// ITIL Incident: Acknowledge business impact immediately. Never make them feel ignored.'},
-      {type:'vis',svgKey:'meraki_mx',title:'Cisco Meraki MX68 — Security Appliance',specs:[['Model','Cisco Meraki MX68'],['WAN1','Fiber ISP — DOWN'],['WAN2','LTE Cellular — Activating'],['Throughput','450 Mbps']]},
-      {type:'agent',name:'R. Rodney',text:'Lisa, I can see your store in the Meraki dashboard. WAN1 — your fiber connection — has a red indicator. I am now checking the router directly to see what the routing table looks like.',comment:'// L3 triage: Start with the routing table. Is there a path? Is OSPF still up?'},
-      {type:'cli',text:`Router# show ip ospf neighbor\nNeighbor ID    Pri  State         Dead Time  Interface\n10.0.0.1       1    DOWN/DROPPED  00:00:00   GigabitEthernet0/1\n\nRouter# show ip route 0.0.0.0\n% Network not in table — No default route active\n\nRouter# show standby brief\nInterface  Grp  Pri  State   Active    Standby  Virtual IP\nGi0/1      10   100  Init    unknown   local    192.168.42.254`},
-      {type:'agent',name:'R. Rodney',text:'Lisa, I can confirm the issue — your primary ISP link has failed. The OSPF neighbor is down and we have no default route. Your store has no path to the internet. I am forcing the failover to your LTE backup now.',comment:'// L3: OSPF neighbor DOWN + no default route = complete routing failure. LTE failover is the immediate fix.'},
-      {type:'cli',text:`Meraki Dashboard → Store-42 → Uplink Configuration\n→ WAN1 (Fiber): FAILED — Failover triggered\n→ WAN2 (LTE): ACTIVATING...\n\nRouter# show ip route 0.0.0.0\nS* 0.0.0.0/0 [1/0] via 172.16.42.1 (LTE gateway)\n\nRouter# ping 8.8.8.8 source GigabitEthernet0/2\nSending 5 pings to 8.8.8.8:\n!!!!! Success rate: 100% (5/5) round-trip: 45ms avg`},
-      {type:'caller',name:'Store 42 Manager',text:'Oh my goodness — the registers just came back! We are processing payments again! You are amazing!'},
-      {type:'agent',name:'R. Rodney',text:'I am glad we got you back online, Lisa. Your store is now running on the LTE cellular backup — it is a bit slower than fiber but fully capable of processing transactions. I am now opening a carrier ticket to investigate and repair the primary fiber line.',comment:'// ITIL: Workaround applied. Now initiate the longer-term repair in parallel.'},
-      {type:'agent',name:'R. Rodney',text:'Lisa, you should see normal operation for the rest of your shift. If anything else comes up, call us immediately. Is there anything else I can help you with right now?'},
-      {type:'caller',name:'Store 42 Manager',text:'No, we are perfect. Thank you so much Régnard — seriously. You saved our day!'},
-      {type:'agent',name:'R. Rodney',text:'You are very welcome, Lisa. Enjoy the rest of your busy day — sounds like you have a full house! Take care.',comment:'// Always close warm. A happy user remembers a helpful IT team.'},
-      {type:'system',text:'[SYS] INC004-L3A → RESOLVED\n[SYS] Workaround: LTE failover active on Store-42\n[SYS] Carrier ticket opened: ISP fiber repair pending\n[SYS] Revenue protection: ~$12,000/hour in transactions restored\n[SYS] SLA: Met ✓'}
-    ]
-  },
-  {
-    id:'l3-multi-cloud', layer:3, kb_link:'multi-cloud',
-    title:'Multi-Cloud Connectivity — AWS to Azure VPN',
-    desc:'Primary BGP session between AWS VGW and Azure VPN Gateway is flapping. Troubeshooting MTU and BGP timers.',
-    incNumber:'INC-CLD-901', caller:'Cloud Architecture Team',
-    ci:'AWS TGW to Azure vWAN\nOSI Layer 3: Network / Cloud',
-    steps:[
-      {type:'alert',text:'🚨 CLOUD ALERT: BGP Flapping — AWS Region US-East-1 to Azure East US',actionLabel:'Debug Tunnel'},
-      {type:'cli',text:`$ az network vpn-gateway show-bgp-settings\nBGP State: Connect (Retrying...)\n$ aws ec2 describe-vpn-connections\nVpnConnectionId: vpn-042... State: available, BGP: down`},
-      {type:'agent',name:'R. Rodney',text:'The BGP session is reaching "Connect" but never "Established." I am checking the IPSec Phase 2 parameters and Path MTU.',comment:'// Cloud: Most multi-cloud BGP issues are caused by MTU mismatches or mismatched Hold-Time timers.'},
-      {type:'vis', svgKey:'bgp_flap', title:'BGP Tunnel Diagnostics', specs:[['Status','Flapping'],['MTU','Mismatch']]},
-      {type:'cli',text:`$ ping 169.254.21.1 -l 1350 -f  # Testing MTU with "Do Not Fragment"\nPacket needs to be fragmented but DF set.\n# Fix: MSS Clamping to 1350 on Azure side`},
-      {type:'system',text:'[SYS] MSS Clamping applied. BGP State: ESTABLISHED. Multi-cloud traffic flowing.'}
-    ]
-  },
-  {
-    id:'l4-tcp-reset', layer:4, tier:'L4 · Tier 2', kb_link: 'wireshark',
-    title:'TCP Connection Reset — MTU / Firewall',
-    desc:'Application randomly drops connections. Wireshark reveals TCP RST at Layer 4. MTU mismatch diagnosis.',
-    incNumber:'INC005-L4A', caller:'App Team Lead — Dev Dept',
-    ci:'Web Application Server · TCP Stack\nOSI Layer 4: Transport / TCP',
-    steps:[
-      {type:'alert',text:'📞 ESCALATION — App Team: Connections resetting randomly · Users losing sessions mid-task',actionLabel:'Accept & Auto-Play'},
-      {type:'caller',name:'App Team Lead',text:'Régnard, our web app is randomly dropping user sessions. Users are in the middle of filling out forms and they just get disconnected. It started after the firewall update last night.'},
-      {type:'agent',name:'R. Rodney',text:'That timing is a big clue — right after a firewall change. This smells like a Layer 4 TCP issue. Let me confirm: are users getting an actual error message, or does the page just hang and then reload?',comment:'// L4 triage: First characterize the failure mode. RST vs timeout vs hang each point to different causes.'},
-      {type:'caller',name:'App Team Lead',text:'They get a "connection reset" error. It is not consistent — sometimes it works fine for 20 minutes, then bang, reset.'},
-      {type:'agent',name:'R. Rodney',text:'Intermittent TCP resets after a firewall change strongly suggests either a stateful inspection timeout, or an MTU mismatch creating fragmentation that the new firewall rules are dropping. I am going to run a packet capture on the application server.',comment:'// L4: Random TCP RSTs are classic MTU/PMTUD failure or overly aggressive firewall session timeouts.'},
-      {type:'vis',svgKey:'wireshark',title:'Wireshark 4.2 — Packet Capture Analysis',specs:[['Interface','eth0 — App Server'],['Filter','tcp.flags.reset==1'],['Protocol','TCP / HTTP/S'],['Anomaly','RST at 4 seconds']]},
-      {type:'cli',text:`$ tshark -i eth0 -f "tcp" -w /tmp/capture.pcap &\n$ curl -v https://app.corp.internal/api/session\n\n# After analysis:\n$ tshark -r /tmp/capture.pcap -Y "tcp.flags.reset == 1"\nFrame 1426: TCP RST from 10.0.0.1 → 192.168.1.45\n  Src Port: 443  Dst Port: 54821\n  Seq: 1  Ack: 0  Flags: RST\n  Time since handshake: 4.0012 seconds ← exactly 4 seconds`},
-      {type:'agent',name:'R. Rodney',text:'This is exactly 4.0 seconds — every time. That is not random, that is a timeout value. The new firewall has a 4-second idle TCP session timeout on port 443. That is far too aggressive — HTTPS sessions need at least 300 seconds for enterprise apps.',comment:'// L4: Consistent RST at a fixed time = firewall idle timeout, not random failure.'},
-      {type:'cli',text:`# Test MTU as well\n$ ping -M do -s 1472 10.0.0.1\nping: local error: message too long, mtu=1400\n\n# MTU mismatch confirmed — firewall set jumbo frame handling wrong\n# Path MTU: 1400 bytes (firewall) vs 1500 bytes (server NIC)\n# Fragmentation: BLOCKED by new firewall ACL "deny ip fragment"`},
-      {type:'agent',name:'R. Rodney',text:'Two problems: the idle timeout is 4 seconds when it should be 300, and there is an MTU mismatch — the new firewall ACL is blocking IP fragments but the path MTU is 1400 vs our server NIC at 1500. I am escalating to the firewall engineer for both fixes.',comment:'// L4: Document all findings clearly before escalating. The engineer needs specifics, not symptoms.'},
-      {type:'system',text:'[SYS] Change Request CR-4421 submitted:\n  1. Increase TCP idle timeout: 4s → 300s on HTTPS policy\n  2. Correct MTU: Enable PMTUD or set server NIC to 1400 bytes\n  3. Review "deny ip fragment" ACL — replace with MSS clamp\n[SYS] Emergency change approved — implementation in 15 minutes'},
-      {type:'cli',text:`# After firewall fix applied:\n$ curl -v --max-time 60 https://app.corp.internal/api/session\n\nHTTP/1.1 200 OK\nContent-Type: application/json\nConnection: keep-alive\nKeep-Alive: timeout=300\n\n# 10 minutes later — session still alive\n# No TCP RST observed in 30-minute capture`},
-      {type:'caller',name:'App Team Lead',text:'Régnard, we have had zero resets for the last 20 minutes. Users are completing forms without issue. This is fixed!'},
-      {type:'agent',name:'R. Rodney',text:'Excellent. The root cause was two compounding issues from the firewall change — the idle timeout was set to 4 seconds, and the MTU ACL was blocking fragmented packets. Both are corrected. I have documented the full RCA.',comment:'// Always document dual root causes. Never let one mask the other.'},
-      {type:'system',text:'[SYS] INC005-L4A → RESOLVED\n[SYS] Root Cause 1: Firewall TCP idle timeout 4s → corrected to 300s\n[SYS] Root Cause 2: MTU mismatch 1500 vs 1400 + fragment ACL → MSS clamp applied\n[SYS] SLA: Met ✓ · Post-change review scheduled'}
-    ]
-  },
-  {
-    id:'l5-vpn-drop', layer:5, tier:'L5 · Tier 2', kb_link: 'network-security',
-    title:'VPN Session Drops — IKEv2 Re-auth Failure',
-    desc:'Remote workers VPN sessions drop every 8 hours. IKEv2 re-authentication timeout misconfiguration.',
-    incNumber:'INC006-L5A', caller:'Remote Work Team Lead',
-    ci:'Cisco AnyConnect · ASA Firewall\nOSI Layer 5: Session / VPN',
-    steps:[
-      {type:'alert',text:'📞 INCOMING CALL — VPN dropping for 40+ remote users · Exactly every 8 hours',actionLabel:'Answer & Auto-Play'},
-      {type:'caller',name:'Remote Work Team Lead',text:'Régnard, this is Marcus. Forty of our remote workers are losing VPN exactly every 8 hours and have to manually reconnect. It is destroying productivity — people are in the middle of calls and get booted.'},
-      {type:'agent',name:'R. Rodney',text:'Marcus, good morning — this is Régnard. The "exactly every 8 hours" detail is the key. That is almost certainly a session timeout parameter, not a network reliability problem. Let me pull the ASA logs.',comment:'// L5: Exact periodic failures = session layer timer. Random failures = L1-L3. Exact = L5 config.'},
-      {type:'cli',text:`ASA# show crypto ikev2 sa\nIKEv2 SAs:\nSession-id: 4821  State: READY\n  Local  10.0.0.1:500  Remote 203.0.113.55:500\n  Encr: AES-256  Prf: SHA512  DH Grp: 21\n  Life/Active Time: 28800/28798 sec  ← 28800 = 8 hours\n  Rekey: DISABLED  ← THIS IS THE PROBLEM`},
-      {type:'agent',name:'R. Rodney',text:'Found it. The IKEv2 SA lifetime is set to 28800 seconds — exactly 8 hours — and re-key is disabled. When the session expires, instead of transparently re-keying, it terminates and forces the user to reconnect manually.',comment:'// L5: IKEv2 re-key should happen before session expiry. DISABLED re-key = hard disconnect at timeout.'},
-      {type:'cli',text:`ASA# conf t\nASA(config)# crypto ikev2 policy 10\nASA(config-ikev2-policy)# lifetime seconds 86400\nASA(config-ikev2-policy)# rekey yes\nASA(config-ikev2-policy)# exit\nASA(config)# tunnel-group VPN-RA general-attributes\nASA(config-tunnel-general)# session-limit 500\nASA(config-tunnel-general)# exit\nASA(config)# write memory\n[OK]`},
-      {type:'system',text:'[SYS] IKEv2 policy updated:\n  Lifetime: 28800s → 86400s (24 hours)\n  Re-key: DISABLED → ENABLED (triggers at 70% of lifetime)\n  Session limit: increased from 200 → 500\n[SYS] Active sessions preserved — no disconnections during change'},
-      {type:'caller',name:'Remote Work Team Lead',text:'Marcus here — the team is at the 8-hour mark now and nobody got disconnected! First time in weeks this has worked. You are a hero.'},
-      {type:'agent',name:'R. Rodney',text:'That is great to hear, Marcus. The IKEv2 policy is now set to re-key automatically before sessions expire, so users will never notice. I am also documenting this as a change that was introduced during the last ASA upgrade — the default policy was not migrated correctly.',comment:'// L5: Always trace config issues back to when they were introduced. Upgrade migrations miss things.'},
-      {type:'system',text:'[SYS] INC006-L5A → RESOLVED\n[SYS] Root Cause: IKEv2 re-key disabled post-ASA firmware upgrade\n[SYS] Fix: Re-key enabled, lifetime extended to 24h\n[SYS] 40 users no longer experiencing session drops · SLA: Met ✓'}
-    ]
-  },
-  {
-    id:'l6-tls-cert', layer:6, tier:'L6 · Tier 2', kb_link: 'sec-plus',
-    title:'Expired TLS Certificate — Internal App',
-    desc:'Internal web application returning ERR_CERT_DATE_INVALID. TLS cert expired. Full renewal and deployment.',
-    incNumber:'INC007-L6A', caller:'Finance Director — Corp Finance',
-    ci:'Apache Web Server — finance.corp.internal\nOSI Layer 6: Presentation / TLS',
-    steps:[
-      {type:'alert',text:'📞 INCOMING CALL — Finance Director: Cannot access finance portal · Browser showing certificate error',actionLabel:'Answer & Auto-Play'},
-      {type:'caller',name:'Finance Director',text:'Régnard, this is Catherine from Finance. I cannot access the finance portal. My browser says the certificate has expired. Month-end reports are due today!'},
-      {type:'agent',name:'R. Rodney',text:'Catherine, good morning! This is Régnard. I understand the urgency — month-end is critical. Let me check the certificate status on that server right now.',comment:'// L6: Certificate errors are always the presentation layer. TLS lives at L6.'},
-      {type:'vis',svgKey:'tls_cert',title:'TLS Certificate Status — finance.corp.internal',specs:[['Protocol','TLS 1.3'],['Algorithm','RSA-4096 / SHA-256'],['Status','EXPIRED'],['Expired','2025-11-01']]},
-      {type:'cli',text:`$ openssl s_client -connect finance.corp.internal:443 2>/dev/null | openssl x509 -noout -dates\nnotBefore=Nov  1 00:00:00 2024 GMT\nnotAfter =Nov  1 00:00:00 2025 GMT\n\n$ date\nNov 15 2025 — Certificate expired 14 days ago\n\n$ openssl x509 -in /etc/ssl/certs/finance.crt -noout -subject\nsubject=CN=finance.corp.internal, O=Corp Inc, OU=Finance`},
-      {type:'agent',name:'R. Rodney',text:'Catherine, the certificate expired on November 1st — 14 days ago. This should have auto-renewed but did not. I am escalating to our PKI team for an emergency renewal. While that happens, I will add a temporary browser exception for your machine so you can access it right now.',comment:'// L6: Never leave a VIP waiting while fixing the underlying problem. Provide an immediate workaround.'},
-      {type:'system',text:'[SYS] Emergency cert renewal initiated via DigiCert portal\n[SYS] CSR generated on finance server\n[SYS] Domain validation: BYPASSED (internal CA, pre-authorized)\n[SYS] New cert issued: ETA 8 minutes'},
-      {type:'cli',text:`# New certificate received from DigiCert\n$ openssl x509 -in finance_new.crt -noout -dates\nnotBefore=Nov 15 00:00:00 2025 GMT\nnotAfter =Nov 15 00:00:00 2026 GMT  ✓ 1 year validity\n\n$ cp finance_new.crt /etc/ssl/certs/finance.crt\n$ cp finance.key /etc/ssl/private/finance.key\n$ systemctl reload apache2\n\n$ curl -vI https://finance.corp.internal 2>&1 | grep "SSL certificate"\n* SSL certificate verify ok.\n* Server certificate: CN=finance.corp.internal, expiry=2026-11-15`},
-      {type:'system',text:'[SYS] New TLS certificate deployed — Valid until 2026-11-15\n[SYS] Certificate auto-renewal rule added: 60-day advance renewal alert\n[SYS] Monitoring alert created: cert-expiry-finance.corp.internal'},
-      {type:'caller',name:'Finance Director',text:'The portal just opened without any errors! I can access all my reports. Catherine here — thank you so much Régnard!'},
-      {type:'agent',name:'R. Rodney',text:'You are welcome, Catherine. I have also added an automated alert so this certificate will renew 60 days before expiry going forward. You will never see this error again. Good luck with your month-end close!',comment:'// Always fix the process, not just the symptom. Add monitoring so it never recurs.'},
-      {type:'system',text:'[SYS] INC007-L6A → RESOLVED\n[SYS] Root Cause: TLS cert expired, auto-renewal not configured\n[SYS] Fix: New cert deployed, auto-renewal monitoring added\n[SYS] SLA: Met ✓ · Finance month-end operations uninterrupted'}
-    ]
-  },
-  {
-    id:'l7-azure-iam', layer:7, tier:'L7 · Tier 2', kb_link: 'sec-plus',
-    title:'Azure Entra ID — VIP Zero Trust Block',
-    desc:'VIP executive locked out of M365 by Conditional Access geoblocking while traveling internationally.',
-    incNumber:'INC008-L7A', caller:'VIP Executive — Board of Directors',
-    ci:'Azure Entra ID / Microsoft 365\nOSI Layer 7: Application / Identity',
-    steps:[
-      {type:'alert',text:'💬 P1 VIP — CEO locked out of O365 · Board meeting in 8 minutes · Frankfurt, Germany',actionLabel:'Accept & Auto-Play'},
-      {type:'caller',name:'CEO (VIP)',text:'I am in Frankfurt for the board meeting and I cannot access my email or Teams at all! The meeting starts in 8 minutes and all my materials are in SharePoint!'},
-      {type:'agent',name:'R. Rodney',text:'Good morning — this is Régnard in IT. I have your case open and I am in Entra ID right now. Eight minutes is enough time. Stay on the line with me.',comment:'// L7: VIP incidents require calm urgency. Never panic. Never make them feel the urgency is their fault.'},
-      {type:'vis',svgKey:'azure_entra',title:'Azure Entra ID — Conditional Access Block Detail',specs:[['Policy','Zero_Trust_Geoblock'],['Location','Frankfurt, DE'],['Error Code','53003'],['Status','BLOCKED']]},
-      {type:'cli',text:`# Azure AD PowerShell — Sign-in log query\nGet-AzureADAuditSignInLogs -Filter "userPrincipalName eq 'ceo@corp.com'" -Top 5\n\nUserDisplayName : CEO Name\nAppDisplayName  : Microsoft 365\nStatus          : Failure\nFailureReason   : Blocked by Conditional Access: Zero_Trust_Geoblock\nIpAddress       : 91.203.114.88 (Frankfurt, DE — Hotel WiFi)\nClientApp       : Outlook (Windows)\nErrorCode       : 53003`},
-      {type:'agent',name:'R. Rodney',text:'I can see the block. Your hotel WiFi IP is in Frankfurt — our Zero Trust policy blocks logins from unfamiliar overseas networks to protect the company. I am sending a push notification to your phone authenticator right now. When you approve it, it will verify your identity and I will whitelist your current IP.',comment:'// L7: Zero Trust works. Never bypass it — work through it with proper MFA verification.'},
-      {type:'cli',text:`# Sending MFA push via Microsoft Graph API\nPOST https://graph.microsoft.com/v1.0/users/ceo@corp.com/authentication/methods\n{\n  "challengeType": "push",\n  "authenticationMethodId": "microsoft_authenticator"\n}\n\nResponse: 200 OK — Push sent to registered device\n[Awaiting user approval...]`},
-      {type:'caller',name:'CEO (VIP)',text:'I got the push on my phone — approved!'},
-      {type:'cli',text:`# IP whitelisting in Conditional Access\nAzure Portal → Entra ID → Security → Conditional Access\n→ Named Locations → Add IP: 91.203.114.88/32\n→ Duration: 12 hours (auto-expires)\n→ Tagged: VIP-travel-exception-CEO-Frankfurt-Nov15\n\n# Test login\nInvoke-RestMethod https://login.microsoftonline.com/... → 200 OK\nToken issued · SharePoint accessible · Teams accessible`},
-      {type:'caller',name:'CEO (VIP)',text:'My email is loading! Teams is connected! You have 5 minutes to spare — incredible!'},
-      {type:'agent',name:'R. Rodney',text:'You are in. Your access will remain active for 12 hours on that IP. I am also notifying our Security team to add Frankfurt hotel networks to your approved travel profile so this does not happen at your next board visit.',comment:'// L7: Do not just fix — prevent recurrence. VIP travel profiles should be pre-configured.'},
-      {type:'agent',name:'R. Rodney',text:'Good luck with the board meeting. Please let us know if anything else comes up today.',comment:''},
-      {type:'caller',name:'CEO (VIP)',text:'Thank you Régnard — you just saved the quarter. See you when I am back.'},
-      {type:'system',text:'[SYS] INC008-L7A → RESOLVED\n[SYS] MFA verified · IP whitelisted 12h · Security team notified\n[SYS] Action item: VIP travel profile updated for Frankfurt locations\n[SYS] Total time to restore: 6 minutes · SLA: Met ✓'}
-    ]
-  },
-  {
-    id:'l7-ai-auto', layer:7, tier:'L7 · Tier 2', kb_link: 'ai-prompt',
-    title:'AI Ticket Automation — Password Storm',
-    desc:'50-ticket burst in 3 minutes. Advanced prompt engineering deployed to autonomously resolve 90% via GPT-4 orchestration.',
-    incNumber:'INC009-L7B', caller:'ServiceNow Automation Engine',
-    ci:'LLM Orchestration · GPT-4 API\nOSI Layer 7: Application / AI',
-    steps:[
-      {type:'alert',text:'🚨 TICKET STORM — 50+ tickets in 3 minutes · All: Password Reset · SLA breach imminent',actionLabel:'Deploy AI & Auto-Play'},
-      {type:'system',text:'[SYS] ANALYSIS: 100% tickets = "Password Reset"\n[SYS] Trigger: 90-day mandatory rotation policy fired at 09:00 EST\n[SYS] Manual resolution ETA: 4.2 hours · SLA breaches in: 22 minutes\n[SYS] Alert: R. Rodney — URGENT RESPONSE REQUIRED'},
-      {type:'agent',name:'R. Rodney',text:'I see it — 50 tickets and growing. Manual triage will breach SLA in under 25 minutes. I am activating the AI orchestration script now. This script uses GPT-4 to autonomously respond, categorize, and route the entire queue.',comment:'// ITIL: When volume exceeds human capacity, automation is not a shortcut — it is the right answer.'},
-      {type:'cli',text:`POST https://api.openai.com/v1/chat/completions\n{\n  "model": "gpt-4",\n  "messages": [\n    {\n      "role": "system",\n      "content": "You are an enterprise IT support agent for Corp Inc.\\nPersona: Professional, empathetic, clear.\\nTask: Process ServiceNow password-reset tickets.\\nAction: Reply with the SailPoint self-service URL only.\\nURL: https://idm.corp.internal/resetpassword\\nCATEGORY: Password Reset · SUBCATEGORY: Self-Service Reset\\nSLA target: Close within 5 minutes of submission.\\nNEVER perform manual resets. NEVER share passwords."\n    },\n    {"role":"user","content":"Process queue: 50 tickets matching \\'password reset\\'."}\n  ],\n  "max_tokens": 1000,\n  "temperature": 0.1\n}`},
-      {type:'system',text:'[SYS] AI WORKFLOW EXECUTING...\n[SYS] ████████████████░░░░ 78% — Processing ticket batch 1 of 2\n[SYS] 45 tickets → auto-responded, categorized, SLA-compliant closure queued\n[SYS] 5 tickets → flagged for Tier 2 (account locks + MFA device failures)\n[SYS] Total processing time: 00:03:42'},
-      {type:'agent',name:'R. Rodney',text:'Queue normalized. 45 tickets closed autonomously with SLA compliance. The 5 complex lockouts are in my queue now — I am working them manually.',comment:'// AI = force multiplier. Human judgment reserved for the 10% that actually need it.'},
-      {type:'cli',text:`# Manual processing — 5 complex cases\nTicket INC-50891: Account locked, MFA device lost\n→ Identity verified via manager callback · Temp code issued\n\nTicket INC-50894: Account locked, AD replication lag\n→ Force sync: repadmin /syncall /AdeP\n→ Account unlocked in target DC\n\n[3 more tickets processed similarly]`},
-      {type:'system',text:'[SYS] QUEUE COMPLETE:\n  45/50 resolved via AI automation (90%)\n  5/50 resolved manually (10%)\n  Total elapsed: 00:18:30 · SLA: ALL MET ✓\n  Automation script saved: runbook/password-storm-v3.sh'},
-      {type:'system',text:'[SYS] INC009-L7B → RESOLVED\n[SYS] AI orchestration: 45 tickets in 3:42 · 0 SLA breaches\n[SYS] Manual resolution: 5 complex cases · all closed < 18 min\n[SYS] Runbook updated · AI automation documented for future use'}
-    ]
-  },
-  {
-    id:'l7-ai-ops', layer:7, kb_link:'aiops', tier:'L7 · Tier 3',
-    title:'AIOps Predictive Alert — Capacity Threshold',
-    desc:'AI model predicts Link saturation on Store-42 within 15 minutes. Proactive bandwidth reallocation.',
-    incNumber:'INC-AI-772', caller:'Cisco AI Assistant (AIOps)',
-    ci:'Meraki SD-WAN Controller\nOSI Layer 7: Application / AIOps',
-    steps:[
-      {type:'alert',text:'🤖 PREDICTIVE ALERT: Interface Gi0/2 will reach 98% saturation at 14:15 EST',actionLabel:'Allocate Bandwidth'},
-      {type:'system',text:'[SYS] Analysis: Historical trend shows "End of Day" POS sync spike.\n[SYS] Recommendation: Shift non-essential guest traffic to WAN2 (LTE).'},
-      {type:'agent',name:'R. Rodney',text:'I am approving the AI recommendation. Executing the SD-WAN traffic shaping policy to prioritize POS traffic on the primary fiber.',comment:'// AIOps: Moving from reactive firefighting to proactive predictive maintenance.'},
-      {type:'cli',text:`Meraki_API# patch_traffic_shaping(network_id, "Guest_WiFi", limit=50000)\nResponse: 200 OK`},
-      {type:'system',text:'[SYS] Policy updated. High-priority traffic protected. Saturation avoided.'},
-      {type:'vis', svgKey:'aiops_graph', title:'Predictive Capacity Analysis', specs:[['Threshold','98%'],['Timeline','+15 Mins']]}
+      {type:'system', text:'🚨 ALERT: BGP Adjacency flapping between AWS and Azure East.'},
+      {type:'agent', name:'R. Rodney', text:'This is likely an MTU mismatch or a Hold-Timer sync issue. Checking Path MTU now.'},
+      {type:'cli', text:'$ ping 169.254.21.1 -l 1472 -f\nPacket needs to be fragmented but DF set.'},
+      {type:'vis', svgKey:'bgp_flap', title:'L3 Routing Triage'},
+      {type:'agent', name:'R. Rodney', text:'MTU mismatch confirmed. Setting MSS Clamping to 1350 on the tunnel interface.'},
+      {type:'system', text:'✅ BGP State: Established. Tunnel stabilized.'}
     ]
   }
 ];
 
-// ─── ENGINE ───
-function buildDashboard(filterL){
-  const container=document.getElementById('layer-sections');
-  container.innerHTML='';
-  const layers=filterL?[filterL]:[1,2,3,4,5,6,7];
-  layers.forEach(l=>{
-    const lc=layerConfig[l];
-    const scens=scenarios.filter(s=>s.layer===l);
-    if(!scens.length)return;
-    const sec=document.createElement('div');
-    sec.className='osi-section';
-    sec.innerHTML=`<div class="osi-section-header">
-      <span class="layer-pill" style="background:${lc.dim};color:${lc.color};border:1px solid ${lc.color}40">${lc.label}</span>
-      <span class="osi-section-title">Layer ${l} — ${lc.name}</span>
-    </div>
-    <div class="grid-cards" id="grid-l${l}"></div>`;
-    container.appendChild(sec);
-    const grid=sec.querySelector('.grid-cards');
-    scens.forEach(sc=>{
-      const card=document.createElement('div');
-      card.className='skill-card';
-      card.innerHTML=`<div class="card-tier">${sc.tier}</div><h3>${sc.title}</h3><p>${sc.desc}</p><button class="launch-btn" onclick="startIncident('${sc.id}')">▶ Launch Simulation</button>`;
-      card.querySelector('.launch-btn').style.setProperty('--layer-color',lc.color);
-      grid.appendChild(card);
+const layerConfig = { 1:{name:'Physical', color:'#ef4444'}, 3:{name:'Network', color:'#58a6ff'}, 7:{name:'Application', color:'#ec4899'} };
+
+// --- ENGINE ---
+function switchView(v) {
+    document.querySelectorAll('.view').forEach(view => view.style.display = 'none');
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    const target = document.getElementById('view-' + v);
+    target.style.display = (v === 'incident' || v === 'agent') ? 'flex' : 'block';
+    const btnId = 'nav-' + (v === 'dashboard' ? 'dash' : v === 'resume' ? 'res' : 'agent');
+    if(document.getElementById(btnId)) document.getElementById(btnId).classList.add('active');
+}
+
+function buildDashboard() {
+    const container = document.getElementById('layer-sections');
+    container.innerHTML = '';
+    Object.keys(layerConfig).forEach(l => {
+        const lc = layerConfig[l];
+        const sec = document.createElement('div');
+        sec.className = 'osi-section';
+        sec.innerHTML = `<h3 style="color:${lc.color}; margin-bottom:1rem;">Layer ${l} — ${lc.name}</h3><div class="grid-cards" id="l${l}-grid"></div>`;
+        container.appendChild(sec);
+        const grid = sec.querySelector('.grid-cards');
+        scenarios.filter(s => s.layer == l).forEach(sc => {
+            const card = document.createElement('div');
+            card.className = 'skill-card';
+            card.innerHTML = `<h4>${sc.title}</h4><p style="font-size:11px;color:var(--muted)">${sc.ci}</p><button class="launch-btn" onclick="startIncident('${sc.id}')" style="margin-top:10px;">Launch Sim</button>`;
+            grid.appendChild(card);
+        });
     });
-  });
 }
 
-function filterLayer(l){
-  buildDashboard(l);
-  switchView('dashboard');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('lnav'+l).classList.add('active');
-  document.getElementById('header-title').textContent=`Layer ${l} — ${layerConfig[l].name} Incidents`;
+let currentS=null, stepIdx=0;
+function startIncident(id) {
+    currentS = scenarios.find(s => s.id === id); stepIdx = 0;
+    document.getElementById('inc-number').textContent = currentS.incNumber;
+    document.getElementById('inc-caller').textContent = currentS.caller;
+    document.getElementById('inc-ci').textContent = currentS.ci;
+    document.getElementById('inc-layer').textContent = 'L' + currentS.layer;
+    document.getElementById('stream-body').innerHTML = '';
+    switchView('incident');
+    advanceIncident();
 }
 
-buildDashboard(null);
-
-let current=null,stepIdx=0,autoPlay=false;
-
-function startIncident(id){
-  current=scenarios.find(s=>s.id===id);
-  if(!current)return;
-  stepIdx=0;autoPlay=false;
-  const lc=layerConfig[current.layer];
-  document.getElementById('inc-number').textContent=current.incNumber;
-  document.getElementById('inc-caller').textContent=current.caller;
-  document.getElementById('inc-ci').textContent=current.ci;
-  document.getElementById('inc-layer').textContent=`L${current.layer} — ${lc.name}`;
-  document.getElementById('inc-layer').style.cssText=`background:${lc.dim};color:${lc.color};border:1px solid ${lc.color}40`;
-  document.getElementById('inc-state').className='badge badge-prog';
-  document.getElementById('inc-state').textContent='In Progress';
-  document.getElementById('inc-opened').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});
-  document.getElementById('stream-scenario-title').textContent=current.title;
-  document.getElementById('stream-body').innerHTML='';
-  document.getElementById('ci-dot').classList.remove('on');
-  document.getElementById('next-btn').style.display='none';
-  const osiPanel=document.getElementById('osi-legend-panel');
-  const osiPath=document.getElementById('osi-path');
-  osiPanel.style.display='block';
-  const layers=['Physical','Data Link','Network','Transport','Session','Presentation','Application'];
-  osiPath.innerHTML=layers.map((l,i)=>{
-    const num=i+1;
-    const active=num===current.layer;
-    const col=active?lc.color:'#484f58';
-    return `<span style="color:${col};font-weight:${active?700:400}">L${num}: ${l}${active?' ◀':''}</span>`;
-  }).join('<br>');
-  switchView('incident');
-  setTimeout(advanceIncident,200);
-}
-
-function advanceIncident(){
-  if(!current||stepIdx>=current.steps.length)return;
-  const step=current.steps[stepIdx];
-  const stream=document.getElementById('stream-body');
-  const btn=document.getElementById('next-btn');
-  const ciDot=document.getElementById('ci-dot');
-  if(step.type==='cli'||step.type==='system')ciDot.classList.add('on');
-  else ciDot.classList.remove('on');
-  const simTime=new Date(Date.now()+stepIdx*90000).toLocaleTimeString('en-US',{hour12:false});
-  const wrap=document.createElement('div');
-  wrap.className='msg';
-
-  if(step.type==='alert'){
-    ringtone.play().catch(e => console.log("Audio needs user interaction first"));
-    wrap.classList.add('m-alert');
-    wrap.innerHTML=`<div class="bubble" onclick="triggerAuto()" style="cursor:pointer">${step.text}<br><span style="font-family:var(--mono);font-size:9px;opacity:.55;margin-top:4px;display:block">Click to ${step.actionLabel}</span></div>`;
-    btn.style.display='none';
-  }else if(step.type==='caller'){
-    wrap.classList.add('m-caller');
-    wrap.innerHTML=`<div class="msg-meta">${step.name} · ${simTime}</div><div class="bubble">${step.text}</div>`;
-    btn.style.display='block';
-  }else if(step.type==='agent'){
-    wrap.classList.add('m-agent');
-    wrap.innerHTML=`<div class="msg-meta">${step.name} · ${simTime}</div><div class="bubble">${step.text}</div>${step.comment?`<div class="logic-note">${step.comment.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`:''}`;
-    btn.style.display='block';
-  }else if(step.type==='system'){
-    wrap.classList.add('m-system');
-    wrap.innerHTML=`<div class="bubble">${step.text.replace(/\n/g,'<br>')}</div>`;
-    btn.style.display='block';
-  }else if(step.type==='cli'){
-    wrap.classList.add('m-cli');
-    wrap.innerHTML=`<div class="bubble">${step.text}</div>`;
-    btn.style.display='block';
-  }else if(step.type==='vis'){
-    wrap.classList.add('m-vis');
-    const svgData=svgs[step.svgKey]||'';
-    wrap.innerHTML=`<div class="bubble"><div class="vis-card">
-      <div class="vis-card-title">${step.title}</div>
-      ${svgData}
-      <div class="vis-card-spec">${step.specs.map(s=>`<div class="vis-spec-row"><span class="vis-spec-lbl">${s[0]}</span><span class="vis-spec-val">${s[1]}</span></div>`).join('')}</div>
-    </div></div>`;
-    btn.style.display='block';
-  }
-
-  stream.appendChild(wrap);
-  stream.scrollTo({top:stream.scrollHeight,behavior:'smooth'});
-  stepIdx++;
-
-  if(stepIdx>=current.steps.length){
-    btn.style.display='none';
-    ciDot.classList.remove('on');
-    document.getElementById('inc-state').className='badge badge-res';
-    document.getElementById('inc-state').textContent='Resolved ✓';
+function advanceIncident() {
+    if(!currentS || stepIdx >= currentS.steps.length) return;
+    const step = currentS.steps[stepIdx];
+    const body = document.getElementById('stream-body');
+    const wrap = document.createElement('div');
+    wrap.className = 'msg ' + (step.type === 'agent' ? 'm-agent' : step.type === 'cli' ? 'm-cli' : '');
     
-    // Add Deep Dive Button at the end of the ticket
-    if(current.kb_link) {
-      const diveBtn = document.createElement('button');
-      diveBtn.className = "launch-btn";
-      diveBtn.style.marginTop = "15px";
-      diveBtn.innerHTML = "🔍 Take a Deeper Dive into this Curriculum";
-      diveBtn.onclick = () => openCert(current.kb_link);
-      stream.appendChild(diveBtn);
-      stream.scrollTo({top:stream.scrollHeight,behavior:'smooth'});
+    if(step.type === 'vis') {
+        wrap.innerHTML = `<div class="vis-card"><div style="padding:5px;font-size:9px;color:var(--muted)">${step.title}</div>${svgs[step.svgKey]}</div>`;
+    } else {
+        wrap.innerHTML = `<div class="bubble"><strong>${step.name || 'SYSTEM'}:</strong> ${step.text}${step.comment ? `<div class="logic-note">${step.comment}</div>` : ''}</div>`;
     }
-
-  }else if(autoPlay&&step.type!=='alert'){
-    btn.style.display='none';
-    const delay=step.type==='cli'?4000:step.type==='vis'?3500:3000;
-    setTimeout(advanceIncident,delay);
-  }
+    
+    body.appendChild(wrap);
+    body.scrollTop = body.scrollHeight;
+    stepIdx++;
 }
 
-function triggerAuto(){
-  stopRinging(); 
-  autoPlay=true;
-  advanceIncident();
-}
-// ... your existing handleAgentChat function ends here ...
-    }
+async function handleAgentChat() {
+    const input = document.getElementById('agent-input');
+    const text = input.value.trim();
+    if(!text) return;
+    const container = document.getElementById('agent-messages');
+    const userDiv = document.createElement('div');
+    userDiv.className = 'agent-msg user';
+    userDiv.innerHTML = `<div class="agent-bubble">${text}</div>`;
+    container.appendChild(userDiv);
+    input.value = '';
+    
+    const typing = document.createElement('div');
+    typing.className = 'agent-msg ai';
+    typing.innerHTML = `<div class="agent-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+    container.appendChild(typing);
+    container.scrollTop = container.scrollHeight;
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.location.hostname.includes('netlify.app')) {
-        const alertBanner = document.getElementById('env-alert');
-        if (alertBanner) {
-          alertBanner.style.display = 'none';
-        }
-      }
-    });
-    </script>
-  </body>
+    try {
+        const response = await fetch('/.netlify/functions/agent', { method: 'POST', body: JSON.stringify({ message: text }) });
+        const data = await response.json();
+        container.removeChild(typing);
+        const aiDiv = document.createElement('div');
+        aiDiv.className = 'agent-msg ai';
+        aiDiv.innerHTML = `<div class="agent-bubble">${data.reply}</div>`;
+        container.appendChild(aiDiv);
+    } catch {
+        container.removeChild(typing);
+        const errDiv = document.createElement('div');
+        errDiv.className = 'agent-msg ai';
+        errDiv.innerHTML = `<div class="agent-bubble">AI backend live on Netlify link.</div>`;
+        container.appendChild(errDiv);
+    }
+    container.scrollTop = container.scrollHeight;
+}
+
+// --- INIT ---
+setInterval(() => { document.getElementById('live-clock').textContent = new Date().toLocaleTimeString(); }, 1000);
+buildDashboard();
+window.addEventListener('DOMContentLoaded', () => { if (window.location.hostname.includes('netlify.app')) document.getElementById('env-alert').style.display = 'none'; });
+</script>
+</body>
 </html>
