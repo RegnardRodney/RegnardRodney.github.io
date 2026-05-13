@@ -164,7 +164,7 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
   .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:none;border-bottom:1px solid var(--border);flex-shrink:0}
   .sidebar::before{height:2px}
   .sb-brand{padding:.7rem 1rem;border-bottom:none;flex:1;min-width:160px}
-  ..sb-nav {
+  .sb-nav {
     display: flex;
     padding: 0;
     flex: none;
@@ -189,6 +189,14 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
   .res-dates{grid-column:1;grid-row:auto}
   .res-ul{grid-column:1}
 }
+/* --- CUSTOM NAV COLORS --- */
+  #nav-dash.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
+  #nav-res.active { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
+  
+  @media(max-width:800px) {
+    #nav-dash.active { border-left: none !important; border-bottom-color: var(--blue) !important; background: transparent !important; }
+    #nav-res.active { border-left: none !important; border-bottom-color: var(--purple) !important; background: transparent !important; }
+  }
 </style>
 </head>
 <body>
@@ -205,11 +213,11 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 
   <div class="sb-nav">
     <div class="nav-section-lbl">Views</div>
-    <button class="nav-btn active" onclick="switchView('dashboard')">
+    <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M0 4h7V0H0v4zm0 12h7V5H0v11zm8 0h8V8H8v8zm0-16v7h8V0H8z"/></svg>
       Dashboard
     </button>
-    <button class="nav-btn" onclick="switchView('resume')">
+    <button class="nav-btn" id="nav-res" onclick="switchView('resume')">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 4h8v1H4V4zm0 3h8v1H4V7zm0 3h5v1H4v-1zM2 0C.9 0 0 .9 0 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2H2zm12 14H2V2h12v12z"/></svg>
       Resume
     </button>
@@ -360,8 +368,15 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
         
         <div class="edu-item">
           <div class="edu-name">Western Governors University</div>
-          <div class="edu-detail">Master of Science, IT Management (Expected Nov 2026) & B.S. Information Technology<br>
-          <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Advanced dual-degree focus on enterprise IT governance, network security, risk management, and aligning technical infrastructure with strategic business objectives.</span></div>
+          <div class="edu-detail">Accelerated Bachelor's to Master's in Information Technology (Expected Nov 2026) <br>
+          <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Several industry certifications are built into this accelerated program. Designed with input from industry experts, this program at WGU prepares you with the most in-demand, workforce-aligned skills:
+
+Automation with Python
+Cloud and networking security
+IT service management
+Data and AI fluency and integration
+Agile project and product management
+Microsoft IT strategy in cloud, data, AI, and security</span></div>
         </div>
 
         <div class="edu-item">
@@ -371,7 +386,7 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
         </div>
 
         <div class="edu-item">
-          <div class="edu-name">International Islamic University Malaysia (IIUM)</div>
+          <div class="edu-name">IIUM</div>
           <div class="edu-detail">Bachelor of Management Information Systems (BMIS) | 2001 – 2005<br>
           <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Core computer science studies bridging software development, database management, and information systems analysis.</span></div>
         </div>
