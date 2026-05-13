@@ -1,3 +1,5 @@
+I see exactly what happened! You accidentally pasted an older version of your code from before we added the Knowledge Base, the new 2026 tickets, and the ringing audio. That is why all the new features were missing from your file!
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -859,6 +861,17 @@ const svgs={
   tls_cert:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="10" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="82" y="28" fill="#58a6ff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">TLS 1.3 Handshake</text><text x="30" y="44" fill="#7d8590" font-size="6" font-family="monospace">Client → Server: ClientHello</text><text x="30" y="56" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: ServerHello</text><text x="30" y="68" fill="#7d8590" font-size="6" font-family="monospace">Server → Client: Certificate</text><text x="30" y="80" fill="#f85149" font-size="6" font-family="monospace">❌ Verify: EXPIRED</text><text x="30" y="92" fill="#f85149" font-size="6" font-family="monospace">ERR_CERT_DATE_INVALID</text><text x="30" y="110" fill="#484f58" font-size="6" font-family="monospace">Expired: 2025-11-01</text><text x="30" y="122" fill="#484f58" font-size="6" font-family="monospace">Issuer: DigiCert CA</text><rect x="165" y="10" width="145" height="120" rx="4" fill="#161b22" stroke="#334155"/><text x="237" y="28" fill="#3fb950" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">New Certificate</text><text x="178" y="44" fill="#7d8590" font-size="6" font-family="monospace">Subject: *.corp.internal</text><text x="178" y="56" fill="#7d8590" font-size="6" font-family="monospace">Valid: 2025-12-01</text><text x="178" y="68" fill="#3fb950" font-size="6" font-family="monospace">Expires: 2026-12-01</text><text x="178" y="80" fill="#7d8590" font-size="6" font-family="monospace">Alg: RSA-4096 / SHA-256</text><text x="178" y="92" fill="#7d8590" font-size="6" font-family="monospace">SAN: 12 alt names</text><text x="178" y="110" fill="#3fb950" font-size="6" font-family="monospace">✓ Issued by DigiCert</text><text x="178" y="122" fill="#3fb950" font-size="6" font-family="monospace">✓ Chain: VALID</text></svg>`
 };
 
+// ─── LAYER CONFIG ───
+const layerConfig={
+  1:{color:'#ef4444',dim:'rgba(239,68,68,0.1)',label:'L1',name:'Physical'},
+  2:{color:'#f97316',dim:'rgba(249,115,22,0.1)',label:'L2',name:'Data Link'},
+  3:{color:'#eab308',dim:'rgba(234,179,8,0.1)',label:'L3',name:'Network'},
+  4:{color:'#3fb950',dim:'rgba(63,185,80,0.1)',label:'L4',name:'Transport'},
+  5:{color:'#06b6d4',dim:'rgba(6,182,212,0.1)',label:'L5',name:'Session'},
+  6:{color:'#8b5cf6',dim:'rgba(139,92,246,0.1)',label:'L6',name:'Presentation'},
+  7:{color:'#ec4899',dim:'rgba(236,72,153,0.1)',label:'L7',name:'Application'}
+};
+
 // ─── FULL OSI SCENARIO LIBRARY (INCLUDING 2026 ADVANCED TICKETS) ───
 const scenarios=[
   {
@@ -1266,3 +1279,5 @@ function triggerAuto(){
 </script>
 </body>
 </html>
+
+```
