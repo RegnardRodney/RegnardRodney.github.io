@@ -164,7 +164,17 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
   .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:none;border-bottom:1px solid var(--border);flex-shrink:0}
   .sidebar::before{height:2px}
   .sb-brand{padding:.7rem 1rem;border-bottom:none;flex:1;min-width:160px}
-  .sb-nav{display:flex;padding:0;flex:none;overflow-x:auto}
+  ..sb-nav {
+    display: flex;
+    padding: 0;
+    flex: none;
+    width: 100vw; /* Forces it to fit the screen width */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iPhones */
+  }
+  
+  /* Optional: Hide the ugly scrollbar on mobile but keep functionality */
+  .sb-nav::-webkit-scrollbar { display: none; }
   .nav-section-lbl{display:none}
   .nav-btn{padding:.8rem .9rem;border-left:none;border-bottom:2px solid transparent;font-size:11px;white-space:nowrap}
   .nav-btn.active{border-bottom-color:var(--green);border-left:none;background:transparent}
@@ -339,18 +349,36 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 
       <div class="res-sec">
         <div class="res-sec-title">Education & Certifications</div>
-        <div class="edu-item"><div class="edu-name">Western Governors University</div><div class="edu-detail">Master of Science, IT Management (Expected Nov 2026) & Bachelor of Science, Information Technology</div></div>
-        <div class="edu-item"><div class="edu-name">ITT Technical Institute</div><div class="edu-detail">Bachelor of Science, Computer Networks Systems</div></div>
-        <div class="edu-item" style="margin-top:1rem"><div class="edu-name">Certifications & Training</div>
-        <div class="edu-detail">
+        
+        <div class="edu-item">
+          <div class="edu-name">Western Governors University</div>
+          <div class="edu-detail">Master of Science, IT Management (Expected Nov 2026) & B.S. Information Technology<br>
+          <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Advanced dual-degree focus on enterprise IT governance, network security, risk management, and aligning technical infrastructure with strategic business objectives.</span></div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-name">ITT Technical Institute</div>
+          <div class="edu-detail">Bachelor of Science, Computer Networks Systems<br>
+          <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Rigorous technical foundation in network architecture, routing protocols, server administration, and physical layer infrastructure troubleshooting.</span></div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-name">International Islamic University Malaysia (IIUM)</div>
+          <div class="edu-detail">Bachelor of Management Information Systems (BMIS) | 2001 – 2005<br>
+          <span style="font-size:10px;opacity:0.8;display:block;margin-top:2px;">Core computer science studies bridging software development, database management, and information systems analysis.</span></div>
+        </div>
+
+        <div class="edu-item" style="margin-top:1.5rem">
+          <div class="edu-name">Certifications & Training</div>
+          <div class="edu-detail" style="line-height:1.8">
             CompTIA A+<br>
             Google Data Analytics Professional Certification<br>
             Google IT Support Professional Certification<br>
-            Workshop: Prompting Essentials & AI for Small Business (Completed)<br>
+            Workshop: Prompting Essentials & AI for Small Business<br>
             ITIL Foundation (2026 Candidate)
-        </div></div>
+          </div>
+        </div>
       </div>
-    </div>
 
   </div>
 </main>
