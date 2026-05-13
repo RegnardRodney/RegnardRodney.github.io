@@ -1475,17 +1475,17 @@ function triggerAuto(){
   autoPlay=true;
   advanceIncident();
 }
-// ... your existing handleAgentChat function ends here ...
-    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.location.hostname.includes('netlify.app')) {
-        const alertBanner = document.getElementById('env-alert');
-        if (alertBanner) {
-          alertBanner.style.display = 'none';
-        }
-      }
-    });
-    </script>
-  </body>
+// ... your existing handleAgentChat function ends here ...
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hostname.includes('netlify.app')) {
+    const alertBanner = document.getElementById('env-alert');
+    if (alertBanner) {
+      alertBanner.style.display = 'none';
+    }
+  }
+});
+</script>
+</body>
 </html>
