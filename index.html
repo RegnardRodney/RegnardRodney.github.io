@@ -328,6 +328,18 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
     </div>
 
     <div id="view-agent">
+      
+      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; display:flex; align-items:center; gap:12px;">
+        <div style="font-size:20px;">🌐</div>
+        <div style="font-size:12px; color:var(--text); line-height:1.4;">
+          <strong>Environment Capability Alert:</strong> You are currently viewing the static GitHub mirror. To experience <strong>Agent RR 2.0</strong> with live, non-deterministic AI reasoning and full infrastructure orchestration:
+          <br>
+          <a href="https://regnardrodney.netlify.app" style="color:var(--teal); font-weight:700; text-decoration:none;">👉 CLICK HERE TO LAUNCH PRODUCTION ENVIRONMENT</a>
+        </div>
+      </div>
+
+      <div class="agent-header">
+        ...
       <div class="agent-header">
         <div class="agent-avatar">RR</div>
         <div class="agent-info">
@@ -1463,6 +1475,17 @@ function triggerAuto(){
   autoPlay=true;
   advanceIncident();
 }
-</script>
-</body>
+// ... your existing handleAgentChat function ends here ...
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hostname.includes('netlify.app')) {
+        const alertBanner = document.getElementById('env-alert');
+        if (alertBanner) {
+          alertBanner.style.display = 'none';
+        }
+      }
+    });
+    </script>
+  </body>
 </html>
