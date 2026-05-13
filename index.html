@@ -41,7 +41,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 .nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;font-weight:400;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
 .nav-btn:hover{color:var(--text);background:var(--surface2)}
 .nav-btn.active{color:var(--green);border-left-color:var(--green);background:var(--green-dim);font-weight:500}
-.nav-layer-badge{font-family:var(--mono);font-size:8px;padding:1px 5px;border-radius:2px;margin-left:auto;flex-shrink:0}
 .sb-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.8}
 .sb-footer a{color:var(--blue);text-decoration:none}
 .sb-footer a:hover{text-decoration:underline}
@@ -63,7 +62,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 .dash-intro{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
 .dash-intro p{font-size:13px;color:var(--muted);line-height:1.8;max-width:700px}
 .dash-intro .hi{color:var(--blue);font-weight:500}
-
 .osi-section{margin-bottom:2rem}
 .osi-section-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
 .layer-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;font-weight:700;letter-spacing:.5px}
@@ -160,17 +158,7 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 .edu-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
 .edu-detail{font-size:11px;color:var(--muted)}
 
-/* PHOTO CARD */
-.photo-card{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;overflow:hidden}
-.photo-top{height:140px;display:flex;align-items:center;justify-content:center;background:#0a0f15}
-.photo-top img{max-height:130px;max-width:100%;object-fit:contain;border-radius:3px}
-.photo-top .photo-fallback{font-family:var(--mono);font-size:10px;color:var(--muted2);text-align:center;padding:1rem}
-.photo-info{padding:.7rem .9rem}
-.photo-model{font-family:var(--display);font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
-.photo-specs{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px}
-.photo-spec{font-size:10px;color:var(--muted)}
-.photo-spec span{color:var(--blue)}
-
+/* --- MOBILE RESPONSIVENESS FIX --- */
 @media(max-width:800px){
   body{flex-direction:column;overflow:auto;height:auto;min-height:100vh}
   .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:none;border-bottom:1px solid var(--border);flex-shrink:0}
@@ -243,7 +231,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 
   <div class="workspace">
 
-    <!-- DASHBOARD -->
     <div id="view-dashboard">
       <div class="dash-intro">
         <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation: greeting → triage → root cause → live tool commands → device visuals → resolution → closing. Skills on your resume are also <span class="hi">clickable</span> — they route directly to the matching scenario.</p>
@@ -251,7 +238,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
       <div id="layer-sections"></div>
     </div>
 
-    <!-- INCIDENT -->
     <div id="view-incident">
       <div class="ticket-panel">
         <div class="ticket-card">
@@ -299,54 +285,70 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
       </div>
     </div>
 
-    <!-- RESUME -->
     <div id="view-resume">
       <div class="res-hero">
         <div class="res-name">Régnard Rodney</div>
         <div class="res-role">Customer-First IT Support Specialist & Incident Commander · OSI Layers 1–7</div>
-        <div class="res-bio">Bilingual (French/English) IT professional with 10+ years across network troubleshooting, cybersecurity, and full device lifecycle management spanning Windows, macOS, Linux, iOS, and Android. Proven track record leveraging Advanced Prompt Engineering and ITSM automation to maintain 99% SLA compliance. <strong style="color:var(--green);font-weight:500">Click any skill tag to launch a live simulation of that technology.</strong></div>
+        <div class="res-bio">Customer-first IT Support Specialist with 10+ experience in network troubleshooting, cybersecurity fundamentals, and full device lifecycle management across Windows, macOS, Linux, iOS, and Android ecosystems. Proven track record of leveraging Advanced Prompt Engineering and automation to accelerate ticket resolution, consistently maintaining 99% SLA compliance. Bilingual (French/English) communicator dedicated to delivering premier remote technical support, secure infrastructure, and seamless retail point-of-sale (POS) operations. <strong style="color:var(--green);font-weight:500">Click any skill tag to launch a live simulation of that technology.</strong></div>
+      </div>
+
+      <div class="res-sec">
+        <div class="res-sec-title">Core Competencies</div>
         <div class="res-tags" id="res-tag-area"></div>
       </div>
 
       <div class="res-sec">
         <div class="res-sec-title">Professional Experience</div>
+        
         <div class="res-job">
           <div class="res-co">Asurion</div>
           <div class="res-dates">2020 – 2025</div>
           <div class="res-jobrole">Premier Solution Support Specialist</div>
           <ul class="res-ul">
-            <li>Orchestrated full device lifecycle and endpoint security compliance for 11,000+ enterprise endpoints.</li>
-            <li>Maintained 99% SLA compliance resolving complex Active Directory, Azure AD, and Office 365 issues via ServiceNow.</li>
-            <li>Authored advanced prompt-engineering scripts to autonomously deflect Tier 1 password-reset ticket storms, reducing manual queue by 90%.</li>
-            <li>Managed escalation pathways across Tier 1/2/3, including VIP executive zero-trust access issues on international travel.</li>
+            <li>Orchestrated full device lifecycle and endpoint security compliance for enterprise environments across Windows PCs, Macs, and mobile devices.</li>
+            <li>Managed high-volume intake calls in a fast-paced remote environment, utilizing ServiceNow and Zendesk to maintain a consistent 99% SLA compliance rate.</li>
+            <li>Administered Identity and Access Management (IAM) through Active Directory and Entra ID, prioritizing First Call Resolution (FCR) for complex account lockouts and permissions issues.</li>
+            <li>Collaborated with site leadership as a delegated backup, contributing to process improvements, peer cross-training, and standard operating procedure (SOP) documentation.</li>
           </ul>
         </div>
+        
         <div class="res-job">
-          <div class="res-co">Robert Half — Prologic ITS, Lowe's, Honey Baked Ham</div>
+          <div class="res-co">Robert Half Technology</div>
           <div class="res-dates">2018 – 2020</div>
-          <div class="res-jobrole">IT Infrastructure Contractor</div>
+          <div class="res-jobrole">IT Contractor — Infrastructure & Field Support</div>
           <ul class="res-ul">
-            <li>Managed MDM deployments via VMware Workspace ONE and AT&T provisioning for 11,000+ first responders (Prologic ITS).</li>
-            <li>Executed on-site retail POS break/fix, UPS repair, and data cabling to ensure zero downtime (Lowe's).</li>
-            <li>Governed hardware lifecycle and network infrastructure for 400+ retail stores, deploying Cisco Meraki SD-WAN (Honey Baked Ham).</li>
+            <li><strong>Prologic ITS (MDM):</strong> Supervised and configured mobile infrastructure for 11,000+ first responders, managing MDM deployments via VMware Workspace ONE and AT&T provisioning.</li>
+            <li><strong>Lowe's & Bargain Hunt (Retail/POS):</strong> Executed break/fix retail solutions, conducting on-site POS system maintenance, UPS hardware repair, and complex data cabling to ensure zero downtime.</li>
+            <li><strong>Honey Baked Ham (Network Support):</strong> Governed hardware lifecycle and network infrastructure for 400+ retail stores, deploying and securing Cisco Meraki SD-WAN and Wireless Access Points (WAPs).</li>
+            <li><strong>Hemmersbach/OneBeacon (Deskside Support):</strong> Performed high-tier remote and deskside troubleshooting for enterprise workstations.</li>
           </ul>
         </div>
+        
         <div class="res-job">
           <div class="res-co">Computer Generated Solutions (CGS)</div>
           <div class="res-dates">2017 – 2018</div>
           <div class="res-jobrole">Bilingual Lenovo Technical Support IV</div>
           <ul class="res-ul">
-            <li>Provided bilingual (French/English) remote assistance resolving complex hardware, server, and router anomalies.</li>
-            <li>Executed Layer 2/3 OSI diagnostics and advanced firmware/BIOS updates on enterprise-grade Lenovo ThinkPad and ThinkStation systems.</li>
+            <li>Provided bilingual (French/English) remote assistance to field technicians, successfully resolving complex hardware, server, and router anomalies.</li>
+            <li>Executed Layer 2/Layer 3 diagnostics and advanced firmware/BIOS updates on enterprise-grade Lenovo systems.</li>
           </ul>
         </div>
+        
+        <p style="font-size:11px;color:var(--muted);font-style:italic;">(Note: Previous progressive work experience available upon request.)</p>
       </div>
 
       <div class="res-sec">
         <div class="res-sec-title">Education & Certifications</div>
-        <div class="edu-item"><div class="edu-name">Western Governors University</div><div class="edu-detail">M.S. IT Management (Expected 2026) · B.S. Information Technology</div></div>
-        <div class="edu-item"><div class="edu-name">ITT Technical Institute</div><div class="edu-detail">B.S. Computer Network Systems</div></div>
-        <div class="edu-item" style="margin-top:1rem"><div class="edu-name">Certifications</div><div class="edu-detail">CompTIA A+ · Google Data Analytics · Google IT Support Professional · ITIL Foundation (2026 Candidate)</div></div>
+        <div class="edu-item"><div class="edu-name">Western Governors University</div><div class="edu-detail">Master of Science, IT Management (Expected Nov 2026) & Bachelor of Science, Information Technology</div></div>
+        <div class="edu-item"><div class="edu-name">ITT Technical Institute</div><div class="edu-detail">Bachelor of Science, Computer Networks Systems</div></div>
+        <div class="edu-item" style="margin-top:1rem"><div class="edu-name">Certifications & Training</div>
+        <div class="edu-detail">
+            CompTIA A+<br>
+            Google Data Analytics Professional Certification<br>
+            Google IT Support Professional Certification<br>
+            Workshop: Prompting Essentials & AI for Small Business (Completed)<br>
+            ITIL Foundation (2026 Candidate)
+        </div></div>
       </div>
     </div>
 
@@ -455,7 +457,7 @@ const svgs={
     <rect x="10" y="10" width="300" height="120" rx="4" fill="#0d1117" stroke="#334155"/>
     <rect x="10" y="10" width="300" height="20" rx="4" fill="#161b22" stroke="#334155"/>
     <text x="160" y="24" fill="#7d8590" font-size="8" font-family="monospace" text-anchor="middle">Wireshark 4.2 — Packet Capture — eth0</text>
-    <text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination     Protocol  Info</text>
+    <text x="20" y="46" fill="#484f58" font-size="6" font-family="monospace">No.    Time      Source          Destination      Protocol  Info</text>
     <rect x="10" y="48" width="300" height="10" fill="rgba(88,166,255,0.08)"/>
     <text x="20" y="56" fill="#79c0ff" font-size="6" font-family="monospace">1423   0.001234  192.168.1.45   10.0.0.1        TCP       [SYN] Seq=0 Win=65535</text>
     <text x="20" y="68" fill="#7d8590" font-size="6" font-family="monospace">1424   0.001290  10.0.0.1       192.168.1.45    TCP       [SYN,ACK] Seq=0 Ack=1</text>
@@ -636,12 +638,12 @@ const scenarios=[
       {type:'caller',name:'Tier 1 Agent',text:'Hey Régnard, I have 6 users on Floor 3 who suddenly lost network. I confirmed their PCs are fine. All six connect to switch port Gi0/8 via a mini-switch at that workstation cluster.'},
       {type:'agent',name:'R. Rodney',text:'On it. Pulling up the switch now. I am going to check the port state, VLAN assignment, and spanning tree before we do anything physical.',comment:'// L2 triage order: port state → VLAN → spanning tree → MAC table → then physical.'},
       {type:'vis',svgKey:'switch_cisco',title:'Cisco Catalyst 2960-X — 48-Port Managed Switch',specs:[['Model','WS-C2960X-48LPS-L'],['Ports','48x GbE PoE+'],['Uplinks','4x SFP+'],['IOS','15.2(7)E6']]},
-      {type:'cli',text:`Switch# show interfaces GigabitEthernet0/8 status\nPort    Name    Status       Vlan  Duplex  Speed  Type\nGi0/8           err-disabled 30    auto    auto   10/100/1000BaseTX\n\nSwitch# show interfaces GigabitEthernet0/8\nGigabitEthernet0/8 is err-disabled\n  %PHY-6-SPEED_ERR: Detected error — port placed in err-disabled state\n  Reason: bpduguard`},
+      {type:'cli',text:`Switch# show interfaces GigabitEthernet0/8 status\nPort    Name    Status       Vlan  Duplex  Speed  Type\nGi0/8            err-disabled 30    auto    auto   10/100/1000BaseTX\n\nSwitch# show interfaces GigabitEthernet0/8\nGigabitEthernet0/8 is err-disabled\n  %PHY-6-SPEED_ERR: Detected error — port placed in err-disabled state\n  Reason: bpduguard`},
       {type:'agent',name:'R. Rodney',text:'Found it. Port Gi0/8 is in err-disabled state due to a BPDU Guard violation. Someone plugged in a mini-switch or access point with Spanning Tree enabled, which sent a BPDU into a port that is configured as an edge port. Port protection kicked in and shut it down.',comment:'// L2: BPDU Guard is a spanning tree protection feature. Edge ports should never receive BPDUs.'},
       {type:'cli',text:`Switch# show spanning-tree interface GigabitEthernet0/8\nVLAN0030  Gi0/8 is err-disabled (BPDU guard)\n\nSwitch# show log | include Gi0/8\n%SPANTREE-2-BLOCK_BPDUGUARD: Received BPDU on port GigabitEthernet0/8\n  with BPDU Guard enabled. Disabling port.`},
       {type:'caller',name:'Tier 1 Agent',text:'I just talked to the users — they said someone from facilities brought in a new 5-port unmanaged switch and plugged it into that port this morning.'},
       {type:'agent',name:'R. Rodney',text:'That is exactly the problem. The unmanaged switch was forwarding BPDUs which triggered BPDU guard. I need to verify that switch does not create a loop before I re-enable the port. I will check the MAC table.',comment:'// L2: Never re-enable a BPDU-guard port without understanding the root cause first.'},
-      {type:'cli',text:`Switch# show mac address-table interface GigabitEthernet0/8\n          Mac Address Table\nVlan  Mac Address       Type    Ports\n30    a4:c3:f0:88:1a:22 DYNAMIC Gi0/8   ← Facilities TP-Link switch\n30    3c:52:82:0a:bb:01 DYNAMIC Gi0/8   ← User PC 1\n30    3c:52:82:0a:cc:02 DYNAMIC Gi0/8   ← User PC 2\n[4 more users...]`},
+      {type:'cli',text:`Switch# show mac address-table interface GigabitEthernet0/8\n         Mac Address Table\nVlan  Mac Address       Type    Ports\n30    a4:c3:f0:88:1a:22 DYNAMIC Gi0/8   ← Facilities TP-Link switch\n30    3c:52:82:0a:bb:01 DYNAMIC Gi0/8   ← User PC 1\n30    3c:52:82:0a:cc:02 DYNAMIC Gi0/8   ← User PC 2\n[4 more users...]`},
       {type:'agent',name:'R. Rodney',text:'The MAC table shows the TP-Link facilities switch plus 6 user PCs. The TP-Link is unmanaged — it should NOT be sending BPDUs. It may be a cheap unit with STP accidentally enabled, or a firmware bug. I will re-enable the port with portfast and verify the loop does not recur.',comment:''},
       {type:'cli',text:`Switch# conf t\nSwitch(config)# interface GigabitEthernet0/8\nSwitch(config-if)# shutdown\nSwitch(config-if)# no shutdown\nSwitch(config-if)# spanning-tree portfast\nSwitch(config-if)# spanning-tree bpduguard enable\nSwitch(config-if)# end\nSwitch# show interfaces GigabitEthernet0/8 status\nPort    Status    Vlan  Duplex  Speed\nGi0/8   connected 30    a-full  a-1000`},
       {type:'caller',name:'Tier 1 Agent',text:'Users are calling in — they are all back online! All 6 of them confirmed.'},
@@ -667,7 +669,7 @@ const scenarios=[
       {type:'agent',name:'R. Rodney',text:'Lisa, I can see your store in the Meraki dashboard. WAN1 — your fiber connection — has a red indicator. I am now checking the router directly to see what the routing table looks like.',comment:'// L3 triage: Start with the routing table. Is there a path? Is OSPF still up?'},
       {type:'cli',text:`Router# show ip ospf neighbor\nNeighbor ID    Pri  State         Dead Time  Interface\n10.0.0.1       1    DOWN/DROPPED  00:00:00   GigabitEthernet0/1\n\nRouter# show ip route 0.0.0.0\n% Network not in table — No default route active\n\nRouter# show standby brief\nInterface  Grp  Pri  State   Active    Standby  Virtual IP\nGi0/1      10   100  Init    unknown   local    192.168.42.254`},
       {type:'agent',name:'R. Rodney',text:'Lisa, I can confirm the issue — your primary ISP link has failed. The OSPF neighbor is down and we have no default route. Your store has no path to the internet. I am forcing the failover to your LTE backup now.',comment:'// L3: OSPF neighbor DOWN + no default route = complete routing failure. LTE failover is the immediate fix.'},
-      {type:'cli',text:`Meraki Dashboard → Store-42 → Uplink Configuration\n→ WAN1 (Fiber): FAILED — Failover triggered\n→ WAN2 (LTE): ACTIVATING...\n\nRouter# show ip route 0.0.0.0\nS*   0.0.0.0/0 [1/0] via 172.16.42.1 (LTE gateway)\n\nRouter# ping 8.8.8.8 source GigabitEthernet0/2\nSending 5 pings to 8.8.8.8:\n!!!!! Success rate: 100% (5/5) round-trip: 45ms avg`},
+      {type:'cli',text:`Meraki Dashboard → Store-42 → Uplink Configuration\n→ WAN1 (Fiber): FAILED — Failover triggered\n→ WAN2 (LTE): ACTIVATING...\n\nRouter# show ip route 0.0.0.0\nS* 0.0.0.0/0 [1/0] via 172.16.42.1 (LTE gateway)\n\nRouter# ping 8.8.8.8 source GigabitEthernet0/2\nSending 5 pings to 8.8.8.8:\n!!!!! Success rate: 100% (5/5) round-trip: 45ms avg`},
       {type:'caller',name:'Store 42 Manager',text:'Oh my goodness — the registers just came back! We are processing payments again! You are amazing!'},
       {type:'agent',name:'R. Rodney',text:'I am glad we got you back online, Lisa. Your store is now running on the LTE cellular backup — it is a bit slower than fiber but fully capable of processing transactions. I am now opening a carrier ticket to investigate and repair the primary fiber line.',comment:'// ITIL: Workaround applied. Now initiate the longer-term repair in parallel.'},
       {type:'agent',name:'R. Rodney',text:'Lisa, you should see normal operation for the rest of your shift. If anything else comes up, call us immediately. Is there anything else I can help you with right now?'},
@@ -745,7 +747,7 @@ const scenarios=[
       {type:'cli',text:`$ openssl s_client -connect finance.corp.internal:443 2>/dev/null | openssl x509 -noout -dates\nnotBefore=Nov  1 00:00:00 2024 GMT\nnotAfter =Nov  1 00:00:00 2025 GMT\n\n$ date\nNov 15 2025 — Certificate expired 14 days ago\n\n$ openssl x509 -in /etc/ssl/certs/finance.crt -noout -subject\nsubject=CN=finance.corp.internal, O=Corp Inc, OU=Finance`},
       {type:'agent',name:'R. Rodney',text:'Catherine, the certificate expired on November 1st — 14 days ago. This should have auto-renewed but did not. I am escalating to our PKI team for an emergency renewal. While that happens, I will add a temporary browser exception for your machine so you can access it right now.',comment:'// L6: Never leave a VIP waiting while fixing the underlying problem. Provide an immediate workaround.'},
       {type:'system',text:'[SYS] Emergency cert renewal initiated via DigiCert portal\n[SYS] CSR generated on finance server\n[SYS] Domain validation: BYPASSED (internal CA, pre-authorized)\n[SYS] New cert issued: ETA 8 minutes'},
-      {type:'cli',text:`# New certificate received from DigiCert\n$ openssl x509 -in finance_new.crt -noout -dates\nnotBefore=Nov 15 00:00:00 2025 GMT\nnotAfter =Nov 15 00:00:00 2026 GMT  ✓ 1 year validity\n\n$ cp finance_new.crt /etc/ssl/certs/finance.crt\n$ cp finance.key /etc/ssl/private/finance.key\n$ systemctl reload apache2\n\n$ curl -vI https://finance.corp.internal 2>&1 | grep "SSL certificate"\n*  SSL certificate verify ok.\n*  Server certificate: CN=finance.corp.internal, expiry=2026-11-15`},
+      {type:'cli',text:`# New certificate received from DigiCert\n$ openssl x509 -in finance_new.crt -noout -dates\nnotBefore=Nov 15 00:00:00 2025 GMT\nnotAfter =Nov 15 00:00:00 2026 GMT  ✓ 1 year validity\n\n$ cp finance_new.crt /etc/ssl/certs/finance.crt\n$ cp finance.key /etc/ssl/private/finance.key\n$ systemctl reload apache2\n\n$ curl -vI https://finance.corp.internal 2>&1 | grep "SSL certificate"\n* SSL certificate verify ok.\n* Server certificate: CN=finance.corp.internal, expiry=2026-11-15`},
       {type:'system',text:'[SYS] New TLS certificate deployed — Valid until 2026-11-15\n[SYS] Certificate auto-renewal rule added: 60-day advance renewal alert\n[SYS] Monitoring alert created: cert-expiry-finance.corp.internal'},
       {type:'caller',name:'Finance Director',text:'The portal just opened without any errors! I can access all my reports. Catherine here — thank you so much Régnard!'},
       {type:'agent',name:'R. Rodney',text:'You are welcome, Catherine. I have also added an automated alert so this certificate will renew 60 days before expiry going forward. You will never see this error again. Good luck with your month-end close!',comment:'// Always fix the process, not just the symptom. Add monitoring so it never recurs.'},
@@ -850,28 +852,25 @@ buildDashboard(null);
 
 // ─── RESUME SKILL TAGS ───
 const skillTagMap=[
-  {skill:'Cisco Meraki SD-WAN',id:'l3-sdwan'},
-  {skill:'Active Directory',id:'l7-ai-auto'},
-  {skill:'Azure Entra ID',id:'l7-azure-iam'},
-  {skill:'Office 365',id:'l7-azure-iam'},
-  {skill:'CompTIA A+',id:'l1-cable-bad'},
-  {skill:'CCNA / Layer 2–3',id:'l2-port-down'},
-  {skill:'ServiceNow ITSM',id:'l7-ai-auto'},
-  {skill:'VMware Workspace ONE',id:'l5-vpn-drop'},
-  {skill:'PowerShell',id:'l4-tcp-reset'},
-  {skill:'TLS / PKI',id:'l6-tls-cert'},
-  {skill:'Wireshark',id:'l4-tcp-reset'},
-  {skill:'TCP/IP Networking',id:'l4-tcp-reset'},
-  {skill:'Fiber Optics',id:'l1-fiber-break'},
-  {skill:'OTDR Testing',id:'l1-fiber-break'},
-  {skill:'Prompt Engineering',id:'l7-ai-auto'},
-  {skill:'ITIL Foundation',id:'l3-sdwan'},
-  {skill:'Network Switching',id:'l2-port-down'},
-  {skill:'VPN / IKEv2',id:'l5-vpn-drop'},
-  {skill:'POS Systems',id:'l7-ai-auto'},
-  {skill:'BIOS / Hardware',id:'l1-cable-bad'},
-  {skill:'Zero Trust Security',id:'l7-azure-iam'},
-  {skill:'Spanning Tree',id:'l2-port-down'},
+  {skill:'Tier 1/2 Diagnostics',id:'l1-cable-bad'},
+  {skill:'Remote Desktop (RDP)',id:'l4-tcp-reset'},
+  {skill:'Incident Management',id:'l7-ai-auto'},
+  {skill:'Active Directory',id:'l7-azure-iam'},
+  {skill:'Azure AD',id:'l7-azure-iam'},
+  {skill:'Office 365 Admin',id:'l7-azure-iam'},
+  {skill:'Linux OS Fundamentals',id:'l4-tcp-reset'},
+  {skill:'LAN/WAN Troubleshooting',id:'l3-sdwan'},
+  {skill:'Cisco/Meraki SD-WAN',id:'l3-sdwan'},
+  {skill:'Endpoint Security',id:'l7-azure-iam'},
+  {skill:'Zero Trust Fundamentals',id:'l7-azure-iam'},
+  {skill:'ServiceNow',id:'l7-ai-auto'},
+  {skill:'Zendesk',id:'l7-ai-auto'},
+  {skill:'POS Deployment',id:'l3-sdwan'},
+  {skill:'SQL Queries',id:'l4-tcp-reset'},
+  {skill:'Advanced Prompt Engineering',id:'l7-ai-auto'},
+  {skill:'AI-Assisted Troubleshooting',id:'l7-ai-auto'},
+  {skill:'API Orchestration',id:'l7-ai-auto'},
+  {skill:'Autonomous Workflows',id:'l7-ai-auto'}
 ];
 
 const tagArea=document.getElementById('res-tag-area');
