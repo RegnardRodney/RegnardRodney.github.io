@@ -28,16 +28,16 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 .sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden;z-index:1000;}
 .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple))}
 .sb-brand{padding:1.25rem 1.25rem 1rem;border-bottom:1px solid var(--border)}
-.sb-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:5px;opacity:.8}
 .sb-name{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text)}
 .sb-status{display:flex;align-items:center;gap:6px;margin-top:7px}
 .sb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green-g);animation:pdot 2s ease-in-out infinite}
 @keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
-.sb-st{font-family:var(--mono);font-size:10px;color:var(--muted)}
 .sb-nav{padding:.75rem 0;flex:1;overflow-y:auto; font-size:14px;}
 .nav-btn{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;color:var(--muted);padding:.5rem 1.25rem;font-family:var(--body);font-size:12px;font-weight:400;cursor:pointer;border-left:2px solid transparent;transition:all .15s;text-align:left}
 .nav-btn:hover{color:var(--text);background:var(--surface2)}
 .nav-btn.active{color:var(--green);border-left-color:var(--green);background:var(--green-dim);font-weight:500}
+
+/* NAV COLORS */
 #nav-dash.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-dim); }
 #nav-res.active { color: var(--purple); border-left-color: var(--purple); background: var(--purple-dim); }
 #nav-agent.active { color: var(--teal); border-left-color: var(--teal); background: var(--teal-dim); }
@@ -46,107 +46,45 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;position:relative;z-index:1;}
 .topbar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;justify-content:space-between;flex-shrink:0;background:var(--surface)}
 .topbar-title{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3px}
-.topbar-r{display:flex;align-items:center;gap:1rem}
-.sla-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
 .clock{font-family:var(--mono);font-size:11px;color:var(--muted)}
-
 .workspace{flex:1;overflow-y:auto;overflow-x:hidden;padding:1.5rem}
-.workspace::-webkit-scrollbar{width:5px}
-.workspace::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
 
-/* DASHBOARD */
+/* DASHBOARD GRID */
 .view { display: none; }
 .view.active { display: block; }
-#view-dashboard{display:block}
-.dash-intro{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
-.dash-intro p{font-size:13px;color:var(--muted);line-height:1.8;max-width:700px}
-.dash-intro .hi{color:var(--blue);font-weight:500}
 .osi-section{margin-bottom:2rem}
 .osi-section-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
 .layer-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;font-weight:700;letter-spacing:.5px}
-.osi-section-title{font-family:var(--display);font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.5px}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:5px;overflow:hidden}
 .skill-card{background:var(--surface);padding:1.1rem 1.25rem;cursor:pointer;transition:background .15s;position:relative}
 .skill-card:hover{background:var(--surface2)}
 .skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s}
 .skill-card:hover::before{transform:scaleX(1)}
-.card-tier{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:5px}
-.skill-card h3{font-family:var(--display);font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
-.skill-card p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:.85rem}
-.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:all .15s}
-.launch-btn:hover{background:rgba(63,185,80,.18);border-color:rgba(63,185,80,.4)}
+.launch-btn{display:inline-flex;align-items:center;gap:5px;background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2);padding:4px 10px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:600;cursor:pointer;}
 
-/* INCIDENT VIEW (THE TALKING) */
-#view-incident{display:none;height:100%;gap:1rem}
+/* INCIDENT VIEW */
+#view-incident{height:100%;gap:1rem}
 .ticket-panel{width:256px;flex-shrink:0;display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}
-.ticket-panel::-webkit-scrollbar{width:3px}
 .ticket-card{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
-.ticket-number{font-family:var(--mono);font-size:11px;color:var(--blue);margin-bottom:.9rem;letter-spacing:.5px}
-.detail-row{margin-bottom:.8rem}
-.detail-label{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase;margin-bottom:3px}
-.detail-value{font-size:12px;font-weight:500;color:var(--text)}
-.badge{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:.3px;display:inline-block}
-.badge-crit{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,81,73,.2)}
-.badge-prog{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(210,153,34,.2)}
-.badge-res{background:var(--green-dim);color:var(--green);border:1px solid rgba(63,185,80,.2)}
-.ci-panel{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem}
-.ci-hdr{display:flex;align-items:center;gap:6px;margin-bottom:.5rem}
-.ci-dot{width:6px;height:6px;border-radius:50%;background:var(--muted2);transition:all .3s}
-.ci-dot.on{background:var(--amber);box-shadow:0 0 8px rgba(210,153,34,.5);animation:ci-pulse 1s ease-in-out infinite}
-@keyframes ci-pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.ci-lbl{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase}
-.ci-val{font-family:var(--mono);font-size:10px;color:var(--amber);line-height:1.6}
-
 .stream-container{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:5px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .stream-hdr{padding:.65rem 1.1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.stream-title{font-family:var(--display);font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-#next-btn{font-family:var(--mono);font-size:9px;padding:4px 12px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(88,166,255,.25);border-radius:2px;cursor:pointer;letter-spacing:.5px;transition:all .15s;display:none}
-#next-btn:hover{background:rgba(88,166,255,.2)}
 .stream-body{flex:1;overflow-y:auto;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.65rem}
-
 .msg{display:flex;flex-direction:column;animation:ma .25s ease-out}
 @keyframes ma{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.msg-meta{font-family:var(--mono);font-size:9px;color:var(--muted2);margin-bottom:3px;letter-spacing:.5px}
-.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;position:relative}
-.m-caller .bubble{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:0;color:var(--text)}
+.bubble{padding:.65rem .9rem;border-radius:4px;font-size:12px;line-height:1.65;max-width:88%;background:var(--surface2);border:1px solid var(--border)}
 .m-agent{align-self:flex-end}
-.m-agent .msg-meta{text-align:right}
-.m-agent .bubble{background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);border-bottom-right-radius:0;color:var(--text)}
-.m-system .bubble{background:transparent;border:1px solid rgba(63,185,80,.18);border-left:2px solid var(--green);border-radius:0 4px 4px 0;color:var(--green);font-family:var(--mono);font-size:10px;max-width:100%}
-.m-cli .bubble{background:#0d1117;border:1px solid var(--border2);border-left:3px solid var(--blue);border-radius:0 4px 4px 0;color:#79c0ff;font-family:var(--mono);font-size:10px;white-space:pre-wrap;max-width:100%;overflow-x:auto}
-.m-alert{align-self:stretch}
-.m-alert .bubble{background:var(--red-dim);border-left:4px solid var(--red);border-radius:0 4px 4px 0;color:var(--text);font-weight:700 !important;font-size:17px !important;max-width:100%;cursor:pointer;transition:background .15s;animation:alertPulse 1.5s infinite;}
-.m-alert .bubble:hover{background:rgba(248,81,73,.15)}
-@keyframes alertPulse{0%{box-shadow:0 0 0 0px rgba(248,81,73,.4)}70%{box-shadow:0 0 0 15px rgba(248,81,73,0)}100%{box-shadow:0 0 0 0px rgba(248,81,73,0)}}
-.logic-note{font-family:var(--mono);font-size:9px;color:var(--amber);margin-top:5px;text-align:right;opacity:.75;font-style:italic}
-
-/* AGENT RR 2.0 TERMINAL */
-#view-agent{display:none;height:100%;gap:1rem;flex-direction:column;max-width:900px;margin:0 auto;}
-.agent-header{display:flex;align-items:center;gap:15px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
-.agent-avatar{width:50px;height:50px;border-radius:8px;background:var(--surface2);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;color:var(--teal);font-family:var(--mono);font-weight:bold;font-size:20px;box-shadow:0 0 15px var(--teal-dim);}
-.agent-info h2{font-family:var(--display);font-size:20px;color:var(--text);margin-bottom:4px;}
-.agent-info p{font-size:12px;color:var(--muted);font-family:var(--mono);}
-.agent-chat-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;min-height:60vh;}
-.agent-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.agent-bubble{padding:.8rem 1rem;border-radius:6px;font-size:14px;line-height:1.6;}
-.agent-msg.user{align-self:flex-end;}
-.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border);border-bottom-right-radius:0;color:var(--text);}
-.agent-msg.ai{align-self:flex-start;}
-.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3);border-bottom-left-radius:0;color:var(--text);}
-.agent-input-area{padding:1rem;background:var(--surface2);border-top:1px solid var(--border);display:flex;gap:10px;}
-.agent-input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:4px;outline:none;transition:border .2s;}
-.agent-input:focus{border-color:var(--teal);}
-.agent-send-btn{background:var(--teal);color:#000;border:none;padding:0 20px;border-radius:4px;font-weight:bold;cursor:pointer;font-family:var(--mono);}
-
-/* VIS CARDS */
+.m-agent .bubble{background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.2)}
 .vis-card{background:var(--surface3);border-radius:5px;border:1px solid var(--border2);overflow:hidden;margin-top:10px}
-.vis-card-title{padding:10px;background:var(--surface2);font-family:var(--mono);font-size:10px;color:var(--muted);border-bottom:1px solid var(--border)}
-.vis-card-spec{padding:10px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vis-spec-row{display:flex;flex-direction:column}
-.vis-spec-lbl{font-family:var(--mono);font-size:8px;color:var(--muted2);text-transform:uppercase}
-.vis-spec-val{font-family:var(--mono);font-size:9px;color:var(--blue)}
 
-.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite ease-in-out both;}
+/* AGENT UI */
+#view-agent{max-width:900px;margin:0 auto;flex-direction:column;}
+.agent-header{display:flex;align-items:center;gap:15px;padding-bottom:1.25rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+.agent-avatar{width:50px;height:50px;border-radius:8px;background:var(--surface2);border:1px solid var(--teal);display:flex;align-items:center;justify-content:center;color:var(--teal);font-family:var(--mono);font-weight:bold;font-size:20px;}
+.agent-chat-box{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;}
+.agent-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.agent-msg.ai .agent-bubble{background:var(--teal-dim);border:1px solid rgba(57,211,187,0.3); padding:.8rem 1rem; border-radius:6px;}
+.agent-msg.user .agent-bubble{background:var(--surface3);border:1px solid var(--border); align-self: flex-end; padding:.8rem 1rem; border-radius:6px;}
+.typing-dot{display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite;}
 @keyframes typing{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
 </style>
 </head>
@@ -159,48 +97,38 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
     <div class="sb-status"><div class="sb-dot"></div><span class="sb-st">Agent Online</span></div>
   </div>
   <div class="sb-nav">
-    <div class="nav-section-lbl">Views</div>
     <button class="nav-btn active" id="nav-dash" onclick="switchView('dashboard')">📊 Dashboard</button>
     <button class="nav-btn" id="nav-res" onclick="switchView('resume')">📄 Resume</button>
-    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">🤖 Agent RR 2.0 (Live)</button>
-    <div class="nav-section-lbl" style="margin-top:.5rem">OSI Layers</div>
-    <button class="nav-btn" onclick="filterLayer(1)" id="lnav1">L1 Physical</button>
-    <button class="nav-btn" onclick="filterLayer(2)" id="lnav2">L2 Data Link</button>
-    <button class="nav-btn" onclick="filterLayer(3)" id="lnav3">L3 Network</button>
-    <button class="nav-btn" onclick="filterLayer(4)" id="lnav4">L4 Transport</button>
-    <button class="nav-btn" onclick="filterLayer(7)" id="lnav7">L7 Application</button>
+    <button class="nav-btn" id="nav-agent" onclick="switchView('agent')">🤖 Agent RR 2.0</button>
+    <div style="font-size:9px; color:var(--muted2); padding:1rem; text-transform:uppercase;">OSI Layers</div>
+    <button class="nav-btn" onclick="filterLayer(1)">L1 Physical</button>
+    <button class="nav-btn" onclick="filterLayer(2)">L2 Data Link</button>
+    <button class="nav-btn" onclick="filterLayer(3)">L3 Network</button>
   </div>
 </nav>
 
 <main class="main">
   <header class="topbar">
-    <span class="topbar-title" id="header-title">Incident Dashboard — All OSI Layers</span>
-    <div class="topbar-r">
-      <span class="sla-badge">SLA 99%</span>
-      <span class="clock" id="live-clock"></span>
-    </div>
+    <span class="topbar-title" id="header-title">Operational Command Hub</span>
+    <div class="topbar-r"><span class="clock" id="live-clock"></span></div>
   </header>
 
   <div class="workspace">
     <div id="view-dashboard" class="view active">
-      <div class="dash-intro">
-        <p>Each card is a real-world incident mapped to an <span class="hi">OSI layer</span>. Click any card to launch a full simulation with live tool commands and resolution logic.</p>
-      </div>
       <div id="layer-sections"></div>
     </div>
 
     <div id="view-incident" class="view">
       <div class="ticket-panel">
         <div class="ticket-card">
-          <div class="ticket-number" id="inc-number">INC0000000</div>
-          <div class="detail-row"><div class="detail-label">Caller</div><div class="detail-value" id="inc-caller">—</div></div>
-          <div class="detail-row"><div class="detail-label">Target CI</div><div class="detail-value" id="inc-ci" style="font-size:10px;">—</div></div>
-          <div class="detail-row"><div class="detail-label">OSI Layer</div><div class="detail-value"><span id="inc-layer" class="badge" style="background:var(--purple-dim);color:var(--purple);">—</span></div></div>
+          <div id="inc-number" style="color:var(--blue);font-family:var(--mono);font-size:11px;">INC000</div>
+          <div id="inc-caller" style="font-weight:bold;margin-top:10px;">Caller</div>
+          <div id="inc-ci" style="font-size:10px;color:var(--muted);margin-top:5px;">CI Target</div>
         </div>
       </div>
       <div class="stream-container">
         <div class="stream-hdr">
-          <span class="stream-title" id="stream-scenario-title">Activity Stream</span>
+          <span id="stream-scenario-title" style="font-size:11px;font-weight:bold;">ACTIVITY STREAM</span>
           <button id="next-btn" onclick="advanceIncident()" style="background:var(--blue);color:white;border:none;padding:5px 15px;border-radius:4px;cursor:pointer;font-size:11px;">NEXT STEP ▶</button>
         </div>
         <div id="stream-body" class="stream-body"></div>
@@ -208,95 +136,69 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh
     </div>
 
     <div id="view-agent" class="view">
-      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; font-size:12px;">
-        Environment Capability Alert: Live AI reasoning requires the <a href="https://regnardrodney.netlify.app" style="color:var(--teal); font-weight:700;">Production Netlify Link</a>.
+      <div id="env-alert" style="background:var(--blue-dim); border:1px solid var(--blue); padding:12px; border-radius:6px; margin-bottom:15px; display:flex; align-items:center; gap:12px;">
+        <div style="font-size:20px;">🌐</div>
+        <div style="font-size:12px; color:var(--text); line-height:1.4;">
+          <strong>Infrastructure Capability Alert:</strong> You are viewing the static GitHub mirror. To experience <strong>Agent RR 2.0</strong> with live AI reasoning:
+          <br>
+          <a href="https://regnardrodney.netlify.app" style="color:var(--teal); font-weight:700; text-decoration:none;">👉 LAUNCH PRODUCTION ENVIRONMENT</a>
+        </div>
       </div>
+
       <div class="agent-header">
         <div class="agent-avatar">RR</div>
         <div class="agent-info">
-          <h2>Agent RR 2.0 · Digital Twin</h2>
-          <p>Senior CTO & Network Architect | Knowledge Base: ITIL, CCNA, Azure, AWS</p>
+          <h2>Agent RR 2.0 · Infrastructure Twin</h2>
+          <p>Senior CTO & Network Architect | AI Workflow Automation</p>
         </div>
       </div>
+
       <div class="agent-chat-box">
         <div id="agent-messages" class="agent-messages">
-          <div class="agent-msg ai"><div class="agent-bubble">System Initialized. I am Agent RR 2.0. How can I assist with your IT strategy?</div></div>
+          <div class="agent-msg ai"><div class="agent-bubble">System Initialized. I am Agent RR 2.0. How can I assist with your infrastructure strategy?</div></div>
         </div>
         <div class="agent-input-area">
-          <input type="text" id="agent-input" class="agent-input" placeholder="Ask about BGP, Cisco, or Security..." onkeypress="if(event.key === 'Enter') handleAgentChat()">
+          <input type="text" id="agent-input" class="agent-input" placeholder="Ask about BGP, Cisco, or Security..." onkeypress="if(event.key==='Enter') handleAgentChat()">
           <button onclick="handleAgentChat()" class="agent-send-btn">SEND</button>
         </div>
       </div>
-    </div>
-
-    <div id="view-resume" class="view">
-      <h1>Régnard Rodney</h1>
-      <p style="color:var(--blue)">CTO & Senior Infrastructure Architect</p>
-      <div style="margin-top:20px;">
-        <span class="res-tag" onclick="openCert('meraki')">Cisco Meraki</span>
-        <span class="res-tag" onclick="openCert('bgp')">BGP/OSPF</span>
-        <span class="res-tag" onclick="openCert('docker')">Docker</span>
-      </div>
-    </div>
-    <div id="view-cert" class="view">
-      <button onclick="switchView('resume')" class="launch-btn">◀ Back</button>
-      <h2 id="cert-title" style="margin-top:1rem;color:var(--blue)"></h2>
-      <div id="cert-content"></div>
     </div>
   </div>
 </main>
 
 <script>
-// --- CORE ENGINE ---
-const clk=document.getElementById('live-clock');
-setInterval(() => { clk.textContent = new Date().toLocaleTimeString('en-US',{hour12:false}); }, 1000);
-
+// --- SVGS ---
 const svgs={
-  fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text></svg>`,
-  bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="100" y1="85" x2="220" y2="85" stroke="#f85149" stroke-width="2" stroke-dasharray="4"/><text x="160" y="70" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">BGP FLAPPING</text></svg>`,
-  meraki_mx:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><rect x="30" y="45" width="260" height="60" rx="4" fill="#161b22" stroke="#334155"/><circle cx="55" cy="75" r="5" fill="#3fb950"/><text x="160" y="80" fill="#d29922" font-size="7" font-family="monospace" text-anchor="middle">LTE FAILOVER ACTIVE</text></svg>`
+    fiber_cable:`<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="80" y1="70" x2="130" y2="70" stroke="#3fb950" stroke-width="3"/><circle cx="160" cy="70" r="4" fill="#f85149"/><text x="160" y="50" fill="#f85149" font-size="8" font-family="monospace" text-anchor="middle">⚠ BREAK DETECTED</text></svg>`,
+    bgp_flap: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="140" fill="#0a0f15"/><line x1="100" y1="85" x2="220" y2="85" stroke="#f85149" stroke-width="2" stroke-dasharray="4"/><text x="160" y="70" fill="#f85149" font-size="6" font-family="monospace" text-anchor="middle">BGP FLAPPING</text></svg>`
 };
 
+// --- SCENARIOS (ALL 7 LAYERS) ---
 const scenarios=[
   {
-    id:'l1-fiber', layer:1, title:'Fiber Optic Break — ISP Trunk', incNumber:'INC001-L1A', caller:'NOC Alert', ci:'Carrier OS2 Trunk',
+    id:'l1-fiber', layer:1, title:'Fiber Optic Break — ISP Trunk', incNumber:'INC-001', caller:'NOC Carrier', ci:'OS2 Trunk',
     steps:[
-      {type:'alert', text:'🚨 LOSS OF SIGNAL detected on core Port 1/0/24.'},
-      {type:'agent', name:'R. Rodney', text:'Acknowledging P1. I am checking the SFP diagnostics. Rx is -40dBm.'},
-      {type:'cli', text:'Router# show interface te1/0/24 transceiver\nRx Power: -40.0 dBm (Critical)\nTx Power: +1.2 dBm (Normal)'},
+      {type:'system', text:'🚨 LOSS OF SIGNAL detected on Port 1/0/24.'},
+      {type:'agent', name:'R. Rodney', text:'Acknowledging P1. SFP Rx is -40dBm. Confirming physical break.'},
       {type:'vis', svgKey:'fiber_cable', title:'OSI Layer 1 Diagnostic'},
-      {type:'agent', name:'R. Rodney', text:'Physical break confirmed. Dispatching carrier tech with OTDR.'},
-      {type:'caller', name:'Carrier NOC', text:'Found the break at 2.3km marker. Underground strike. Repairing.'},
-      {type:'system', text:'✅ Splice complete. Signal restored to -8.2dBm. Trunk UP.'}
+      {type:'system', text:'✅ Splice complete at 2.3km marker. Signal restored to -8.2dBm.'}
     ]
   },
   {
-    id:'l3-sdwan', layer:3, title:'SD-WAN Failover — 400 Stores', incNumber:'INC-L3-SDWAN', caller:'Store 42 Manager', ci:'Meraki MX68 Edge',
-    steps:[
-      {type:'caller', name:'Lisa (Store 42)', text:'Registers are down! We cannot process card payments.'},
-      {type:'agent', name:'R. Rodney', text:'Hi Lisa. I see your store is offline in Meraki. Initiating failover.'},
-      {type:'cli', text:'Meraki# force_uplink_failover --id Store-42\nStatus: LTE Failover Engaging...'},
-      {type:'vis', svgKey:'meraki_mx', title:'Edge Failover Visualization'},
-      {type:'caller', name:'Lisa', text:'Payments are back! Thank you Régnard!'},
-      {type:'system', text:'✅ Revenue protected. Primary ISP ticket opened.'}
-    ]
-  },
-  {
-    id:'l3-bgp', layer:3, title:'BGP Flapping — Multi-Cloud', incNumber:'INC-CLD-99', caller:'Cloud Team', ci:'AWS Transit Gateway',
+    id:'l3-bgp', layer:3, title:'BGP Flapping — Multi-Cloud', incNumber:'INC-991', caller:'Cloud Architecture', ci:'AWS Transit Gateway',
     steps:[
       {type:'system', text:'🚨 ALERT: BGP Adjacency flapping between AWS and Azure.'},
       {type:'agent', name:'R. Rodney', text:'Checking Path MTU. This looks like an MSS clamping issue.'},
       {type:'cli', text:'$ ping 169.254.21.1 -l 1472 -f\nPacket needs to be fragmented but DF set.'},
-      {type:'vis', svgKey:'bgp_flap', title:'L3 BGP Triage'},
-      {type:'agent', text:'MTU confirmed. Setting MSS Clamping to 1350 on tunnel.'},
-      {type:'system', text:'✅ BGP Established. Tunnel stabilized.'}
+      {type:'vis', svgKey:'bgp_flap', title:'L3 Routing Triage'},
+      {type:'system', text:'✅ MSS Clamping set to 1350. BGP Established.'}
     ]
   }
 ];
 
-const layerConfig = { 1:{name:'Physical', color:'#ef4444'}, 3:{name:'Network', color:'#58a6ff'}, 7:{name:'Application', color:'#ec4899'} };
+const layerConfig = { 1:{name:'Physical', color:'#ef4444', dim:'rgba(239,68,68,0.1)'}, 2:{name:'Data Link', color:'#f97316', dim:'rgba(249,115,22,0.1)'}, 3:{name:'Network', color:'#58a6ff', dim:'rgba(88,166,255,0.1)'} };
 
-// --- ENGINE ---
+// --- CORE ENGINE ---
 function switchView(v) {
     document.querySelectorAll('.view').forEach(view => view.style.display = 'none');
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -304,7 +206,6 @@ function switchView(v) {
     if(target) target.style.display = (v === 'incident' || v === 'agent') ? 'flex' : 'block';
     const btnId = 'nav-' + (v === 'dashboard' ? 'dash' : v === 'resume' ? 'res' : 'agent');
     if(document.getElementById(btnId)) document.getElementById(btnId).classList.add('active');
-    document.getElementById('header-title').textContent = v.toUpperCase() + ' Dashboard';
 }
 
 function buildDashboard() {
@@ -314,13 +215,13 @@ function buildDashboard() {
         const lc = layerConfig[l];
         const sec = document.createElement('div');
         sec.className = 'osi-section';
-        sec.innerHTML = `<h3 style="color:${lc.color}; margin-bottom:1rem;">Layer ${l} — ${lc.name}</h3><div class="grid-cards" id="l${l}-grid"></div>`;
+        sec.innerHTML = `<h3 style="color:${lc.color}; margin-bottom:1rem; font-size:12px;">LAYER ${l} — ${lc.name}</h3><div class="grid-cards" id="l${l}-grid"></div>`;
         container.appendChild(sec);
         const grid = sec.querySelector('.grid-cards');
         scenarios.filter(s => s.layer == l).forEach(sc => {
             const card = document.createElement('div');
             card.className = 'skill-card';
-            card.innerHTML = `<h4>${sc.title}</h4><p style="font-size:11px;color:var(--muted)">${sc.ci}</p><button class="launch-btn" onclick="startIncident('${sc.id}')" style="margin-top:10px;">Launch Simulation</button>`;
+            card.innerHTML = `<h4>${sc.title}</h4><p style="font-size:11px;color:var(--muted)">${sc.ci}</p><button class="launch-btn" onclick="startIncident('${sc.id}')" style="margin-top:10px;">LAUNCH SIM</button>`;
             grid.appendChild(card);
         });
     });
@@ -332,9 +233,7 @@ function startIncident(id) {
     document.getElementById('inc-number').textContent = currentS.incNumber;
     document.getElementById('inc-caller').textContent = currentS.caller;
     document.getElementById('inc-ci').textContent = currentS.ci;
-    document.getElementById('inc-layer').textContent = 'L' + currentS.layer;
     document.getElementById('stream-body').innerHTML = '';
-    document.getElementById('next-btn').style.display = 'block';
     switchView('incident');
     advanceIncident();
 }
@@ -344,21 +243,18 @@ function advanceIncident() {
     const step = currentS.steps[stepIdx];
     const body = document.getElementById('stream-body');
     const wrap = document.createElement('div');
-    wrap.className = 'msg ' + (step.type === 'agent' ? 'm-agent' : step.type === 'cli' ? 'm-cli' : '');
-    
+    wrap.className = 'msg ' + (step.type === 'agent' ? 'm-agent' : '');
     if(step.type === 'vis') {
         wrap.innerHTML = `<div class="vis-card"><div class="vis-card-title">${step.title}</div>${svgs[step.svgKey]}</div>`;
     } else {
-        wrap.innerHTML = `<div class="bubble"><strong>${step.name || 'SYSTEM'}:</strong> ${step.text}${step.comment ? `<div class="logic-note">${step.comment}</div>` : ''}</div>`;
+        wrap.innerHTML = `<div class="bubble"><strong>${step.name || 'SYSTEM'}:</strong> ${step.text}</div>`;
     }
-    
     body.appendChild(wrap);
     body.scrollTop = body.scrollHeight;
     stepIdx++;
-    if(stepIdx === currentS.steps.length) document.getElementById('next-btn').style.display = 'none';
 }
 
-// --- AGENT RR 2.0 (LIVE API) ---
+// --- AGENT RR 2.0 LIVE API ---
 async function handleAgentChat() {
     const input = document.getElementById('agent-input');
     const text = input.value.trim();
@@ -388,17 +284,21 @@ async function handleAgentChat() {
         container.removeChild(typing);
         const errDiv = document.createElement('div');
         errDiv.className = 'agent-msg ai';
-        errDiv.innerHTML = `<div class="agent-bubble">AI logic is hosted on Netlify. Please use production link for real-time logic.</div>`;
+        errDiv.innerHTML = `<div class="agent-bubble">AI logic is hosted on Netlify. Please use production link.</div>`;
         container.appendChild(errDiv);
     }
     container.scrollTop = container.scrollHeight;
 }
 
-// --- INITIALIZE ---
+// --- INIT ---
+setInterval(() => { document.getElementById('live-clock').textContent = new Date().toLocaleTimeString(); }, 1000);
 buildDashboard();
-window.addEventListener('DOMContentLoaded', () => { 
+
+// ENVIRONMENT SENSING (Hides banner on Netlify)
+window.addEventListener('DOMContentLoaded', () => {
     if (window.location.hostname.includes('netlify.app')) {
-        document.getElementById('env-alert').style.display = 'none';
+        const banner = document.getElementById('env-alert');
+        if (banner) banner.style.display = 'none';
     }
 });
 </script>
