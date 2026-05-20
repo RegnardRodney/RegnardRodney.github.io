@@ -502,7 +502,7 @@ async function handleTerminal() {
     body.scrollTop = body.scrollHeight;
     
     try {
-        // 3. Make the API Call to your secure Netlify backend
+        // 3. Make the call to your NEW Vercel backend
         const response = await fetch('/api/agent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
