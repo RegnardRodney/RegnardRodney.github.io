@@ -22,7 +22,20 @@
   --body:'DM Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6} 
+body{font-family:var(--body);background:var(--bg);color:var(--text);height:100vh;display:flex;overflow:hidden;font-size:16px;line-height:1.6}   
+
+:root {
+  --base-font-size: clamp(1rem, 0.8rem + 1vw, 1.375rem);
+}
+
+body {
+  font-size: var(--base-font-size) !important;
+}
+
+h1, h2, h3 {
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 3rem) !important;
+  letter-spacing: -0.02em;
+}
 
 /* SIDEBAR */
 .sidebar{width:248px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative;overflow:hidden}
@@ -577,6 +590,7 @@ function handleAgentChat() {
 }
 
 // ─── KNOWLEDGE BASE DATA ───
+// ─── KNOWLEDGE BASE DATA ───
 const certData = {
   'comptia': {
     title: 'CompTIA A+',
@@ -937,12 +951,168 @@ const certData = {
     title: 'Wireshark | Protocol Analysis & Deep Packet Inspection',
     content: `
       <div class="kb-grid">
-        <div class="kb-card"><h4>Traffic Capture</h4><ul><li>Promiscuous Mode vs. Monitor Mode</li><li>Capture Filters (BPF Syntax)</li><li>Pcapng File Management</li></ul></div>
-        <div class="kb-card"><h4>Troubleshooting Filters</h4><ul><li><strong>TCP Retransmissions:</strong> <code>tcp.analysis.retransmission</code></li><li><strong>DNS Errors:</strong> <code>dns.flags.rcode != 0</code></li><li><strong>Latency:</strong> <code>tcp.time_delta > 0.5</code></li></ul></div>
-      </div>`
+        <div class="kb-card">
+          <h4>Traffic Capture <span style="font-size:10px; font-weight:normal; color:var(--muted);">(Click to Learn)</span></h4>
+          <ul>
+            <li><a class="cert-link" onclick="openCert('promiscuous-mode')">Promiscuous Mode vs. Monitor Mode</a></li>
+            <li><a class="cert-link" onclick="openCert('bpf-syntax')">Capture Filters (BPF Syntax)</a></li>
+            <li><a class="cert-link" onclick="openCert('pcapng')">Pcapng File Management</a></li>
+          </ul>
+        </div>
+        <div class="kb-card">
+          <h4>Troubleshooting Filters <span style="font-size:10px; font-weight:normal; color:var(--muted);">(Click to Learn)</span></h4>
+          <ul>
+            <li><a class="cert-link" onclick="openCert('tcp-retransmissions')">TCP Retransmissions: tcp.analysis.retransmission</a></li>
+            <li><a class="cert-link" onclick="openCert('dns-errors')">DNS Errors: dns.flags.rcode != 0</a></li>
+            <li><a class="cert-link" onclick="openCert('latency-analysis')">Latency: tcp.time_delta > 0.5</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:15px; background:var(--blue-dim); padding:15px; border-left:3px solid var(--blue); font-size:13px;">
+        <strong>Instructor Note:</strong> In modern switched networks, simply opening Wireshark won't capture other users' traffic. You must configure <strong>Port Mirroring (SPAN)</strong> on the managed switch to send a copy of the target port's traffic to your packet analyzer.
+      </div>
+    `
+  },
+  
+  // --- NEW CLICKABLE WIRESHARK MASTERCLASS ENTRIES ---
+  
+  'promiscuous-mode': {
+    title: 'Masterclass: Promiscuous Mode vs. Monitor Mode',
+    content: `
+      <div class="kb-card" style="margin-bottom: 20px;">
+        <p style="margin-bottom: 10px;">By default, a Network Interface Card (NIC) only passes packets to the CPU that are explicitly addressed to its own MAC address (or broadcast/multicast traffic). To perform deep packet inspection on an entire network segment, we must bypass this filter.</p>
+        
+      </div>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4 style="color:var(--teal)">Promiscuous Mode (Wired/Ethernet)</h4>
+          <p style="font-size:13px; color:var(--muted); line-height: 1.6;">Tells the NIC to pass <strong>ALL</strong> traffic it receives up to the OS/Wireshark. However, on modern switches, you still only receive your own traffic. <em>To make this work, you must pair it with a SPAN (Switched Port Analyzer) or port mirror configuration on the switch.</em></p>
+        </div>
+        <div class="kb-card">
+          <h4 style="color:var(--purple)">Monitor Mode (Wireless/RF)</h4>
+          <p style="font-size:13px; color:var(--muted); line-height: 1.6;">Specific to 802.11 wireless interfaces. It allows the NIC to passively capture all raw 802.11 frames in the air on a specific channel, without needing to associate with an Access Point. Used for capturing management frames (Beacons, Probe Requests) and WPA handshakes.</p>
+        </div>
+      </div>
+    `
+  },
+  'bpf-syntax': {
+    title: 'Masterclass: Capture Filters (BPF Syntax)',
+    content: `
+      <div class="kb-card" style="margin-bottom: 20px; border-left: 4px solid var(--blue);">
+        <p><strong>Capture Filters vs. Display Filters:</strong> Capture filters are applied <em>before</em> packets are saved to disk using the Berkeley Packet Filter (BPF) syntax. This is critical on high-throughput links (like a 10Gbps core switch) to prevent dropping packets or running out of RAM/Disk space.</p>
+      </div>
+      <h4 style="margin-top: 20px; margin-bottom: 10px; font-family: var(--display); color: var(--text);">Common BPF Primitives</h4>
+      <table style="width:100%; border-collapse:collapse; font-size:13px; color:var(--muted); background:var(--surface2); border:1px solid var(--border);">
+        <thead>
+          <tr style="background:var(--surface3); color:var(--text); text-align:left;">
+            <th style="padding:10px; border:1px solid var(--border);">Syntax</th>
+            <th style="padding:10px; border:1px solid var(--border);">Description / Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); font-family:var(--mono); color:var(--green);">host 10.1.1.50</td>
+            <td style="padding:10px; border:1px solid var(--border);">Captures traffic specifically to or from this IP address.</td>
+          </tr>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); font-family:var(--mono); color:var(--green);">net 192.168.1.0/24</td>
+            <td style="padding:10px; border:1px solid var(--border);">Captures all traffic originating from or destined to this subnet.</td>
+          </tr>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); font-family:var(--mono); color:var(--green);">port 53 and udp</td>
+            <td style="padding:10px; border:1px solid var(--border);">Only capture UDP DNS queries and responses.</td>
+          </tr>
+          <tr>
+            <td style="padding:10px; border:1px solid var(--border); font-family:var(--mono); color:var(--green);">not arp and not port 443</td>
+            <td style="padding:10px; border:1px solid var(--border);">Exclude "noisy" broadcast ARP and encrypted HTTPS traffic to isolate cleartext issues.</td>
+          </tr>
+        </tbody>
+      </table>
+    `
+  },
+  'pcapng': {
+    title: 'Masterclass: Pcapng File Management',
+    content: `
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4>PCAP vs. PCAPNG</h4>
+          <p style="font-size:13px; color:var(--muted); line-height: 1.6;"><strong>PCAPNG (Next Generation)</strong> is the modern default format in Wireshark. Unlike the legacy PCAP format, PCAPNG can store extended metadata, including the interface name it was captured on, packet drop statistics, and inline annotations/comments.</p>
+        </div>
+        <div class="kb-card">
+          <h4>Ring Buffers for Intermittent Issues</h4>
+          <p style="font-size:13px; color:var(--muted); line-height: 1.6;">When waiting for a random failure (e.g., an app drops once a week), you cannot capture a single massive file—it will crash your RAM. <br><br><strong>Solution:</strong> In Wireshark's output settings, enable "Create a new file automatically" (e.g., every 50MB) and "Use a ring buffer with 10 files." This keeps only the last 500MB of rolling data so you can hit 'Stop' right after the incident occurs.</p>
+        </div>
+      </div>
+    `
+  },
+  'tcp-retransmissions': {
+    title: 'Masterclass: TCP Retransmissions & Packet Loss',
+    content: `
+      <div class="kb-card" style="margin-bottom: 20px;">
+        <p style="margin-bottom: 15px;">TCP is a reliable transport protocol. Every segment sent must be acknowledged (ACK) by the receiver. If the sender does not receive an ACK within a specific timeframe (RTO), it assumes the packet was lost in transit and <strong>retransmits</strong> it.</p>
+        
+      </div>
+      <div class="kb-grid">
+        <div class="kb-card" style="border-left: 3px solid var(--amber);">
+          <h4 style="color:var(--amber)">The Display Filter</h4>
+          <pre style="background:var(--bg); padding:10px; margin-top:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; white-space:pre-wrap;">tcp.analysis.retransmission</pre>
+        </div>
+        <div class="kb-card">
+          <h4>Root Cause Analysis</h4>
+          <ul style="font-size:13px; color:var(--muted); line-height: 1.6;">
+            <li><strong>L1/L2 Issues:</strong> Faulty cables, duplex mismatches, or saturated switch uplinks dropping frames.</li>
+            <li><strong>Congestion:</strong> A router in the path is overwhelmed and dropping packets (Tail Drop).</li>
+            <li><strong>Asymmetric Routing:</strong> Traffic takes one path out, but returns via a path where a firewall drops it because it lacks the state table entry.</li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  'dns-errors': {
+    title: 'Masterclass: DNS Error Triage',
+    content: `
+      <div class="kb-card" style="margin-bottom: 20px;">
+        <p>The Domain Name System (DNS) translates human-readable hostnames to IP addresses. When a user says "The internet is down," it's often just DNS failing to resolve. Wireshark can instantly expose this by looking at the Response Codes (RCODEs).</p>
+      </div>
+      <div class="kb-grid">
+        <div class="kb-card" style="border-left: 3px solid var(--red);">
+          <h4 style="color:var(--red)">The Display Filter</h4>
+          <pre style="background:var(--bg); padding:10px; margin-top:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; white-space:pre-wrap;">dns.flags.rcode != 0</pre>
+          <p style="font-size:11px; margin-top: 10px; color:var(--muted);">Filters out all successful resolutions (RCODE 0), showing only errors.</p>
+        </div>
+        <div class="kb-card">
+          <h4>Common DNS RCODEs</h4>
+          <ul style="font-size:13px; color:var(--muted); line-height: 1.6;">
+            <li><strong>RCODE 0 (NoError):</strong> Successful query.</li>
+            <li><strong>RCODE 2 (ServFail):</strong> The DNS server was unable to process this query due to an internal problem (e.g., its upstream forwarder is dead).</li>
+            <li><strong>RCODE 3 (NXDomain):</strong> Non-Existent Domain. The domain name simply does not exist or was typed incorrectly by the user.</li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  'latency-analysis': {
+    title: 'Masterclass: Latency & Time Delta Analysis',
+    content: `
+      <div class="kb-card" style="margin-bottom: 20px; border-left: 4px solid var(--blue);">
+        <p>Is it the Network or the Application? Latency analysis in Wireshark helps you prove whether the network took too long to deliver the packet, or the server took too long to process the request.</p>
+      </div>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h4 style="color:var(--teal)">The Network Filter (Time Delta)</h4>
+          <pre style="background:var(--bg); padding:10px; margin-top:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; white-space:pre-wrap;">tcp.time_delta > 0.5</pre>
+          <p style="font-size:13px; color:var(--muted); margin-top:10px; line-height: 1.6;">This filter shows any packet that arrived more than 500 milliseconds (0.5s) after the <em>previous</em> packet in that TCP stream. High time deltas on basic ACK packets indicate network congestion or high jitter.</p>
+        </div>
+        <div class="kb-card">
+          <h4 style="color:var(--purple)">The Server Filter (App Latency)</h4>
+          <pre style="background:var(--bg); padding:10px; margin-top:10px; border:1px solid var(--border); color:var(--blue); font-size:12px; white-space:pre-wrap;">http.time > 1.0</pre>
+          <p style="font-size:13px; color:var(--muted); margin-top:10px; line-height: 1.6;">This measures the time between the HTTP GET request and the HTTP 200 OK response. If this number is high, the network delivered the packet fine, but the Web Server / Database was slow to generate the page. <strong>Proof it's not the network!</strong></p>
+        </div>
+      </div>
+    `
   }
 };
-
+// ─── END KNOWLEDGE BASE DATA ───
 function openCert(id) {
   const data = certData[id];
   if(!data) {
