@@ -503,7 +503,7 @@ async function handleTerminal() {
     
     try {
         // 3. Make the API Call to your secure Netlify backend
-        const response = await fetch('/.netlify/functions/agent', {
+        const response = await fetch('/api/agent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: text })
